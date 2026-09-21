@@ -1,0 +1,275 @@
+{
+  "products": [
+    {
+      "id": "duck-001",
+      "title": "Al Capone Duck",
+      "description": "Meet the boss of the bathtub. With his sharp suit, signature hat and no-nonsense attitude, Al Capone rules the bubbles. A loyal companion for your next debugging session.",
+      "price": 14.99,
+      "categories": ["onSale"],
+      "isOnSale": true,
+      "isLimitedEdition": false,
+      "salePrice": 9.99,
+      "images": {
+        "main": "/ducks/alcaponeduck.png",
+        "secondary": "/ducks/alcaponeduck2.png"
+      },
+      "stock": 10
+    },
+    {
+      "id": "duck-002",
+      "title": "Bat Duck",
+      "description": "The bathtub needs a hero. Bat Duck keeps watch over the bubbles and helps you hunt down bugs after dark. His greatest weakness? An empty bath.",
+      "price": 16.99,
+      "categories": ["mostPopular"],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/batduck.png",
+        "secondary": "/ducks/batduck2.png"
+      },
+      "stock": 15
+    },
+    {
+      "id": "duck-003",
+      "title": "Beer Duck",
+      "description": "Clock out and float away. Beer Duck brings a relaxed attitude to your desk and patiently listens while you explain why your code worked yesterday.",
+      "price": 12.99,
+      "categories": [],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/beerduck.png",
+        "secondary": "/ducks/beerduck2.png"
+      },
+      "stock": 12
+    },
+    {
+      "id": "duck-004",
+      "title": "Chef Duck",
+      "description": "Something good is cooking. Chef Duck serves up fresh ideas and helps you follow the recipe for cleaner code. Just keep the spaghetti in the kitchen.",
+      "price": 13.99,
+      "categories": [],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/chefduck.png",
+        "secondary": "/ducks/chefduck2.png"
+      },
+      "stock": 14
+    },
+    {
+      "id": "duck-005",
+      "title": "Dala Duck",
+      "description": "A little Swedish charm for your bathtub. Dala Duck enjoys a quiet fika and a thorough explanation of your latest coding problem. Coffee breaks are always welcome.",
+      "price": 19.99,
+      "categories": ["limitedEdition", "mostPopular", "onSale"],
+      "isOnSale": true,
+      "isLimitedEdition": true,
+      "salePrice": 16.99,
+      "images": {
+        "main": "/ducks/daladuck.png",
+        "secondary": "/ducks/daladuck2.png"
+      },
+      "stock": 5
+    },
+    {
+      "id": "duck-006",
+      "title": "Duck You",
+      "description": "Some days call for a duck with attitude. Duck You understands your frustration when nothing compiles. Take a breath, explain the problem and try again.",
+      "price": 14.99,
+      "categories": ["mostPopular"],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/duckyou.png",
+        "secondary": "/ducks/duckyou2.png"
+      },
+      "stock": 18
+    },
+    {
+      "id": "duck-007",
+      "title": "Gamer Duck",
+      "description": "Your new player two has arrived. Gamer Duck is ready for late-night sessions, tricky puzzles and one more attempt at fixing that stubborn bug. No rage quitting.",
+      "price": 15.99,
+      "categories": ["mostPopular"],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/gamerduck.png",
+        "secondary": "/ducks/gamerduck2.png"
+      },
+      "stock": 20
+    },
+    {
+      "id": "duck-008",
+      "title": "Gamer Girl Duck",
+      "description": "Meet your next teammate. Gamer Girl Duck brings confidence to every coding challenge and gaming session. Explain your strategy and get ready for the next level.",
+      "price": 15.99,
+      "categories": ["limitedEdition", "mostPopular", "onSale"],
+      "isOnSale": true,
+      "isLimitedEdition": true,
+      "salePrice": 12.99,
+      "images": {
+        "main": "/ducks/gamergirlduck.png",
+        "secondary": "/ducks/gamergirlduck2.png"
+      },
+      "stock": 16
+    },
+    {
+      "id": "duck-009",
+      "title": "Groot Duck",
+      "description": "A small friend with a big heart and a very limited vocabulary. Groot Duck listens while your ideas grow. Perfect company when you are branching out into new code.",
+      "price": 18.99,
+      "categories": ["limitedEdition"],
+      "isOnSale": false,
+      "isLimitedEdition": true,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/grootduck.png",
+        "secondary": "/ducks/grootduck2.png"
+      },
+      "stock": 6
+    },
+    {
+      "id": "duck-010",
+      "title": "Harry Ponder",
+      "description": "Ponder your next spell with a magical desk companion. Harry Ponder cannot fix your code with a wand, but explaining the problem to him might work wonders.",
+      "price": 17.99,
+      "categories": ["mostPopular"],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/harryponderduck.png",
+        "secondary": "/ducks/harryponderduck2.png"
+      },
+      "stock": 12
+    },
+    {
+      "id": "duck-011",
+      "title": "Picasso Duck",
+      "description": "See your problems from a different angle. Picasso Duck brings an artistic spirit to your desk and reminds you that a messy first draft can become something brilliant.",
+      "price": 21.99,
+      "categories": ["limitedEdition"],
+      "isOnSale": false,
+      "isLimitedEdition": true,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/picassoduck.png",
+        "secondary": "/ducks/picassoduck2.png"
+      },
+      "stock": 4
+    },
+    {
+      "id": "duck-012",
+      "title": "Pride Duck",
+      "description": "Bring a splash of pride to your desk. Pride Duck celebrates being yourself and makes room for every idea. A cheerful companion for work, play and everything in between.",
+      "price": 14.99,
+      "categories": [],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/prideduck.png",
+        "secondary": "/ducks/prideduck2.png"
+      },
+      "stock": 22
+    },
+    {
+      "id": "duck-013",
+      "title": "Queen Corgi Duck",
+      "description": "Give your bathtub the royal treatment. Queen Corgi Duck expects excellent bubbles, regular tea breaks and a full report on your latest coding adventure.",
+      "price": 19.99,
+      "categories": ["limitedEdition"],
+      "isOnSale": false,
+      "isLimitedEdition": true,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/queencorgiduck.png",
+        "secondary": "/ducks/queencorgiduck2.png"
+      },
+      "stock": 7
+    },
+    {
+      "id": "duck-014",
+      "title": "Sonic Duck",
+      "description": "Ready to race through your next adventure. Sonic Duck brings energy to your desk, but even he knows that slowing down to read an error message can save time.",
+      "price": 16.99,
+      "categories": ["onSale"],
+      "isOnSale": true,
+      "isLimitedEdition": false,
+      "salePrice": 13.99,
+      "images": {
+        "main": "/ducks/sonicduck.png",
+        "secondary": "/ducks/sonicduck2.png"
+      },
+      "stock": 11
+    },
+    {
+      "id": "duck-015",
+      "title": "Sphinx Duck",
+      "description": "An ancient mystery meets the modern bathtub. Sphinx Duck guards your desk and silently challenges you to solve the riddle of your latest bug.",
+      "price": 22.99,
+      "categories": ["limitedEdition"],
+      "isOnSale": false,
+      "isLimitedEdition": true,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/sphinxduck.png",
+        "secondary": "/ducks/sphinxduck2.png"
+      },
+      "stock": 3
+    },
+    {
+      "id": "duck-016",
+      "title": "Tattoo Duck",
+      "description": "A little ink and plenty of personality. Tattoo Duck brings a rebellious streak to your collection and listens without judging your questionable variable names.",
+      "price": 15.99,
+      "categories": [],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/tattooduck.png",
+        "secondary": "/ducks/tattooduck2.png"
+      },
+      "stock": 9
+    },
+    {
+      "id": "duck-017",
+      "title": "Trump Duck",
+      "description": "Campaigning for more bubbles and a bigger bathtub. Trump Duck brings political parody to your collection and has plenty of silent opinions about your code.",
+      "price": 14.99,
+      "categories": ["onSale"],
+      "isOnSale": true,
+      "isLimitedEdition": false,
+      "salePrice": 10.99,
+      "images": {
+        "main": "/ducks/trumpduck.png",
+        "secondary": "/ducks/trumpduck2.png"
+      },
+      "stock": 8
+    },
+    {
+      "id": "duck-018",
+      "title": "Turtles Duck",
+      "description": "Pizza breaks and bathtub adventures await. Turtles Duck is ready to join your team, tackle tricky bugs and celebrate every small victory with another slice.",
+      "price": 17.99,
+      "categories": ["mostPopular"],
+      "isOnSale": false,
+      "isLimitedEdition": false,
+      "salePrice": null,
+      "images": {
+        "main": "/ducks/turtlesduck.png",
+        "secondary": "/ducks/turtlesduck2.png"
+      },
+      "stock": 13
+    }
+  ],
+  "orders": []
+}

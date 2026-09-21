@@ -1,5 +1,7 @@
-import Footer from "./Footer";
-import Header from "./Header";
+import { Outlet } from "react-router-dom";
+
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 
 function AppLayout() {
   return (
@@ -7,7 +9,9 @@ function AppLayout() {
       <Header />
 
       <main className="main">
-        <div className="main-content">{}</div>
+        <div className="main-content">
+          <Outlet />
+        </div>
       </main>
 
       <Footer />

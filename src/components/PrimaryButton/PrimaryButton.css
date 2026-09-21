@@ -1,0 +1,11 @@
+.primary-button.MuiButton-root {
+  background-color: var(--color-pink);
+  color: var(--color-black);
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.primary-button.MuiButton-root:hover {
+  background-color: var(--color-pink);
+}

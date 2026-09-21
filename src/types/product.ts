@@ -9,6 +9,9 @@ export interface Product {
     isOnSale: boolean;
     isLimitedEdition: boolean;
     salePrice: number | null;
-    image: string;
+    images: {
+        main: string;
+        secondary: string;
+    };
     stock: number;
 }

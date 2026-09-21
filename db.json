@@ -9,7 +9,10 @@
       "isOnSale": true,
       "isLimitedEdition": false,
       "salePrice": 9.99,
-      "image": "",
+      "images": {
+        "main": "/ducks/alcaponeduck.png",
+        "secondary": "/ducks/alcaponeduck2.png"
+      },
       "stock": 10
     },
     {
@@ -21,7 +24,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/batduck.png",
+        "secondary": "/ducks/batduck2.png"
+      },
       "stock": 15
     },
     {
@@ -33,7 +39,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/beerduck.png",
+        "secondary": "/ducks/beerduck2.png"
+      },
       "stock": 12
     },
     {
@@ -45,7 +54,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/chefduck.png",
+        "secondary": "/ducks/chefduck2.png"
+      },
       "stock": 14
     },
     {
@@ -57,7 +69,10 @@
       "isOnSale": true,
       "isLimitedEdition": true,
       "salePrice": 16.99,
-      "image": "",
+      "images": {
+        "main": "/ducks/daladuck.png",
+        "secondary": "/ducks/daladuck2.png"
+      },
       "stock": 5
     },
     {
@@ -69,7 +84,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/duckyou.png",
+        "secondary": "/ducks/duckyou2.png"
+      },
       "stock": 18
     },
     {
@@ -81,7 +99,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/gamerduck.png",
+        "secondary": "/ducks/gamerduck2.png"
+      },
       "stock": 20
     },
     {
@@ -93,7 +114,10 @@
       "isOnSale": true,
       "isLimitedEdition": true,
       "salePrice": 12.99,
-      "image": "",
+      "images": {
+        "main": "/ducks/gamergirlduck.png",
+        "secondary": "/ducks/gamergirlduck2.png"
+      },
       "stock": 16
     },
     {
@@ -105,7 +129,10 @@
       "isOnSale": false,
       "isLimitedEdition": true,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/grootduck.png",
+        "secondary": "/ducks/grootduck2.png"
+      },
       "stock": 6
     },
     {
@@ -117,7 +144,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/harryponderduck.png",
+        "secondary": "/ducks/harryponderduck2.png"
+      },
       "stock": 12
     },
     {
@@ -129,7 +159,10 @@
       "isOnSale": false,
       "isLimitedEdition": true,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/picassoduck.png",
+        "secondary": "/ducks/picassoduck2.png"
+      },
       "stock": 4
     },
     {
@@ -141,7 +174,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/prideduck.png",
+        "secondary": "/ducks/prideduck2.png"
+      },
       "stock": 22
     },
     {
@@ -153,7 +189,10 @@
       "isOnSale": false,
       "isLimitedEdition": true,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/queencorgiduck.png",
+        "secondary": "/ducks/queencorgiduck2.png"
+      },
       "stock": 7
     },
     {
@@ -165,7 +204,10 @@
       "isOnSale": true,
       "isLimitedEdition": false,
       "salePrice": 13.99,
-      "image": "",
+      "images": {
+        "main": "/ducks/sonicduck.png",
+        "secondary": "/ducks/sonicduck2.png"
+      },
       "stock": 11
     },
     {
@@ -177,7 +219,10 @@
       "isOnSale": false,
       "isLimitedEdition": true,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/sphinxduck.png",
+        "secondary": "/ducks/sphinxduck2.png"
+      },
       "stock": 3
     },
     {
@@ -189,7 +234,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/tattooduck.png",
+        "secondary": "/ducks/tattooduck2.png"
+      },
       "stock": 9
     },
     {
@@ -201,7 +249,10 @@
       "isOnSale": true,
       "isLimitedEdition": false,
       "salePrice": 10.99,
-      "image": "",
+      "images": {
+        "main": "/ducks/trumpduck.png",
+        "secondary": "/ducks/trumpduck2.png"
+      },
       "stock": 8
     },
     {
@@ -213,7 +264,10 @@
       "isOnSale": false,
       "isLimitedEdition": false,
       "salePrice": null,
-      "image": "",
+      "images": {
+        "main": "/ducks/turtlesduck.png",
+        "secondary": "/ducks/turtlesduck2.png"
+      },
       "stock": 13
     }
   ],

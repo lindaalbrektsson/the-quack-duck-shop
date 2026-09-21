@@ -33,3 +33,10 @@
   font-weight: 600;
   white-space: nowrap;
 }
+
+.product-card__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}

@@ -2,6 +2,7 @@ import Rating from "@mui/material/Rating";
 import type { Product } from "../../types/product";
 import "./ProductCard.css";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import CategoryBadges from "../CategoryBadges/CategoryBadges";
 
 interface ProductCardProps {
   product: Product;
@@ -23,7 +24,10 @@ function ProductCard({ product }: ProductCardProps) {
         />
       </div>
 
-      <Rating value={product.rating} precision={0.5} readOnly />
+      <div className="product-card__info">
+        <Rating value={product.rating} readOnly />
+        <CategoryBadges categories={product.categories} />
+      </div>
 
       <h2 className="product-card__title">{product.title}</h2>
 

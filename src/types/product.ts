@@ -1,5 +1,7 @@
 export type Category = "limitedEdition" | "mostPopular" | "onSale";
 
+export type SelectedCategory = "all" | Category;
+
 export interface Product {
     id: string;
     title: string;

@@ -1,0 +1,35 @@
+.product-list-page {
+  width: 100%;
+}
+
+.product-list-page__header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.product-list-page__intro {
+  grid-column: 2;
+  text-align: center;
+}
+
+.product-list-page__intro h1 {
+  margin: 0;
+  font-family: "Bubblegum Sans", sans-serif;
+}
+
+.product-list-page__intro p {
+  margin: 0.25rem 0 0;
+}
+
+.product-list-page__filter {
+  grid-column: 3;
+  justify-self: end;
+  width: 200px;
+  min-height: 40px;
+  border: 1px dashed var(--color-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

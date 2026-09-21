@@ -13,7 +13,8 @@
         "main": "/ducks/alcaponeduck.png",
         "secondary": "/ducks/alcaponeduck2.png"
       },
-      "stock": 10
+      "stock": 10,
+      "rating": 3
     },
     {
       "id": "duck-002",
@@ -28,7 +29,8 @@
         "main": "/ducks/batduck.png",
         "secondary": "/ducks/batduck2.png"
       },
-      "stock": 15
+      "stock": 15,
+      "rating": 5
     },
     {
       "id": "duck-003",
@@ -43,7 +45,8 @@
         "main": "/ducks/beerduck.png",
         "secondary": "/ducks/beerduck2.png"
       },
-      "stock": 12
+      "stock": 12,
+      "rating": 2
     },
     {
       "id": "duck-004",
@@ -58,7 +61,8 @@
         "main": "/ducks/chefduck.png",
         "secondary": "/ducks/chefduck2.png"
       },
-      "stock": 14
+      "stock": 14,
+      "rating": 3
     },
     {
       "id": "duck-005",
@@ -73,7 +77,8 @@
         "main": "/ducks/daladuck.png",
         "secondary": "/ducks/daladuck2.png"
       },
-      "stock": 5
+      "stock": 5,
+      "rating": 5
     },
     {
       "id": "duck-006",
@@ -88,7 +93,8 @@
         "main": "/ducks/duckyou.png",
         "secondary": "/ducks/duckyou2.png"
       },
-      "stock": 18
+      "stock": 18,
+      "rating": 4
     },
     {
       "id": "duck-007",
@@ -103,7 +109,8 @@
         "main": "/ducks/gamerduck.png",
         "secondary": "/ducks/gamerduck2.png"
       },
-      "stock": 20
+      "stock": 20,
+      "rating": 5
     },
     {
       "id": "duck-008",
@@ -118,7 +125,8 @@
         "main": "/ducks/gamergirlduck.png",
         "secondary": "/ducks/gamergirlduck2.png"
       },
-      "stock": 16
+      "stock": 16,
+      "rating": 5
     },
     {
       "id": "duck-009",
@@ -133,7 +141,8 @@
         "main": "/ducks/grootduck.png",
         "secondary": "/ducks/grootduck2.png"
       },
-      "stock": 6
+      "stock": 6,
+      "rating": 4
     },
     {
       "id": "duck-010",
@@ -148,7 +157,8 @@
         "main": "/ducks/harryponderduck.png",
         "secondary": "/ducks/harryponderduck2.png"
       },
-      "stock": 12
+      "stock": 12,
+      "rating": 5
     },
     {
       "id": "duck-011",
@@ -163,7 +173,8 @@
         "main": "/ducks/picassoduck.png",
         "secondary": "/ducks/picassoduck2.png"
       },
-      "stock": 4
+      "stock": 4,
+      "rating": 3
     },
     {
       "id": "duck-012",
@@ -178,7 +189,8 @@
         "main": "/ducks/prideduck.png",
         "secondary": "/ducks/prideduck2.png"
       },
-      "stock": 22
+      "stock": 22,
+      "rating": 4
     },
     {
       "id": "duck-013",
@@ -193,7 +205,8 @@
         "main": "/ducks/queencorgiduck.png",
         "secondary": "/ducks/queencorgiduck2.png"
       },
-      "stock": 7
+      "stock": 7,
+      "rating": 3
     },
     {
       "id": "duck-014",
@@ -208,7 +221,8 @@
         "main": "/ducks/sonicduck.png",
         "secondary": "/ducks/sonicduck2.png"
       },
-      "stock": 11
+      "stock": 11,
+      "rating": 4
     },
     {
       "id": "duck-015",
@@ -223,7 +237,8 @@
         "main": "/ducks/sphinxduck.png",
         "secondary": "/ducks/sphinxduck2.png"
       },
-      "stock": 3
+      "stock": 3,
+      "rating": 2
     },
     {
       "id": "duck-016",
@@ -238,7 +253,8 @@
         "main": "/ducks/tattooduck.png",
         "secondary": "/ducks/tattooduck2.png"
       },
-      "stock": 9
+      "stock": 9,
+      "rating": 3
     },
     {
       "id": "duck-017",
@@ -253,7 +269,8 @@
         "main": "/ducks/trumpduck.png",
         "secondary": "/ducks/trumpduck2.png"
       },
-      "stock": 8
+      "stock": 8,
+      "rating": 1
     },
     {
       "id": "duck-018",
@@ -268,7 +285,8 @@
         "main": "/ducks/turtlesduck.png",
         "secondary": "/ducks/turtlesduck2.png"
       },
-      "stock": 13
+      "stock": 13,
+      "rating": 4
     }
   ],
   "orders": []

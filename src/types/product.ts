@@ -14,4 +14,5 @@ export interface Product {
         secondary: string;
     };
     stock: number;
+    rating: number;
 }

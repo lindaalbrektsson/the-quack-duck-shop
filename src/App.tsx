@@ -1,7 +1,8 @@
-const App = () => {
-  return (
-    <h1>hello world</h1>
-  )
-}
+import "./App.css";
+import AppLayout from "./components/AppLayout";
 
-export default App
+const App = () => {
+  return <AppLayout />;
+};
+
+export default App;

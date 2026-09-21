@@ -1,0 +1,40 @@
+.footer {
+  width: 100%;
+  min-height: 80px;
+  background-color: var(--color-black);
+  color: var(--color-off-white);
+
+  display: flex;
+  align-items: center;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+
+  font-family: "Bubblegum Sans", sans-serif;
+}
+
+.footer-content p:nth-child(1) {
+  text-align: left;
+}
+
+.footer-content p:nth-child(2) {
+  text-align: center;
+}
+
+.footer-content p:nth-child(3) {
+  text-align: right;
+}
+
+.copyright {
+  font-family: Arial, sans-serif;
+  font-size: 0.9em;
+  margin-right: 4px;
+}

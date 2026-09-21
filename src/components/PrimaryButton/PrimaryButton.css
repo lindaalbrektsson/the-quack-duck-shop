@@ -1,5 +1,5 @@
 .primary-button.MuiButton-root {
-  background-color: var(--color-pink);
+  background-color: var(--color-light-pink);
   color: var(--color-black);
   border-radius: 8px;
   font-weight: 600;

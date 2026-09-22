@@ -3,6 +3,7 @@ import type { Product } from "../../types/product";
 import "./ProductCard.css";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
@@ -16,12 +17,13 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article className="product-card">
+      <Link to={`/products/${product.id}`}>
       <div className="product-card__image-container">
         <img
           className="product-card__image"
           src={product.images.main}
           alt={product.title}
-        />
+          />
       </div>
 
       <div className="product-card__info">
@@ -36,6 +38,7 @@ function ProductCard({ product }: ProductCardProps) {
 
         <span className="product-card__price">${displayPrice.toFixed(2)}</span>
       </div>
+    </Link>
     </article>
   );
 }

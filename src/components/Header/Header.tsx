@@ -1,13 +1,21 @@
 import "./Header.css";
 import logo from "../../assets/logo.png";
 
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 function Header() {
   return (
     <header className="header">
       <div className="header-content">
         <img className="logo" src={logo} alt="The Quack Duck Shop" />
 
-        <button className="cart-button">Cart</button>
+        <IconButton aria-label="cart">
+          <Badge badgeContent={0} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
       </div>
     </header>
   );

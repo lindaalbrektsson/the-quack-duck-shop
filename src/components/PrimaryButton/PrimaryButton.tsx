@@ -5,11 +5,20 @@ import "./PrimaryButton.css";
 
 interface PrimaryButtonProps {
   children: ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
-function PrimaryButton({ children }: PrimaryButtonProps) {
+function PrimaryButton({
+  children,
+  type = "button",
+ }: PrimaryButtonProps) {
   return (
-    <Button variant="contained" disableElevation className="primary-button">
+    <Button 
+    type={type}
+    variant="contained"
+    disableElevation
+    className="primary-button"
+    >
       {children}
     </Button>
   );

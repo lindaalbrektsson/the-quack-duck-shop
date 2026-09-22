@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 // Check that name and address are filled in.
 const customerSchema = z.object({
@@ -43,7 +44,7 @@ const CustomerInfoForm = () => {
       {errors.customerAddress && (
         <p role="alert">{errors.customerAddress.message}</p>
       )}
-      <button type="submit">Continue</button>
+      <PrimaryButton type="submit">Continue</PrimaryButton>
     </form>
   );
 };

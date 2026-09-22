@@ -10,7 +10,14 @@ const App = () => {
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<ProductListPage />} />
-        <Route path="/checkout" element={<CustomerInfoForm />} />
+        <Route
+          path="/customer-info"
+          element={
+            <CustomerInfoForm
+              onContinue={(data) => console.log("Customer information:", data)}
+            />
+          }
+        />
       </Route>
     </Routes>
   );

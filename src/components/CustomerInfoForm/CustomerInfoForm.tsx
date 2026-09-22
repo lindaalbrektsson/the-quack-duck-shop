@@ -11,8 +11,11 @@ const customerSchema = z.object({
 
 // Get the form type from the schema.
 type CustomerFormData = z.infer<typeof customerSchema>;
+type CustomerInfoFormProps = {
+  onContinue: (data: CustomerFormData) => void;
+};
 
-const CustomerInfoForm = () => {
+const CustomerInfoForm = ({ onContinue }: CustomerInfoFormProps) => {
   // Set up the form with Zod validation.
   const {
     register,
@@ -22,9 +25,9 @@ const CustomerInfoForm = () => {
     resolver: zodResolver(customerSchema),
   });
 
-  // Log the form data for now.
+  // Pass valid customer data to the next step.
   const onSubmit = (data: CustomerFormData) => {
-    console.log(data);
+    onContinue(data);
   };
 
   return (

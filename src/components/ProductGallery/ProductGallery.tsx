@@ -1,4 +1,5 @@
 import type { Product } from "../../types/product"
+import "./ProductGallery.css"
 
 type Props = {
     product: Product
@@ -7,8 +8,8 @@ type Props = {
 const ProductGallery = ({product}: Props) => {
     return (
         <>
-        <img src={`${product.images.main}`} alt={`main picture of ${product.title}`} />
-        <img src={`${product.images.secondary}`} alt={`secondary picture of ${product.title}`} />
+        <img id="main-img" src={`${product.images.main}`} alt={`main picture of ${product.title}`} />
+        <img id="second-img" src={`${product.images.secondary}`} alt={`secondary picture of ${product.title}`} />
         </>
     )
 }

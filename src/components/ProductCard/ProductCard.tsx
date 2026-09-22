@@ -37,6 +37,7 @@ function ProductCard({ product }: ProductCardProps) {
 
         <h2 className="product-card__title">{product.title}</h2>
 
+      </Link>
         <div className="product-card__bottom">
           <PrimaryButton onClick={() => addToCart(product)}>
             ADD TO CART
@@ -46,7 +47,6 @@ function ProductCard({ product }: ProductCardProps) {
             ${displayPrice.toFixed(2)}
           </span>
         </div>
-      </Link>
     </article>
   );
 }

@@ -20,7 +20,15 @@
 }
 
 .cart-button {
-  border: none;
-  background: none;
-  cursor: pointer;
+  color: var(--color-black) !important;
+}
+
+.cart-button svg {
+  font-size: 2rem;
+}
+
+.cart-button .MuiBadge-badge {
+  background-color: var(--color-pink);
+  color: var(--color-black);
+  font-weight: 700;
 }

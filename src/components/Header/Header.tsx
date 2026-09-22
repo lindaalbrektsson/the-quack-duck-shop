@@ -17,6 +17,7 @@ function Header() {
         <img className="logo" src={logo} alt="The Quack Duck Shop" />
 
         <IconButton
+          className="cart-button"
           aria-label="cart"
           onClick={() => {
             if (totalQuantity > 0) {

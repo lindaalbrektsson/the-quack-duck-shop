@@ -1,23 +1,25 @@
 import Button from "@mui/material/Button";
-import type { ReactNode } from "react";
-
+import type { MouseEventHandler, ReactNode } from "react";
 import "./PrimaryButton.css";
 
 interface PrimaryButtonProps {
   children: ReactNode;
   type?: "button" | "submit" | "reset";
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 function PrimaryButton({
   children,
   type = "button",
- }: PrimaryButtonProps) {
+  onClick,
+}: PrimaryButtonProps) {
   return (
-    <Button 
-    type={type}
-    variant="contained"
-    disableElevation
-    className="primary-button"
+    <Button
+      type={type}
+      onClick={onClick}
+      variant="contained"
+      disableElevation
+      className="primary-button"
     >
       {children}
     </Button>

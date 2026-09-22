@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import Rating from "@mui/material/Rating";
 import type { Product } from "../../types/product";
 import "./ProductCard.css";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
+import { CartContext } from "../../context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -13,6 +15,8 @@ function ProductCard({ product }: ProductCardProps) {
     product.isOnSale && product.salePrice !== null
       ? product.salePrice
       : product.price;
+
+  const { addToCart } = useContext(CartContext)!;
 
   return (
     <article className="product-card">
@@ -32,7 +36,9 @@ function ProductCard({ product }: ProductCardProps) {
       <h2 className="product-card__title">{product.title}</h2>
 
       <div className="product-card__bottom">
-        <PrimaryButton>ADD TO CART</PrimaryButton>
+        <PrimaryButton onClick={() => addToCart(product)}>
+          ADD TO CART
+        </PrimaryButton>
 
         <span className="product-card__price">${displayPrice.toFixed(2)}</span>
       </div>

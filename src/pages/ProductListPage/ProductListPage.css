@@ -28,7 +28,6 @@
   justify-self: end;
   width: 200px;
   min-height: 40px;
-  border: 1px dashed var(--color-pink);
   display: flex;
   align-items: center;
   justify-content: center;

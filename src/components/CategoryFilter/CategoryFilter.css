@@ -1,0 +1,18 @@
+.category-filter-title {
+  margin: 0 0 6px;
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 1.2rem;
+  color: var(--color-black);
+}
+
+.category-filter.MuiInput-root {
+  background-color: white;
+  color: var(--color-black);
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 4px 8px;
+}
+
+.category-filter.MuiInput-root:hover {
+  background-color: var(--color-light-pink);
+}

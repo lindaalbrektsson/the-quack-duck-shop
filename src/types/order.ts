@@ -8,7 +8,7 @@ export interface Order {
     id: string;
     orderNumber: string;
     customerName: string;
-    customerAdress: string;
+    customerAddress: string;
     shippingMethod: string;
     paymentMethod: string;
     createdAt: string;

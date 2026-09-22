@@ -18,3 +18,7 @@ export interface Product {
     stock: number;
     rating: number;
 }
+
+export interface CartItem extends Product {
+  quantity: number;
+}

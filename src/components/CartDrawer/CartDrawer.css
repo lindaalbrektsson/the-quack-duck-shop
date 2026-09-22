@@ -1,0 +1,21 @@
+.cart-drawer {
+  width: 35vw;
+  max-width: 500px;
+  min-width: 350px;
+  min-height: 100%;
+  padding: 2rem;
+  background-color: var(--color-light-green);
+}
+
+.cart-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .cart-drawer {
+    width: 100vw;
+    min-width: 0;
+  }
+}

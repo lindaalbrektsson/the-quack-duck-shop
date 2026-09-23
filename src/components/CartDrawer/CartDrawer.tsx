@@ -32,6 +32,40 @@ const exampleItems: CartItem[] = [
     rating: 3,
     quantity: 1,
   },
+  {
+    id: "duck-002",
+    title: "Bat Duck",
+    description: "The bathtub needs a hero.",
+    price: 16.99,
+    categories: ["mostPopular"],
+    isOnSale: false,
+    isLimitedEdition: false,
+    salePrice: null,
+    images: {
+      main: "/ducks/batduck.png",
+      secondary: "/ducks/batduck2.png",
+    },
+    stock: 15,
+    rating: 5,
+    quantity: 1,
+  },
+  {
+    id: "duck-003",
+    title: "Beer Duck",
+    description: "Clock out and float away.",
+    price: 12.99,
+    categories: [],
+    isOnSale: false,
+    isLimitedEdition: false,
+    salePrice: null,
+    images: {
+      main: "/ducks/beerduck.png",
+      secondary: "/ducks/beerduck2.png",
+    },
+    stock: 12,
+    rating: 2,
+    quantity: 1,
+  },
 ];
 
 function CartDrawer({ open, onClose }: CartDrawerProps) {
@@ -54,6 +88,14 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
     setItems((currentItems) => currentItems.filter((item) => item.id !== id));
   };
 
+  // Add up all product totals, including sale prices.
+  const totalPrice = items.reduce((total, item) => {
+    const price =
+      item.isOnSale && item.salePrice !== null ? item.salePrice : item.price;
+
+    return total + price * item.quantity;
+  }, 0);
+
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <div className="cart-drawer">
@@ -70,6 +112,8 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
           onRemove={removeItem}
         />
         {items.length > 0 && (
+          <div className="cart-drawer__total">
+            <p>Total: ${totalPrice.toFixed(2)}</p>
           <PrimaryButton
             onClick={() => {
               navigate("/checkout");
@@ -78,6 +122,7 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
           >
             GO TO CHECKOUT
           </PrimaryButton>
+          </div>
         )}
       </div>
     </Drawer>

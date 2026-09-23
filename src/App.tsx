@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import CustomerInfoForm from "./components/CustomerInfoForm/CustomerInfoForm";
-import CheckoutPage from "./pages/CheckoutPage/Checkoutpage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
 import "./App.css";
 import AppLayout from "./components/AppLayout";

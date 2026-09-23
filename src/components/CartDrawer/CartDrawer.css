@@ -5,12 +5,22 @@
   min-height: 100%;
   padding: 2rem;
   background-color: var(--color-light-green);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .cart-drawer__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.cart-drawer__total {
+  margin-top: auto;
+  padding-top: 2rem;
+  text-align: right;
+  font-weight: bold;
 }
 
 @media (max-width: 600px) {

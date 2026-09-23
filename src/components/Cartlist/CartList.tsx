@@ -3,6 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import type { CartItem } from "../../types/product";
 import DeleteIcon from "@mui/icons-material/Delete";
+import "./CartList.css";
 
 type CartListProps = {
   items: CartItem[];
@@ -17,10 +18,11 @@ function CartList({ items, onQuantityChange, onRemove, readOnly = false }: CartL
   }
 
   return (
-    <ul> 
+    <ul className="cart-list"> 
       {items.map((item) => (
-        <li key={item.id}>
+        <li key={item.id} className="cart-list__item">
           <img src={item.images.main} alt={item.title} width={80} />
+          <div className="cart-list__info">
           <p>{item.title}</p>
           {/* Use the sale price when the product is on sale. */}
           <p>
@@ -30,11 +32,12 @@ function CartList({ items, onQuantityChange, onRemove, readOnly = false }: CartL
               : item.price
             ).toFixed(2)}
           </p>
+          </div>
           {/* Hide quantity controls in read-only mode. */}
           {readOnly ? (
             <p>Quantity: {item.quantity}</p>
           ) : (
-            <div>
+            <div className="cart-list__quantity">
               <IconButton
                 aria-label={`Decrease quantity of ${item.title}`}
                 disabled={item.quantity <= 1}

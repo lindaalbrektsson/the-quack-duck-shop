@@ -2,7 +2,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import "./CartDrawer.css";
-import CartList from "../Cartlist/Cartlist";
+import CartList from "../Cartlist/CartList";
 import type { CartItem } from "../../types/product";
 
 interface CartDrawerProps {

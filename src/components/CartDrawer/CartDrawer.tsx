@@ -46,6 +46,10 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
     );
   };
 
+  const removeItem = (id: string) => {
+    setItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  }
+
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <div className="cart-drawer">
@@ -56,7 +60,7 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
             <CloseIcon />
           </IconButton>
         </div>
-        <CartList items={items} onQuantityChange={changeQuantity} />
+        <CartList items={items} onQuantityChange={changeQuantity} onRemove={removeItem} />
       </div>
     </Drawer>
   );

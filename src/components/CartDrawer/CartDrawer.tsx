@@ -28,7 +28,7 @@ const exampleItems: CartItem[] = [
     },
     stock: 10,
     rating: 3,
-    quantity: 2,
+    quantity: 1,
   },
 ];
 

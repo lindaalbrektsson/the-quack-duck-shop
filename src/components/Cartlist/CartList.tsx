@@ -8,11 +8,16 @@ type CartListProps = {
   items: CartItem[];
   onQuantityChange?: (id: string, change: number) => void;
   onRemove?: (id: string) => void;
+  readOnly?: boolean;
 };
 
-function CartList({ items, onQuantityChange, onRemove }: CartListProps) {
+function CartList({ items, onQuantityChange, onRemove, readOnly = false }: CartListProps) {
+  if (items.length === 0) {
+    return <p>Your cart is empty.</p>;
+  }
+
   return (
-    <ul>
+    <ul> 
       {items.map((item) => (
         <li key={item.id}>
           <img src={item.images.main} alt={item.title} width={80} />
@@ -25,24 +30,29 @@ function CartList({ items, onQuantityChange, onRemove }: CartListProps) {
               : item.price
             ).toFixed(2)}
           </p>
-          <div>
-            <IconButton
-              aria-label={`Decrease quantity of ${item.title}`}
-              disabled={item.quantity <= 1}
-              onClick={() => onQuantityChange?.(item.id, -1)}
-            >
-              <RemoveIcon />
-            </IconButton>
+          {/* Hide quantity controls in read-only mode. */}
+          {readOnly ? (
+            <p>Quantity: {item.quantity}</p>
+          ) : (
+            <div>
+              <IconButton
+                aria-label={`Decrease quantity of ${item.title}`}
+                disabled={item.quantity <= 1}
+                onClick={() => onQuantityChange?.(item.id, -1)}
+              >
+                <RemoveIcon />
+              </IconButton>
 
-            <span>{item.quantity}</span>
+              <span>{item.quantity}</span>
 
-            <IconButton
-              aria-label={`Increase quantity of ${item.title}`}
-              onClick={() => onQuantityChange?.(item.id, 1)}
-            >
-              <AddIcon />
-            </IconButton>
-          </div>
+              <IconButton
+                aria-label={`Increase quantity of ${item.title}`}
+                onClick={() => onQuantityChange?.(item.id, 1)}
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
+          )}
           <p>
             Total: $
             {(
@@ -51,12 +61,14 @@ function CartList({ items, onQuantityChange, onRemove }: CartListProps) {
                 : item.price) * item.quantity
             ).toFixed(2)}
           </p>
-          <IconButton
-            aria-label={`Remove ${item.title} from cart`}
-            onClick={() => onRemove?.(item.id)}
-          >
-            <DeleteIcon />
-          </IconButton>
+          {!readOnly && (
+            <IconButton
+              aria-label={`Remove ${item.title} from cart`}
+              onClick={() => onRemove?.(item.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
         </li>
       ))}
     </ul>

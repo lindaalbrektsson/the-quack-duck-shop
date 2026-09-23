@@ -5,6 +5,8 @@ import "./CartDrawer.css";
 import CartList from "../Cartlist/CartList";
 import type { CartItem } from "../../types/product";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 interface CartDrawerProps {
   open: boolean;
@@ -33,6 +35,8 @@ const exampleItems: CartItem[] = [
 ];
 
 function CartDrawer({ open, onClose }: CartDrawerProps) {
+  const navigate = useNavigate();
+
   // Keep example items in local state until CartContext handles updates.
   const [items, setItems] = useState<CartItem[]>(exampleItems);
 
@@ -48,7 +52,7 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
 
   const removeItem = (id: string) => {
     setItems((currentItems) => currentItems.filter((item) => item.id !== id));
-  }
+  };
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
@@ -60,7 +64,21 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
             <CloseIcon />
           </IconButton>
         </div>
-        <CartList items={items} onQuantityChange={changeQuantity} onRemove={removeItem} />
+        <CartList
+          items={items}
+          onQuantityChange={changeQuantity}
+          onRemove={removeItem}
+        />
+        {items.length > 0 && (
+          <PrimaryButton
+            onClick={() => {
+              navigate("/checkout");
+              onClose();
+            }}
+          >
+            GO TO CHECKOUT
+          </PrimaryButton>
+        )}
       </div>
     </Drawer>
   );

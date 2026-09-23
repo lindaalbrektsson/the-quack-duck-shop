@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import CustomerInfoForm from "./components/CustomerInfoForm/CustomerInfoForm";
+import CheckoutPage from "./pages/CheckoutPage/Checkoutpage";
 
 import "./App.css";
 import AppLayout from "./components/AppLayout";
@@ -12,6 +13,7 @@ const App = () => {
       <Route element={<AppLayout />}>
         <Route path="/" element={<ProductListPage />} />
         <Route path="/products/:id" element={<ProductDetailsPage/>}/>
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route
           path="/customer-info"
           element={

@@ -1,0 +1,17 @@
+
+
+
+
+#main-img {
+    max-width: 500px;
+    max-height: 500px;
+    background-color: rgba(189, 111, 249, 0.46);
+    border: 2px solid black;
+}
+
+#second-img {
+    max-width: 200px;
+    max-height: 200px;
+    background-color: rgba(189, 111, 249, 0.46);
+    border: 2px solid black;
+}

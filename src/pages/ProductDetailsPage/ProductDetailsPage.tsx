@@ -25,14 +25,14 @@ const ProductDetailsPage = () => {
     }
 
     return (
-        <>
+        <div style={{display: "flex"}}>
         <div>
             <ProductInfo product={product}/>
         </div>
-        <div>
+        <div style={{marginLeft:"10%"}}>
             <ProductGallery product={product}/>
         </div>
-        </>
+        </div>
     )
 }
 

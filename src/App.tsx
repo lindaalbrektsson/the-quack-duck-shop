@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import CustomerInfoForm from "./components/CustomerInfoForm/CustomerInfoForm";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+
 import ShippingForm from "./components/ShippingForm/ShippingForm";
 import "./App.css";
 import AppLayout from "./components/AppLayout";
@@ -11,9 +13,8 @@ const App = () => {
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<ProductListPage />} />
-
-        <Route path="/products/:id" element={<ProductDetailsPage />} />
-
+        <Route path="/products/:id" element={<ProductDetailsPage/>}/>
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route
           path="/customer-info"
           element={

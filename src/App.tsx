@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CustomerInfoForm from "./components/CustomerInfoForm/CustomerInfoForm";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 
+import ShippingForm from "./components/ShippingForm/ShippingForm";
 import "./App.css";
 import AppLayout from "./components/AppLayout";
 import ProductListPage from "./pages/ProductListPage/ProductListPage";
@@ -19,6 +20,15 @@ const App = () => {
           element={
             <CustomerInfoForm
               onContinue={(data) => console.log("Customer information:", data)}
+            />
+          }
+        />
+
+        <Route
+          path="/shipping"
+          element={
+            <ShippingForm
+              onContinue={(data) => console.log("Shipping information:", data)}
             />
           }
         />

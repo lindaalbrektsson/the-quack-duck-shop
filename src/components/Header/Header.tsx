@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartDrawer from "../CartDrawer/CartDrawer";
+import { Link } from "react-router-dom";
 
 function Header() {
   const { totalQuantity } = useContext(CartContext)!;
@@ -14,7 +15,9 @@ function Header() {
   return (
     <header className="header">
       <div className="header-content">
-        <img className="logo" src={logo} alt="The Quack Duck Shop" />
+        <Link to="/">
+          <img className="logo" src={logo} alt="The Quack Duck Shop" />
+        </Link>
 
         <IconButton
           className="cart-button"

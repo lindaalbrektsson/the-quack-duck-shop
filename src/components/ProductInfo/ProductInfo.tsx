@@ -26,8 +26,8 @@ const ProductInfo = ({ product }: Props) => {
         <Rating value={product.rating} readOnly />
         <p>THROWABILITY RATING</p>
       </div>
-      <div id="discription-container">
-        <p id="discription-text">{product.description}</p>
+      <div id="description-container">
+        <p id="description-text">{product.description}</p>
         <p>STOCK STATUS</p> {/*Hard coded stock status for know*/}
       </div>
       <div id="price-container">

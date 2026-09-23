@@ -1,10 +1,14 @@
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import type { CartItem } from "../../types/product";
 
 type CartListProps = {
   items: CartItem[];
+  onQuantityChange?: (id: string, change: number) => void;
 };
 
-function CartList({ items }: CartListProps) {
+function CartList({ items, onQuantityChange }: CartListProps) {
   return (
     <ul>
       {items.map((item) => (
@@ -19,7 +23,24 @@ function CartList({ items }: CartListProps) {
               : item.price
             ).toFixed(2)}
           </p>
-          <p>Quantity: {item.quantity}</p>
+          <div>
+            <IconButton
+              aria-label={`Decrease quantity of ${item.title}`}
+              disabled={item.quantity <= 1}
+              onClick={() => onQuantityChange?.(item.id, -1)}
+            >
+              <RemoveIcon />
+            </IconButton>
+
+            <span>{item.quantity}</span>
+
+            <IconButton
+              aria-label={`Increase quantity of ${item.title}`}
+              onClick={() => onQuantityChange?.(item.id, 1)}
+            >
+              <AddIcon />
+            </IconButton>
+          </div>
           <p>
             Total: $
             {(

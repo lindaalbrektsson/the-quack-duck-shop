@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import "./CartDrawer.css";
 import CartList from "../Cartlist/CartList";
 import type { CartItem } from "../../types/product";
+import { useState } from "react";
 
 interface CartDrawerProps {
   open: boolean;
@@ -32,6 +33,19 @@ const exampleItems: CartItem[] = [
 ];
 
 function CartDrawer({ open, onClose }: CartDrawerProps) {
+  // Keep example items in local state until CartContext handles updates.
+  const [items, setItems] = useState<CartItem[]>(exampleItems);
+
+  const changeQuantity = (id: string, change: number) => {
+    setItems((currentItems) =>
+      currentItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + change) }
+          : item,
+      ),
+    );
+  };
+
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <div className="cart-drawer">
@@ -42,7 +56,7 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
             <CloseIcon />
           </IconButton>
         </div>
-        <CartList items={exampleItems} />
+        <CartList items={items} onQuantityChange={changeQuantity} />
       </div>
     </Drawer>
   );

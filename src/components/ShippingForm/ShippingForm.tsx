@@ -5,7 +5,11 @@ import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import "./ShippingForm.css";
 
 const shippingSchema = z.object({
-  shippingMethod: z.string().min(1, "Select a shipping method"),
+  shippingMethod: z
+    .string({
+      error: "Please select a shipping method.",
+    })
+    .min(1, "Please select a shipping method."),
 });
 
 type ShippingFormValues = z.infer<typeof shippingSchema>;

@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import "./ShippingForm.css";
+import PrimaryButton from "../../PrimaryButton/PrimaryButton";
+import "../CheckoutForms.css";
 
 const shippingSchema = z.object({
   shippingMethod: z
@@ -21,6 +21,7 @@ export type ShippingFormData = {
 
 type ShippingFormProps = {
   onContinue: (data: ShippingFormData) => void;
+  onShippingChange: (shippingCost: number) => void;
 };
 
 const shippingCosts = {
@@ -29,7 +30,7 @@ const shippingCosts = {
   BudBee: 5.99,
 };
 
-const ShippingForm = ({ onContinue }: ShippingFormProps) => {
+const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
   const {
     register,
     handleSubmit,
@@ -37,6 +38,14 @@ const ShippingForm = ({ onContinue }: ShippingFormProps) => {
   } = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingSchema),
   });
+
+  const handleShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const shippingMethod = event.target.value;
+    const shippingCost =
+      shippingCosts[shippingMethod as keyof typeof shippingCosts];
+
+    onShippingChange(shippingCost);
+  };
 
   const onSubmit = (data: ShippingFormValues) => {
     const shippingCost =
@@ -49,11 +58,16 @@ const ShippingForm = ({ onContinue }: ShippingFormProps) => {
   };
 
   return (
-    <form className="shipping-form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="checkout-form" onSubmit={handleSubmit(onSubmit)}>
       <h2>Select Shipping</h2>
 
       <label className="shipping-option">
-        <input type="radio" value="PostNord" {...register("shippingMethod")} />
+        <input
+          type="radio"
+          value="PostNord"
+          {...register("shippingMethod")}
+          onChange={handleShippingChange}
+        />
         <img
           className="shipping-logo"
           src="/shipping/postnord-logo.png"
@@ -66,9 +80,13 @@ const ShippingForm = ({ onContinue }: ShippingFormProps) => {
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="DHL" {...register("shippingMethod")} />
+        <input
+          type="radio"
+          value="DHL"
+          {...register("shippingMethod")}
+          onChange={handleShippingChange}
+        />
         <img className="shipping-logo" src="/shipping/dhl-logo.png" alt="DHL" />
-
         <div className="shipping-details">
           <span>4.99</span>
           <span>1-2 days delivery.</span>
@@ -76,13 +94,17 @@ const ShippingForm = ({ onContinue }: ShippingFormProps) => {
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="BudBee" {...register("shippingMethod")} />
+        <input
+          type="radio"
+          value="BudBee"
+          {...register("shippingMethod")}
+          onChange={handleShippingChange}
+        />
         <img
           className="shipping-logo"
           src="/shipping/budbee-logo.png"
           alt="BudBee"
         />
-
         <div className="shipping-details">
           <span>5.99</span>
           <span>1 day delivery.</span>

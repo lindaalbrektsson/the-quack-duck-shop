@@ -12,30 +12,37 @@ type CartListProps = {
   readOnly?: boolean;
 };
 
-function CartList({ items, onQuantityChange, onRemove, readOnly = false }: CartListProps) {
+function CartList({
+  items,
+  onQuantityChange,
+  onRemove,
+  readOnly = false,
+}: CartListProps) {
   if (items.length === 0) {
     return <p>Your cart is empty.</p>;
   }
 
   return (
-    <ul className="cart-list"> 
+    <ul className="cart-list">
       {items.map((item) => (
         <li key={item.id} className="cart-list__item">
           <img src={item.images.main} alt={item.title} width={80} />
           <div className="cart-list__info">
-          <p>{item.title}</p>
-          {/* Use the sale price when the product is on sale. */}
-          <p>
-            Price: $
-            {(item.isOnSale && item.salePrice !== null
-              ? item.salePrice
-              : item.price
-            ).toFixed(2)}
-          </p>
+            <p>{item.title}</p>
+            {/* Use the sale price when the product is on sale. */}
+            <p>
+              Price: $
+              {(item.isOnSale && item.salePrice !== null
+                ? item.salePrice
+                : item.price
+              ).toFixed(2)}
+            </p>
           </div>
           {/* Hide quantity controls in read-only mode. */}
           {readOnly ? (
-            <p>Quantity: {item.quantity}</p>
+            <p className="cart-list__readonly-quantity">
+              Quantity: {item.quantity}
+            </p>
           ) : (
             <div className="cart-list__quantity">
               <IconButton

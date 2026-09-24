@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import PrimaryButton from "../../PrimaryButton/PrimaryButton";
+import "../CheckoutForms.css";
 
 // Check that name and address are filled in.
 const customerSchema = z.object({
@@ -31,23 +32,36 @@ const CustomerInfoForm = ({ onContinue }: CustomerInfoFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="checkout-form" onSubmit={handleSubmit(onSubmit)}>
       <h2>Customer Information</h2>
-      <label htmlFor="customerName">Full Name</label>
-      <input id="customerName" type="text" {...register("customerName")} />
-      {/* Show an error if the name is too short. */}
-      {errors.customerName && <p role="alert">{errors.customerName.message}</p>}
-      <label htmlFor="customerAddress">Address</label>
-      <input
-        id="customerAddress"
-        type="text"
-        {...register("customerAddress")}
-      />
-      {/* Show an error if the address is too short. */}
-      {errors.customerAddress && (
-        <p role="alert">{errors.customerAddress.message}</p>
+
+      <div className="checkout-form__field">
+        <label htmlFor="customerName">Full Name</label>
+        <input id="customerName" type="text" {...register("customerName")} />
+      </div>
+
+      {errors.customerName && (
+        <p className="checkout-form__error" role="alert">
+          {errors.customerName.message}
+        </p>
       )}
-      <PrimaryButton type="submit">Continue</PrimaryButton>
+
+      <div className="checkout-form__field">
+        <label htmlFor="customerAddress">Address</label>
+        <input
+          id="customerAddress"
+          type="text"
+          {...register("customerAddress")}
+        />
+      </div>
+
+      {errors.customerAddress && (
+        <p className="checkout-form__error" role="alert">
+          {errors.customerAddress.message}
+        </p>
+      )}
+
+      <PrimaryButton type="submit">Continue to shipping details</PrimaryButton>
     </form>
   );
 };

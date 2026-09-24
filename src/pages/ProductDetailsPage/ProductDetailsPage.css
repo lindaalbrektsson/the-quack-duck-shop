@@ -1,0 +1,14 @@
+.return-to-shop {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-light-pink);
+  color: var(--color-black);
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.return-to-shop:hover {
+  background-color: var(--color-pink);
+}

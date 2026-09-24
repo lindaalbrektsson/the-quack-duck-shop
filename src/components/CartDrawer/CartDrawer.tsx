@@ -37,14 +37,14 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
         {cartItems.length > 0 && (
           <div className="cart-drawer__total">
             <p>Total: ${totalPrice.toFixed(2)}</p>
-          <PrimaryButton
-            onClick={() => {
-              navigate("/checkout");
-              onClose();
-            }}
-          >
-            GO TO CHECKOUT
-          </PrimaryButton>
+            <PrimaryButton
+              onClick={() => {
+                navigate("/checkout");
+                onClose();
+              }}
+            >
+              GO TO CHECKOUT
+            </PrimaryButton>
           </div>
         )}
       </div>

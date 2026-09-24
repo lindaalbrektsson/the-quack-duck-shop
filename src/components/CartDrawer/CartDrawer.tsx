@@ -2,7 +2,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import "./CartDrawer.css";
-import CartList from "../Cartlist/CartList";
+import CartList from "../CartList/CartList";
 import type { CartItem } from "../../types/product";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -114,14 +114,14 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
         {items.length > 0 && (
           <div className="cart-drawer__total">
             <p>Total: ${totalPrice.toFixed(2)}</p>
-          <PrimaryButton
-            onClick={() => {
-              navigate("/checkout");
-              onClose();
-            }}
-          >
-            GO TO CHECKOUT
-          </PrimaryButton>
+            <PrimaryButton
+              onClick={() => {
+                navigate("/checkout");
+                onClose();
+              }}
+            >
+              GO TO CHECKOUT
+            </PrimaryButton>
           </div>
         )}
       </div>

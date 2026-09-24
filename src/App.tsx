@@ -7,9 +7,11 @@ import "./App.css";
 import AppLayout from "./components/AppLayout";
 import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
+import { CartProvider } from "./context/CartContext";
 
 const App = () => {
   return (
+    <CartProvider>
     <Routes>
       <Route element={<AppLayout />}>
         <Route path="/" element={<ProductListPage />} />
@@ -34,6 +36,8 @@ const App = () => {
         />
       </Route>
     </Routes>
+
+    </CartProvider>
   );
 };
 

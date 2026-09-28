@@ -1,4 +1,5 @@
 import Chip from "@mui/material/Chip";
+import { Link } from "react-router-dom";
 
 import type { Category } from "../../types/product";
 
@@ -24,13 +25,14 @@ function CategoryBadges({ categories }: CategoryBadgesProps) {
   return (
     <div className="category-badges">
       {categories.map((category) => (
-        <Chip
-          key={category}
-          label={categoryLabels[category]}
-          size="small"
-          className="category-chip"
-          sx={{ backgroundColor: categoryColors[category] }}
-        />
+        <Link key={category} to={`/?category=${category}`}>
+          <Chip
+            label={categoryLabels[category]}
+            size="small"
+            className="category-chip"
+            sx={{ backgroundColor: categoryColors[category] }}
+          />
+        </Link>
       ))}
     </div>
   );

@@ -44,3 +44,7 @@
   align-items: center;
   gap: 0.25rem;
 }
+
+.product-card__sale-price {
+  color: var(--color-sale);
+}

@@ -36,17 +36,22 @@ function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <h2 className="product-card__title">{product.title}</h2>
-
       </Link>
-        <div className="product-card__bottom">
-          <PrimaryButton onClick={() => addToCart(product)}>
-            ADD TO CART
-          </PrimaryButton>
+      <div className="product-card__bottom">
+        <PrimaryButton onClick={() => addToCart(product)}>
+          ADD TO CART
+        </PrimaryButton>
 
-          <span className="product-card__price">
-            ${displayPrice.toFixed(2)}
-          </span>
-        </div>
+        <span
+          className={
+            product.isOnSale && product.salePrice !== null
+              ? "product-card__price product-card__sale-price"
+              : "product-card__price"
+          }
+        >
+          ${displayPrice.toFixed(2)}
+        </span>
+      </div>
     </article>
   );
 }

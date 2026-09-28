@@ -5,10 +5,12 @@ import CustomerInfoForm from "../../components/forms/CustomerInfoForm/CustomerIn
 import ShippingForm, {
   type ShippingFormData,
 } from "../../components/forms/ShippingForm/ShippingForm";
+import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
 import type { CartItem } from "../../types/product";
 // TODO: Add when PaymentForm has been created.
 // import PaymentForm from "../../components/forms/PaymentForm/PaymentForm";
 import "./CheckoutPage.css";
+import PaymentMethodForm from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
 
 // Temporary cart data until CartContext is connected.
 // Copying the existing exampleItems from CartDrawer.
@@ -99,6 +101,12 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
+  const handlePaymentContinue = (data: PaymentMethodFormData) => {
+    //Console.log here now for this step in production. 
+    //this should store the selected payment.
+    console.log(data)
+  }
+
   const totalPrice = items.reduce((total, item) => {
     const price =
       item.isOnSale && item.salePrice !== null ? item.salePrice : item.price;
@@ -136,7 +144,8 @@ function CheckoutPage() {
           )}
           {/* TODO: Replace this with PaymentForm when it has been created.
           Also add the PaymentForm import at the top of this file. */}
-          {checkoutStep === "payment" && <p>Payment form coming soon.</p>}
+          {checkoutStep === "payment" && 
+          <PaymentMethodForm onContinue={handlePaymentContinue}/>}
         </div>
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>

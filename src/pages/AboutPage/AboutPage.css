@@ -1,0 +1,38 @@
+.about-page h1 {
+  font-family: "Bubblegum Sans", sans-serif;
+  text-align: center;
+}
+
+.about-page > p {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-page__team {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.about-page__member {
+  flex: 1 1 250px;
+  padding: 1.5rem;
+  background-color: var(--color-light-green);
+  border-radius: 8px;
+}
+
+.about-page__member h2 {
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 1.2rem;
+}
+
+.about-page__member p {
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.about-page__image {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}

@@ -2,7 +2,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import "./CartDrawer.css";
-import CartList from "../Cartlist/CartList";
+import CartList from "../CartList/CartList";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
@@ -13,11 +13,11 @@ interface CartDrawerProps {
   onClose: () => void;
 }
 
-
 function CartDrawer({ open, onClose }: CartDrawerProps) {
   const navigate = useNavigate();
-  
-  const {changeQuantity, cartItems, removeItem, totalPrice} = useContext(CartContext)!;
+
+  const { changeQuantity, cartItems, removeItem, totalPrice } =
+    useContext(CartContext)!;
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>

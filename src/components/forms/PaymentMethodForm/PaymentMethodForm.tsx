@@ -14,11 +14,11 @@ const paymentMethodSchema = z.object({
 
 export type PaymentMethodFormData = z.infer<typeof paymentMethodSchema>
 
-type PaymentMEthodFormProps = {
+type PaymentMethodFormProps = {
     onContinue: (data: PaymentMethodFormData) => void;
 }
 
-const PaymentMethodForm = ({onContinue}: PaymentMEthodFormProps) => {
+const PaymentMethodForm = ({onContinue}: PaymentMethodFormProps) => {
     const {
         register,
         handleSubmit,
@@ -87,7 +87,7 @@ const PaymentMethodForm = ({onContinue}: PaymentMEthodFormProps) => {
       {errors.paymentMethod && (
         <p role= "alert">{errors.paymentMethod.message}</p>
       )}
-      <PrimaryButton type="submit">Contiune</PrimaryButton>
+      <PrimaryButton type="submit">Continue</PrimaryButton>
 </form>
         
     )

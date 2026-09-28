@@ -142,8 +142,7 @@ function CheckoutPage() {
               onShippingChange={setShippingCost}
             />
           )}
-          {/* TODO: Replace this with PaymentForm when it has been created.
-          Also add the PaymentForm import at the top of this file. */}
+
           {checkoutStep === "payment" && 
           <PaymentMethodForm onContinue={handlePaymentContinue}/>}
         </div>

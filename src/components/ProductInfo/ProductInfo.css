@@ -1,6 +1,3 @@
-
-
-
 #title-container {
     display: flex;
     align-items: center;
@@ -35,11 +32,25 @@
 }
 
 #price-container {
-    display: flex;
-    color:var(--color-light-pink);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-#price-container > h1 {
-    padding-left: 10px;
+.product-info__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  font-weight: bold;
 }
 
+.product-info__sale-price {
+  color: var(--color-sale);
+}
+
+.product-info__original-price {
+  color: var(--color-black);
+  font-size: 1rem;
+  font-weight: 600;
+}

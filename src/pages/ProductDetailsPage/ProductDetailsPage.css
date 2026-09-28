@@ -12,3 +12,11 @@
 .return-to-shop:hover {
   background-color: var(--color-pink);
 }
+
+.product-details {
+  display: flex;
+}
+
+.product-details__gallery {
+  margin-left: 10%;
+}

@@ -26,13 +26,15 @@ const ProductDetailsPage = () => {
 
   return (
     <>
-      <Link to="/" className="return-to-shop">← Return to Duck Shop</Link>
+      <Link to="/" className="return-to-shop">
+        ← Return to Duck Shop
+      </Link>
 
-      <div style={{ display: "flex" }}>
+      <div className="product-details">
         <div>
           <ProductInfo product={product} />
         </div>
-        <div style={{ marginLeft: "10%" }}>
+        <div className="product-details__gallery">
           <ProductGallery product={product} />
         </div>
       </div>

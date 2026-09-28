@@ -3,11 +3,19 @@ import "./ProductListPage.css";
 import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import type { Product, SelectedCategory } from "../../types/product";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/CategoryFilter/CategoryFilter";
 
-
 function ProductListPage() {
-  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>("all");
+  const [searchParams] = useSearchParams();
+
+  const categoryFromUrl = searchParams.get(
+    "category",
+  ) as SelectedCategory | null;
+
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>(
+    categoryFromUrl ?? "all",
+  );
 
   const { data: products = [] } = useQuery<Product[]>({
     queryKey: ["products"],
@@ -17,11 +25,13 @@ function ProductListPage() {
     },
   });
 
-  //filters the product list according to the selectedCategory state. If the state is on all, it just through the whole fetched list, if the state is something else it filters the list. 
-  const filteredProducts = 
+  //filters the product list according to the selectedCategory state. If the state is on all, it just through the whole fetched list, if the state is something else it filters the list.
+  const filteredProducts =
     selectedCategory === "all"
-    ? products
-    : products.filter((product) => product.categories.includes(selectedCategory));
+      ? products
+      : products.filter((product) =>
+          product.categories.includes(selectedCategory),
+        );
 
   return (
     <section className="product-list-page">
@@ -32,7 +42,10 @@ function ProductListPage() {
         </div>
 
         <div className="product-list-page__filter">
-          <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+          <CategoryFilter
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
         </div>
       </div>
 

@@ -32,21 +32,20 @@ function ProductCard({ product }: ProductCardProps) {
 
         <div className="product-card__info">
           <Rating value={product.rating} readOnly />
-          <CategoryBadges categories={product.categories} />
         </div>
 
         <h2 className="product-card__title">{product.title}</h2>
-
       </Link>
-        <div className="product-card__bottom">
-          <PrimaryButton onClick={() => addToCart(product)}>
-            ADD TO CART
-          </PrimaryButton>
 
-          <span className="product-card__price">
-            ${displayPrice.toFixed(2)}
-          </span>
-        </div>
+      <CategoryBadges categories={product.categories} />
+
+      <div className="product-card__bottom">
+        <PrimaryButton onClick={() => addToCart(product)}>
+          ADD TO CART
+        </PrimaryButton>
+
+        <span className="product-card__price">${displayPrice.toFixed(2)}</span>
+      </div>
     </article>
   );
 }

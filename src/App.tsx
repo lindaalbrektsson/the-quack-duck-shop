@@ -5,6 +5,7 @@ import AppLayout from "./components/AppLayout";
 import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
 import { CartProvider } from "./context/CartContext";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<ProductListPage />} />
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
     </Routes>
 

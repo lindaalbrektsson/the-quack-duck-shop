@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
@@ -8,7 +9,11 @@ function Footer() {
           <span className="copyright">©</span> DUCK TEAM F26D
         </p>
 
-        <p>ABOUT THE DUCK TEAM</p>
+        <p>
+          <Link to="/about" className="footer-link">
+            ABOUT THE DUCK TEAM
+          </Link>
+        </p>
 
         <p>CONTACT US</p>
       </div>

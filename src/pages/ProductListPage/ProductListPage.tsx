@@ -2,20 +2,25 @@ import { useQuery } from "@tanstack/react-query";
 import "./ProductListPage.css";
 import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import type { Product, SelectedCategory } from "../../types/product";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/CategoryFilter/CategoryFilter";
 
 function ProductListPage() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const categoryFromUrl = searchParams.get(
     "category",
   ) as SelectedCategory | null;
 
-  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>(
-    categoryFromUrl ?? "all",
-  );
+  const selectedCategory: SelectedCategory = categoryFromUrl ?? "all";
+
+  const setSelectedCategory = (category: SelectedCategory) => {
+    if (category === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category });
+    }
+  };
 
   const { data: products = [] } = useQuery<Product[]>({
     queryKey: ["products"],

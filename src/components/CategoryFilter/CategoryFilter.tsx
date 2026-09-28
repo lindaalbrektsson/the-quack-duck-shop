@@ -7,7 +7,7 @@ import "./CategoryFilter.css";
 
 type CategoryFilterProps = {
   selectedCategory: SelectedCategory;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<SelectedCategory>>;
+  setSelectedCategory: (category: SelectedCategory) => void;
 };
 
 const CategoryFilter = ({

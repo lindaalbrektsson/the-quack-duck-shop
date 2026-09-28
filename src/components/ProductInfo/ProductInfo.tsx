@@ -4,14 +4,14 @@ import Rating from "@mui/material/Rating";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import "./ProductInfo.css"
+import "./ProductInfo.css";
 
 type Props = {
   product: Product;
 };
 const ProductInfo = ({ product }: Props) => {
   const { addToCart } = useContext(CartContext)!;
-  
+
   const displayPrice =
     product.isOnSale && product.salePrice !== null
       ? product.salePrice
@@ -19,8 +19,8 @@ const ProductInfo = ({ product }: Props) => {
   return (
     <>
       <div id="title-container">
-      <h1>{product.title}</h1>
-        <CategoryBadges categories={product.categories}/>
+        <h1>{product.title}</h1>
+        <CategoryBadges categories={product.categories} />
       </div>
       <div id="rating-container">
         <Rating value={product.rating} readOnly />
@@ -34,7 +34,20 @@ const ProductInfo = ({ product }: Props) => {
         <PrimaryButton onClick={() => addToCart(product)}>
           ADD TO CART
         </PrimaryButton>
-        <h1>{`${displayPrice}$`}</h1>
+        <div className="product-info__price">
+          {product.isOnSale && product.salePrice !== null ? (
+            <>
+              <span className="product-info__sale-price">
+                ${displayPrice.toFixed(2)}
+              </span>
+              <s className="product-info__original-price">
+                ${product.price.toFixed(2)}
+              </s>
+            </>
+          ) : (
+            <span>${displayPrice.toFixed(2)}</span>
+          )}
+        </div>
       </div>
     </>
   );

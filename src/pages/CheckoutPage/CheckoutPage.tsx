@@ -1,96 +1,31 @@
 import { useState } from "react";
-
+import { useContext } from "react";
 import CartList from "../../components/CartList/CartList";
 import CustomerInfoForm from "../../components/forms/CustomerInfoForm/CustomerInfoForm";
 import ShippingForm, {
   type ShippingFormData,
 } from "../../components/forms/ShippingForm/ShippingForm";
 import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
-import type { CartItem } from "../../types/product";
-// TODO: Add when PaymentForm has been created.
-// import PaymentForm from "../../components/forms/PaymentForm/PaymentForm";
 import "./CheckoutPage.css";
 import PaymentMethodForm from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
+import { CartContext } from "../../context/CartContext";
 
-// Temporary cart data until CartContext is connected.
-// Copying the existing exampleItems from CartDrawer.
-const exampleItems: CartItem[] = [
-  {
-    id: "duck-001",
-    title: "Al Capone Duck",
-    description: "An example product",
-    price: 14.99,
-    categories: ["onSale"],
-    isOnSale: true,
-    isLimitedEdition: false,
-    salePrice: 9.99,
-    images: {
-      main: "/ducks/alcaponeduck.png",
-      secondary: "/ducks/alcaponeduck2.png",
-    },
-    stock: 10,
-    rating: 3,
-    quantity: 1,
-  },
-  {
-    id: "duck-002",
-    title: "Bat Duck",
-    description: "The bathtub needs a hero.",
-    price: 16.99,
-    categories: ["mostPopular"],
-    isOnSale: false,
-    isLimitedEdition: false,
-    salePrice: null,
-    images: {
-      main: "/ducks/batduck.png",
-      secondary: "/ducks/batduck2.png",
-    },
-    stock: 15,
-    rating: 5,
-    quantity: 1,
-  },
-  {
-    id: "duck-003",
-    title: "Beer Duck",
-    description: "Clock out and float away.",
-    price: 12.99,
-    categories: [],
-    isOnSale: false,
-    isLimitedEdition: false,
-    salePrice: null,
-    images: {
-      main: "/ducks/beerduck.png",
-      secondary: "/ducks/beerduck2.png",
-    },
-    stock: 12,
-    rating: 2,
-    quantity: 1,
-  },
-];
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
 
+  const {
+    changeQuantity, 
+    cartItems,  
+    removeItem, 
+    totalPrice } = useContext(CartContext)!;
+
   const [shippingCost, setShippingCost] = useState(0);
-
-  // TODO: Replace local items state with CartContext when it is connected.
-  const [items, setItems] = useState<CartItem[]>(exampleItems);
-
-  const changeQuantity = (id: string, change: number) => {
-    setItems((currentItems) =>
-      currentItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item,
-      ),
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setItems((currentItems) => currentItems.filter((item) => item.id !== id));
-  };
+  //state for the payment method. This is to store the selected method.
+  //The paymentMethod is red now. It isnt used anywere yet, but it is going to be used in the next issue when we build the order confirmation
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleCustomerContinue = () => {
     setCheckoutStep("shipping");
@@ -102,21 +37,13 @@ function CheckoutPage() {
   };
 
   const handlePaymentContinue = (data: PaymentMethodFormData) => {
-    //Console.log here now for this step in production. 
-    //this should store the selected payment.
-    console.log(data)
-  }
+    setPaymentMethod(data.paymentMethod);
+  };
 
-  const totalPrice = items.reduce((total, item) => {
-    const price =
-      item.isOnSale && item.salePrice !== null ? item.salePrice : item.price;
-
-    return total + price * item.quantity;
-  }, 0);
-
+  
   const orderTotal = totalPrice + shippingCost;
 
-  const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <section className="checkout-page">
@@ -127,7 +54,7 @@ function CheckoutPage() {
           {checkoutStep === "customer" && (
             <>
               <CartList
-                items={items}
+                items={cartItems}
                 onQuantityChange={changeQuantity}
                 onRemove={removeItem}
               />
@@ -154,7 +81,7 @@ function CheckoutPage() {
               <p>{totalQuantity} articles</p>
 
               <div className="checkout-page__summary-items">
-                {items.map((item) => {
+                {cartItems.map((item) => {
                   const itemPrice =
                     item.isOnSale && item.salePrice !== null
                       ? item.salePrice
@@ -173,7 +100,7 @@ function CheckoutPage() {
             </>
           )}
 
-          {checkoutStep !== "customer" && <CartList items={items} readOnly />}
+          {checkoutStep !== "customer" && <CartList items={cartItems} readOnly />}
 
           <div className="checkout-page__summary-total">
             <strong>Total:</strong>

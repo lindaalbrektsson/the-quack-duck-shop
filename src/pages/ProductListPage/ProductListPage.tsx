@@ -22,15 +22,33 @@ function ProductListPage() {
     }
   };
 
-  const { data: products = [] } = useQuery<Product[]>({
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+  } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: async () => {
       const response = await fetch("http://localhost:3000/products");
+
+      if (!response.ok) {
+        throw new Error("Failed to load products");
+      }
+
       return response.json();
     },
   });
 
-  //filters the product list according to the selectedCategory state. If the state is on all, it just through the whole fetched list, if the state is something else it filters the list.
+  if (isLoading) {
+    return <p>Getting the ducks in a row... 🐥</p>;
+  }
+
+  if (isError) {
+    return (
+      <p>Oh quack! We couldn't load the ducks. Please try again later. 🐥</p>
+    );
+  }
+
   const filteredProducts =
     selectedCategory === "all"
       ? products

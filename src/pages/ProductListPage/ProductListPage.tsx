@@ -44,9 +44,7 @@ function ProductListPage() {
   }
 
   if (isError) {
-    return (
-      <p>Oh quack! We couldn't load the ducks. Please try again later. 🐥</p>
-    );
+    return <p>Oh quack! We couldn't load the ducks. Please try again. 🐥</p>;
   }
 
   const filteredProducts =

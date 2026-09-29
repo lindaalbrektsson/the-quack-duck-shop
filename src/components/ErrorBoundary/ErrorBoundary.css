@@ -1,0 +1,37 @@
+.error-boundary {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-boundary h1 {
+  font-family: "Bubblegum Sans", sans-serif;
+}
+
+.error-boundary p {
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.error-boundary__link {
+  padding: 0.75rem 1rem;
+  background-color: var(--color-light-pink);
+  color: var(--color-black);
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.error-boundary__link:hover {
+  background-color: var(--color-pink);
+}
+
+.error-boundary__image {
+  width: 140px;
+  height: auto;
+  margin-bottom: 1rem;
+}

@@ -11,15 +11,14 @@ import { CartProvider } from "./context/CartContext";
 const App = () => {
   return (
     <CartProvider>
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<ProductListPage />} />
-        <Route path="/products/:id" element={<ProductDetailsPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Route>
-    </Routes>
-
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<ProductListPage />} />
+          <Route path="/products/:id" element={<ProductDetailsPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Route>
+      </Routes>
     </CartProvider>
   );
 };

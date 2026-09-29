@@ -8,20 +8,33 @@ import "./ProductDetailsPage.css";
 const ProductDetailsPage = () => {
   const { id } = useParams();
 
-  const { data: product, isLoading } = useQuery<Product>({
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useQuery<Product>({
     queryKey: ["product", id],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3000/products/${id}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to load product");
+      }
+
       return response.json();
     },
   });
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Just a quack... finding your duck! 🐥</p>;
+  }
+
+  if (isError) {
+    return <p>Oh quack! We couldn't load this duck. Please try again. 🐥</p>;
   }
 
   if (!product) {
-    return <p>Failed to load the product.</p>;
+    return <p>Oh quack! This duck seems to have waddled away. 🦆💨</p>;
   }
 
   return (

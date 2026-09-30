@@ -1,4 +1,4 @@
-import "../CheckoutForms.css";
+import "./CheckoutForms.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

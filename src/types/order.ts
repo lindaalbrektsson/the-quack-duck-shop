@@ -1,16 +1,18 @@
 export interface OrderItem {
-    productId: string;
-    quantity: number;
-    unitPrice: number;
+  productId: string;
+  quantity: number;
+  unitPrice: number;
 }
 
 export interface Order {
-    id: string;
-    orderNumber: string;
-    customerName: string;
-    customerAddress: string;
-    shippingMethod: string;
-    paymentMethod: string;
-    createdAt: string;
-    items: OrderItem[];
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerAddress: string;
+  shippingMethod: string;
+  paymentMethod: string;
+  createdAt: string;
+  items: OrderItem[];
 }
+
+export type CreateOrder = Omit<Order, "id">;

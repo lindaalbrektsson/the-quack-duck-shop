@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import "../CheckoutForms.css";
+import "./CheckoutForms.css";
 
 // Check that name and address are filled in.
 const customerSchema = z.object({

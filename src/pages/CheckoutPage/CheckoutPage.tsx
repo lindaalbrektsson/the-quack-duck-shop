@@ -11,6 +11,8 @@ import type { PaymentMethodFormData } from "../../components/forms/PaymentMethod
 import "./CheckoutPage.css";
 import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
+import { useMutation } from "@tanstack/react-query";
+import type { CreateOrder, Order } from "../../types/order";
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
@@ -29,9 +31,6 @@ function CheckoutPage() {
   );
 
   const [shippingCost, setShippingCost] = useState(0);
-  //state for the payment method. This is to store the selected method.
-  //The paymentMethod is red now. It isnt used anywere yet, but it is going to be used in the next issue when we build the order confirmation
-  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handleCustomerContinue = (data: CustomerFormData) => {
     setCustomerInfo(data);
@@ -45,12 +44,51 @@ function CheckoutPage() {
   };
 
   const handlePaymentContinue = (data: PaymentMethodFormData) => {
-    setPaymentMethod(data.paymentMethod);
+    if (!customerInfo || !shippingInfo) {
+      return;
+    }
+
+    const order: CreateOrder = {
+      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      customerName: customerInfo.customerName,
+      customerAddress: customerInfo.customerAddress,
+      shippingMethod: shippingInfo.shippingMethod,
+      paymentMethod: data.paymentMethod,
+      createdAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        unitPrice:
+          item.isOnSale && item.salePrice !== null
+            ? item.salePrice
+            : item.price,
+      })),
+    };
+
+    createOrderMutation.mutate(order);
   };
 
   const orderTotal = totalPrice + shippingCost;
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const createOrderMutation = useMutation<Order, Error, CreateOrder>({
+    mutationFn: async (order) => {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save order");
+      }
+
+      return response.json();
+    },
+  });
 
   return (
     <section className="checkout-page">

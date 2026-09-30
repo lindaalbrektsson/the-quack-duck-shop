@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import PrimaryButton from "../../PrimaryButton/PrimaryButton";
-import "../CheckoutForms.css";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import "./CheckoutForms.css";
 
 const shippingSchema = z.object({
   shippingMethod: z

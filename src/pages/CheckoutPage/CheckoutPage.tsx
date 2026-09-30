@@ -1,53 +1,99 @@
 import { useState } from "react";
 import { useContext } from "react";
 import CartList from "../../components/CartList/CartList";
-import CustomerInfoForm from "../../components/forms/CustomerInfoForm/CustomerInfoForm";
+import CustomerInfoForm, {
+  type CustomerFormData,
+} from "../../components/forms/CustomerInfoForm";
 import ShippingForm, {
   type ShippingFormData,
-} from "../../components/forms/ShippingForm/ShippingForm";
-import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
+} from "../../components/forms/ShippingForm";
+import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm";
 import "./CheckoutPage.css";
-import PaymentMethodForm from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
+import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
+import { useMutation } from "@tanstack/react-query";
+import type { CreateOrder, Order } from "../../types/order";
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const {
-    changeQuantity, 
-    cartItems,  
-    removeItem, 
-    totalPrice } = useContext(CartContext)!;
+  const { changeQuantity, cartItems, removeItem, totalPrice } =
+    useContext(CartContext)!;
+
+  const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
+    null,
+  );
+
+  const [shippingInfo, setShippingInfo] = useState<ShippingFormData | null>(
+    null,
+  );
 
     const navigate = useNavigate()
 
   const [shippingCost, setShippingCost] = useState(0);
-  //state for the payment method. This is to store the selected method.
-  //The paymentMethod is red now. It isnt used anywere yet, but it is going to be used in the next issue when we build the order confirmation
-  const [paymentMethod, setPaymentMethod] = useState("");
 
-  const handleCustomerContinue = () => {
+  const handleCustomerContinue = (data: CustomerFormData) => {
+    setCustomerInfo(data);
     setCheckoutStep("shipping");
   };
 
   const handleShippingContinue = (data: ShippingFormData) => {
+    setShippingInfo(data);
     setShippingCost(data.shippingCost);
     setCheckoutStep("payment");
   };
 
   const handlePaymentContinue = (data: PaymentMethodFormData) => {
-    setPaymentMethod(data.paymentMethod);
     navigate("/order-confirmation")
+    if (!customerInfo || !shippingInfo) {
+      return;
+    }
+
+    const order: CreateOrder = {
+      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      customerName: customerInfo.customerName,
+      customerAddress: customerInfo.customerAddress,
+      shippingMethod: shippingInfo.shippingMethod,
+      paymentMethod: data.paymentMethod,
+      createdAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        unitPrice:
+          item.isOnSale && item.salePrice !== null
+            ? item.salePrice
+            : item.price,
+      })),
+    };
+
+    createOrderMutation.mutate(order);
   };
 
-  
   const orderTotal = totalPrice + shippingCost;
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const createOrderMutation = useMutation<Order, Error, CreateOrder>({
+    mutationFn: async (order) => {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save order");
+      }
+
+      return response.json();
+    },
+  });
 
   return (
     <section className="checkout-page">
@@ -74,8 +120,9 @@ function CheckoutPage() {
             />
           )}
 
-          {checkoutStep === "payment" && 
-          <PaymentMethodForm onContinue={handlePaymentContinue}/>}
+          {checkoutStep === "payment" && (
+            <PaymentMethodForm onContinue={handlePaymentContinue} />
+          )}
         </div>
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>
@@ -104,7 +151,9 @@ function CheckoutPage() {
             </>
           )}
 
-          {checkoutStep !== "customer" && <CartList items={cartItems} readOnly />}
+          {checkoutStep !== "customer" && (
+            <CartList items={cartItems} readOnly />
+          )}
 
           <div className="checkout-page__summary-total">
             <strong>Total:</strong>

@@ -9,6 +9,7 @@ import type { PaymentMethodFormData } from "../../components/forms/PaymentMethod
 import "./CheckoutPage.css";
 import PaymentMethodForm from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 
 function CheckoutPage() {
@@ -21,6 +22,8 @@ function CheckoutPage() {
     cartItems,  
     removeItem, 
     totalPrice } = useContext(CartContext)!;
+
+    const navigate = useNavigate()
 
   const [shippingCost, setShippingCost] = useState(0);
   //state for the payment method. This is to store the selected method.
@@ -38,6 +41,7 @@ function CheckoutPage() {
 
   const handlePaymentContinue = (data: PaymentMethodFormData) => {
     setPaymentMethod(data.paymentMethod);
+    navigate("/order-confirmation")
   };
 
   

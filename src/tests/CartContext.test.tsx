@@ -55,7 +55,6 @@ function TestCart() {
 
 describe("Cart", () => {
   it("adds the same product to one row and increases the quantity", async () => {
-
     // Arrange
     const user = userEvent.setup();
 
@@ -64,7 +63,7 @@ describe("Cart", () => {
         <CartProvider>
           <TestCart />
         </CartProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     // Act
@@ -74,12 +73,46 @@ describe("Cart", () => {
     await user.click(addButton);
 
     // Assert
-    const cart = within(
-      screen.getByRole("region", { name: "Shopping cart" })
-    );
+    const cart = within(screen.getByRole("region", { name: "Shopping cart" }));
 
     expect(cart.getAllByRole("listitem")).toHaveLength(1);
     expect(cart.getByText("2")).toBeInTheDocument();
     expect(cart.getByText("Cart total: $20.00")).toBeInTheDocument();
+  });
+
+  it("updates quantity and total when clicking plus and minus", async () => {
+    
+    // Arrange
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <CartProvider>
+          <TestCart />
+        </CartProvider>
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByRole("button", { name: /add to cart/i }));
+
+    const cart = within(screen.getByRole("region", { name: "Shopping cart" }));
+
+    // Act: increase the quantity.
+    await user.click(
+      cart.getByRole("button", { name: "Increase quantity of Test Duck" }),
+    );
+
+    // Assert
+    expect(cart.getByText("2")).toBeInTheDocument();
+    expect(cart.getByText("Cart total: $20.00")).toBeInTheDocument();
+
+    // Act: decrease the quantity.
+    await user.click(
+      cart.getByRole("button", { name: "Decrease quantity of Test Duck" }),
+    );
+
+    // Assert
+    expect(cart.getByText("1")).toBeInTheDocument();
+    expect(cart.getByText("Cart total: $10.00")).toBeInTheDocument();
   });
 });

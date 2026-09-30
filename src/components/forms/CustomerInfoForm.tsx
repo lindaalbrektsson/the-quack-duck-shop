@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import PrimaryButton from "../../PrimaryButton/PrimaryButton";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import "../CheckoutForms.css";
 
 // Check that name and address are filled in.
@@ -11,7 +11,7 @@ const customerSchema = z.object({
 });
 
 // Get the form type from the schema.
-type CustomerFormData = z.infer<typeof customerSchema>;
+export type CustomerFormData = z.infer<typeof customerSchema>;
 type CustomerInfoFormProps = {
   onContinue: (data: CustomerFormData) => void;
 };

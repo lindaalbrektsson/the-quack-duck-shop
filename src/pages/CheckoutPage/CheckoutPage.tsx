@@ -1,37 +1,45 @@
 import { useState } from "react";
 import { useContext } from "react";
 import CartList from "../../components/CartList/CartList";
-import CustomerInfoForm from "../../components/forms/CustomerInfoForm/CustomerInfoForm";
+import CustomerInfoForm, {
+  type CustomerFormData,
+} from "../../components/forms/CustomerInfoForm";
 import ShippingForm, {
   type ShippingFormData,
-} from "../../components/forms/ShippingForm/ShippingForm";
-import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
+} from "../../components/forms/ShippingForm";
+import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm";
 import "./CheckoutPage.css";
-import PaymentMethodForm from "../../components/forms/PaymentMethodForm/PaymentMethodForm";
+import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
-
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const {
-    changeQuantity, 
-    cartItems,  
-    removeItem, 
-    totalPrice } = useContext(CartContext)!;
+  const { changeQuantity, cartItems, removeItem, totalPrice } =
+    useContext(CartContext)!;
+
+  const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
+    null,
+  );
+
+  const [shippingInfo, setShippingInfo] = useState<ShippingFormData | null>(
+    null,
+  );
 
   const [shippingCost, setShippingCost] = useState(0);
   //state for the payment method. This is to store the selected method.
   //The paymentMethod is red now. It isnt used anywere yet, but it is going to be used in the next issue when we build the order confirmation
   const [paymentMethod, setPaymentMethod] = useState("");
 
-  const handleCustomerContinue = () => {
+  const handleCustomerContinue = (data: CustomerFormData) => {
+    setCustomerInfo(data);
     setCheckoutStep("shipping");
   };
 
   const handleShippingContinue = (data: ShippingFormData) => {
+    setShippingInfo(data);
     setShippingCost(data.shippingCost);
     setCheckoutStep("payment");
   };
@@ -40,7 +48,6 @@ function CheckoutPage() {
     setPaymentMethod(data.paymentMethod);
   };
 
-  
   const orderTotal = totalPrice + shippingCost;
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -70,8 +77,9 @@ function CheckoutPage() {
             />
           )}
 
-          {checkoutStep === "payment" && 
-          <PaymentMethodForm onContinue={handlePaymentContinue}/>}
+          {checkoutStep === "payment" && (
+            <PaymentMethodForm onContinue={handlePaymentContinue} />
+          )}
         </div>
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>
@@ -100,7 +108,9 @@ function CheckoutPage() {
             </>
           )}
 
-          {checkoutStep !== "customer" && <CartList items={cartItems} readOnly />}
+          {checkoutStep !== "customer" && (
+            <CartList items={cartItems} readOnly />
+          )}
 
           <div className="checkout-page__summary-total">
             <strong>Total:</strong>

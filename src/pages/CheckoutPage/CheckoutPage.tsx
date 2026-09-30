@@ -114,12 +114,20 @@ function CheckoutPage() {
               onShippingChange={setShippingCost}
             />
           )}
+          {checkoutStep === "payment" && (
+            <>
+              <PaymentMethodForm onContinue={handlePaymentContinue} />
 
-          {checkoutStep === "payment" && (
-            <PaymentMethodForm onContinue={handlePaymentContinue} />
-          )}
-          {checkoutStep === "payment" && (
-            <PaymentMethodForm onContinue={handlePaymentContinue} />
+              {createOrderMutation.isPending && (
+                <p>Just a quack... placing your order! 🐥</p>
+              )}
+
+              {createOrderMutation.isError && (
+                <p>
+                  Oh quack! We couldn't place your order. Please try again. 🐥
+                </p>
+              )}
+            </>
           )}
         </div>
         <aside className="checkout-page__summary">

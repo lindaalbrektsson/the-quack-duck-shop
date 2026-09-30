@@ -27,13 +27,11 @@ const productQueries = useQueries({
     const isError = productQueries.some((query) => query.isError)
 
     if(isLoading) {
-        console.log("is loading in order summary")
         return <p>Loading your ducks...</p>
     }
     
     if(isError) {
-        console.log("is error in OrderSummary")
-        return <p>Got quackit... Your duck order couldn't load. Please try again. 🐥</p>
+        return <p>Got quackit... Your duck order summary couldn't load. Please try reload the page. 🐥</p>
     }
 
 

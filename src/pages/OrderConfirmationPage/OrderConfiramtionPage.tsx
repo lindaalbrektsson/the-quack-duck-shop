@@ -29,12 +29,10 @@ const OrderConfirmationPage = () => {
     })
 
     if (isLoading) {
-        console.log("is loading in order conf")
         return <p>We are preparing your quacky order! 🐥</p>
     }
 
     if (isError) {
-        console.log("is error in order confirmation")
         return <p>Got quackit... Your duck order couldn't load.
             Please try again. 🐥 </p>
     }

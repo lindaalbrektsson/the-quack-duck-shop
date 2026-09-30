@@ -32,14 +32,25 @@ const testProduct: Product = {
   rating: 5,
 };
 
+const saleProduct: Product = {
+  ...testProduct,
+  id: "sale-duck",
+  title: "Sale Duck",
+  price: 20,
+  categories: ["onSale"],
+  isOnSale: true,
+  salePrice: 15,
+};
+
 // Connect the product card and cart list for the tests.
-function TestCart() {
+function TestCart({ showSaleProduct = false }) {
   const { cartItems, changeQuantity, removeItem, totalPrice } =
     useContext(CartContext)!;
 
   return (
     <>
       <ProductCard product={testProduct} />
+      {showSaleProduct && <ProductCard product={saleProduct} />}
 
       <section aria-label="Shopping cart">
         <CartList
@@ -81,7 +92,6 @@ describe("Cart", () => {
   });
 
   it("updates quantity and total when clicking plus and minus", async () => {
-    
     // Arrange
     const user = userEvent.setup();
 
@@ -114,5 +124,34 @@ describe("Cart", () => {
     // Assert
     expect(cart.getByText("1")).toBeInTheDocument();
     expect(cart.getByText("Cart total: $10.00")).toBeInTheDocument();
+  });
+
+  it("uses the sale price when calculating the cart total", async () => {
+    
+    // Arrange
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <CartProvider>
+          <TestCart showSaleProduct />
+        </CartProvider>
+      </MemoryRouter>,
+    );
+
+    // Act
+    const addButtons = screen.getAllByRole("button", {
+      name: /add to cart/i,
+    });
+
+    await user.click(addButtons[0]);
+    await user.click(addButtons[1]);
+    await user.click(addButtons[1]);
+
+    // Assert
+    const cart = within(screen.getByRole("region", { name: "Shopping cart" }));
+
+    expect(cart.getAllByRole("listitem")).toHaveLength(2);
+    expect(cart.getByText("Cart total: $40.00")).toBeInTheDocument();
   });
 });

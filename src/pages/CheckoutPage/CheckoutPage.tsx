@@ -118,6 +118,9 @@ function CheckoutPage() {
           {checkoutStep === "payment" && (
             <PaymentMethodForm onContinue={handlePaymentContinue} />
           )}
+          {checkoutStep === "payment" && (
+            <PaymentMethodForm onContinue={handlePaymentContinue} />
+          )}
         </div>
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>

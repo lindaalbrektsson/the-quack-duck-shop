@@ -21,7 +21,7 @@ function CheckoutPage() {
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const { changeQuantity, cartItems, removeItem, totalPrice } =
+  const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
     useContext(CartContext)!;
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
@@ -47,14 +47,15 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handlePaymentContinue = (data: PaymentMethodFormData) => {
-    navigate("/order-confirmation")
+  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
     }
+    
+    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`
 
     const order: CreateOrder = {
-      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      orderNumber: orderNumber,
       customerName: customerInfo.customerName,
       customerAddress: customerInfo.customerAddress,
       shippingMethod: shippingInfo.shippingMethod,
@@ -70,7 +71,10 @@ function CheckoutPage() {
       })),
     };
 
-    createOrderMutation.mutate(order);
+    await createOrderMutation.mutateAsync(order);
+
+    clearCart()
+    navigate(`/order-confirmation/${orderNumber}`)
   };
 
   const orderTotal = totalPrice + shippingCost;

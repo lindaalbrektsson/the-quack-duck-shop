@@ -11,6 +11,8 @@ import type { PaymentMethodFormData } from "../../components/forms/PaymentMethod
 import "./CheckoutPage.css";
 import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
+
 import { useMutation } from "@tanstack/react-query";
 import type { CreateOrder, Order } from "../../types/order";
 
@@ -19,7 +21,7 @@ function CheckoutPage() {
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const { changeQuantity, cartItems, removeItem, totalPrice } =
+  const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
     useContext(CartContext)!;
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
@@ -29,6 +31,8 @@ function CheckoutPage() {
   const [shippingInfo, setShippingInfo] = useState<ShippingFormData | null>(
     null,
   );
+
+    const navigate = useNavigate()
 
   const [shippingCost, setShippingCost] = useState(0);
 
@@ -43,13 +47,15 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handlePaymentContinue = (data: PaymentMethodFormData) => {
+  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
     }
+    
+    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`
 
     const order: CreateOrder = {
-      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      orderNumber: orderNumber,
       customerName: customerInfo.customerName,
       customerAddress: customerInfo.customerAddress,
       shippingMethod: shippingInfo.shippingMethod,
@@ -65,7 +71,10 @@ function CheckoutPage() {
       })),
     };
 
-    createOrderMutation.mutate(order);
+    await createOrderMutation.mutateAsync(order);
+
+    clearCart()
+    navigate(`/order-confirmation/${orderNumber}`)
   };
 
   const orderTotal = totalPrice + shippingCost;

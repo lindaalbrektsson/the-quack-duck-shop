@@ -172,3 +172,13 @@
 .checkout-page__back-button:hover {
   background-color: var(--color-pink);
 }
+
+.checkout-page__stock-alert {
+  background-color: var(--color-light-orange) !important;
+  color: var(--color-black) !important;
+  font-weight: 600;
+}
+
+.checkout-page__stock-alert .MuiAlert-icon {
+  color: var(--color-black);
+}

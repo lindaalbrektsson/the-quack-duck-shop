@@ -26,6 +26,16 @@ function CheckoutPage() {
 
   const [stockError, setStockError] = useState<string | null>(null);
 
+  const handleQuantityChange = (id: string, change: number) => {
+    setStockError(null);
+    changeQuantity(id, change);
+  };
+
+  const handleRemoveItem = (id: string) => {
+    setStockError(null);
+    removeItem(id);
+  };
+
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
   );
@@ -146,8 +156,8 @@ function CheckoutPage() {
             <>
               <CartList
                 items={cartItems}
-                onQuantityChange={changeQuantity}
-                onRemove={removeItem}
+                onQuantityChange={handleQuantityChange}
+                onRemove={handleRemoveItem}
               />
 
               <CustomerInfoForm onContinue={handleCustomerContinue} />
@@ -166,31 +176,22 @@ function CheckoutPage() {
               <PaymentMethodForm onContinue={handlePaymentContinue} />
 
               {stockError && (
-                <div className="checkout-page__stock-error">
-                  <Alert
-                    severity="warning"
-                    variant="filled"
-                    sx={{
-                      backgroundColor: "var(--color-light-orange)",
-                      color: "var(--color-black)",
-                      fontWeight: 600,
-                      "& .MuiAlert-icon": {
-                        color: "var(--color-black)",
-                      },
-                    }}
-                  >
-                    {stockError}
-                  </Alert>
-
-                  <button
-                    type="button"
-                    className="checkout-page__back-button"
-                    onClick={() => setCheckoutStep("customer")}
-                  >
-                    ← Back to Cart
-                  </button>
-                </div>
+                <Alert
+                  severity="warning"
+                  variant="filled"
+                  className="checkout-page__stock-alert"
+                >
+                  {stockError}
+                </Alert>
               )}
+
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => setCheckoutStep("customer")}
+              >
+                ← Back to Cart
+              </button>
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

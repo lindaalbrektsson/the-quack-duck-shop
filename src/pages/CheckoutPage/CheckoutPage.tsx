@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import Alert from "@mui/material/Alert";
+
 import CartList from "../../components/CartList/CartList";
 import CustomerInfoForm, {
   type CustomerFormData,
@@ -7,22 +10,27 @@ import CustomerInfoForm, {
 import ShippingForm, {
   type ShippingFormData,
 } from "../../components/forms/ShippingForm";
-import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm";
-import "./CheckoutPage.css";
-import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
-import { CartContext } from "../../context/CartContext";
-import { useNavigate } from "react-router-dom";
+import PaymentMethodForm, {
+  type PaymentMethodFormData,
+} from "../../components/forms/PaymentMethodForm";
 
-import { useMutation } from "@tanstack/react-query";
+import { CartContext } from "../../context/CartContext";
 import type { CreateOrder, Order } from "../../types/order";
+import type { Product } from "../../types/product";
+
+import "./CheckoutPage.css";
 
 function CheckoutPage() {
+  const navigate = useNavigate();
+
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
 
   const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
     useContext(CartContext)!;
+
+  const [stockError, setStockError] = useState<string | null>(null);
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
@@ -32,9 +40,17 @@ function CheckoutPage() {
     null,
   );
 
-    const navigate = useNavigate()
-
   const [shippingCost, setShippingCost] = useState(0);
+
+  const handleQuantityChange = (id: string, change: number) => {
+    setStockError(null);
+    changeQuantity(id, change);
+  };
+
+  const handleRemoveItem = (id: string) => {
+    setStockError(null);
+    removeItem(id);
+  };
 
   const handleCustomerContinue = (data: CustomerFormData) => {
     setCustomerInfo(data);
@@ -47,39 +63,41 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
-    if (!customerInfo || !shippingInfo) {
-      return;
+  const checkStock = async () => {
+    setStockError(null);
+
+    try {
+      const response = await fetch("http://localhost:3000/products");
+
+      if (!response.ok) {
+        throw new Error("Failed to check stock");
+      }
+
+      const products: Product[] = await response.json();
+
+      const unavailableItem = cartItems.find((item) => {
+        const currentProduct = products.find(
+          (product) => product.id === item.id,
+        );
+
+        return !currentProduct || item.quantity > currentProduct.stock;
+      });
+
+      if (unavailableItem) {
+        setStockError(
+          `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
+        );
+        return false;
+      }
+
+      return true;
+    } catch {
+      setStockError(
+        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+      );
+      return false;
     }
-    
-    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`
-
-    const order: CreateOrder = {
-      orderNumber: orderNumber,
-      customerName: customerInfo.customerName,
-      customerAddress: customerInfo.customerAddress,
-      shippingMethod: shippingInfo.shippingMethod,
-      paymentMethod: data.paymentMethod,
-      createdAt: new Date().toISOString(),
-      items: cartItems.map((item) => ({
-        productId: item.id,
-        quantity: item.quantity,
-        unitPrice:
-          item.isOnSale && item.salePrice !== null
-            ? item.salePrice
-            : item.price,
-      })),
-    };
-
-    await createOrderMutation.mutateAsync(order);
-
-    clearCart()
-    navigate(`/order-confirmation/${orderNumber}`)
   };
-
-  const orderTotal = totalPrice + shippingCost;
-
-  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const createOrderMutation = useMutation<Order, Error, CreateOrder>({
     mutationFn: async (order) => {
@@ -99,6 +117,46 @@ function CheckoutPage() {
     },
   });
 
+  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
+    if (!customerInfo || !shippingInfo) {
+      return;
+    }
+
+    const stockIsAvailable = await checkStock();
+
+    if (!stockIsAvailable) {
+      return;
+    }
+
+    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    const order: CreateOrder = {
+      orderNumber,
+      customerName: customerInfo.customerName,
+      customerAddress: customerInfo.customerAddress,
+      shippingMethod: shippingInfo.shippingMethod,
+      paymentMethod: data.paymentMethod,
+      createdAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        unitPrice:
+          item.isOnSale && item.salePrice !== null
+            ? item.salePrice
+            : item.price,
+      })),
+    };
+
+    await createOrderMutation.mutateAsync(order);
+
+    clearCart();
+    navigate(`/order-confirmation/${orderNumber}`);
+  };
+
+  const orderTotal = totalPrice + shippingCost;
+
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <section className="checkout-page">
       <h1>Checkout</h1>
@@ -107,10 +165,18 @@ function CheckoutPage() {
         <div className="checkout-page__main">
           {checkoutStep === "customer" && (
             <>
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => navigate("/")}
+              >
+                ← Back to Shop
+              </button>
+
               <CartList
                 items={cartItems}
-                onQuantityChange={changeQuantity}
-                onRemove={removeItem}
+                onQuantityChange={handleQuantityChange}
+                onRemove={handleRemoveItem}
               />
 
               <CustomerInfoForm onContinue={handleCustomerContinue} />
@@ -118,14 +184,53 @@ function CheckoutPage() {
           )}
 
           {checkoutStep === "shipping" && (
-            <ShippingForm
-              onContinue={handleShippingContinue}
-              onShippingChange={setShippingCost}
-            />
+            <>
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => setCheckoutStep("customer")}
+              >
+                ← Back to Customer Information
+              </button>
+
+              <ShippingForm
+                onContinue={handleShippingContinue}
+                onShippingChange={setShippingCost}
+              />
+            </>
           )}
+
           {checkoutStep === "payment" && (
             <>
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => setCheckoutStep("shipping")}
+              >
+                ← Back to Shipping Details
+              </button>
+
               <PaymentMethodForm onContinue={handlePaymentContinue} />
+
+              {stockError && (
+                <>
+                  <Alert
+                    severity="warning"
+                    variant="filled"
+                    className="checkout-page__stock-alert"
+                  >
+                    {stockError}
+                  </Alert>
+
+                  <button
+                    type="button"
+                    className="checkout-page__back-button"
+                    onClick={() => setCheckoutStep("customer")}
+                  >
+                    ← Return to Cart
+                  </button>
+                </>
+              )}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>
@@ -139,6 +244,7 @@ function CheckoutPage() {
             </>
           )}
         </div>
+
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>
 

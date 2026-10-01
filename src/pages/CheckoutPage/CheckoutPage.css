@@ -131,6 +131,38 @@
   margin-bottom: 0.75rem;
 }
 
+/* Back navigation */
+
+.checkout-page__back-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkout-page__back-button:hover {
+  text-decoration: underline;
+}
+
+/* Stock warning */
+
+.checkout-page__stock-alert {
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  background-color: var(--color-light-orange) !important;
+  color: var(--color-black) !important;
+  font-weight: 600;
+}
+
+.checkout-page__stock-alert .MuiAlert-icon {
+  color: var(--color-black);
+}
+
 @media (max-width: 768px) {
   .checkout-page__layout {
     grid-template-columns: 1fr;
@@ -140,4 +172,8 @@
   .checkout-page__main .cart-list__item {
     grid-template-columns: 70px 1fr auto;
   }
+}
+
+.checkout-page__stock-alert + .checkout-page__back-button {
+  margin-top: 0.75rem;
 }

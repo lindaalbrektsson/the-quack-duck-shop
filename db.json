@@ -265,7 +265,7 @@
         "main": "/ducks/sphinxduck.png",
         "secondary": "/ducks/sphinxduck2.png"
       },
-      "stock": 3,
+      "stock": 1,
       "rating": 2
     },
     {
@@ -342,6 +342,58 @@
         }
       ],
       "id": "7rpCIPrLxUw"
+    },
+    {
+      "orderNumber": "QD-145182",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "paymentMethod": "swish",
+      "createdAt": "2026-10-01T10:44:37.994Z",
+      "items": [
+        {
+          "productId": "duck-010",
+          "quantity": 2,
+          "unitPrice": 17.99
+        },
+        {
+          "productId": "duck-015",
+          "quantity": 2,
+          "unitPrice": 22.99
+        },
+        {
+          "productId": "duck-016",
+          "quantity": 1,
+          "unitPrice": 15.99
+        }
+      ],
+      "id": "hUTmkWoiRz0"
+    },
+    {
+      "orderNumber": "QD-242081",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "paymentMethod": "klarna",
+      "createdAt": "2026-10-01T10:44:41.510Z",
+      "items": [
+        {
+          "productId": "duck-010",
+          "quantity": 2,
+          "unitPrice": 17.99
+        },
+        {
+          "productId": "duck-015",
+          "quantity": 2,
+          "unitPrice": 22.99
+        },
+        {
+          "productId": "duck-016",
+          "quantity": 1,
+          "unitPrice": 15.99
+        }
+      ],
+      "id": "nOKmmElZPlc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

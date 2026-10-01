@@ -6,17 +6,20 @@ interface PrimaryButtonProps {
   children: ReactNode;
   type?: "button" | "submit" | "reset";
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 }
 
 function PrimaryButton({
   children,
   type = "button",
   onClick,
+  disabled = false,
 }: PrimaryButtonProps) {
   return (
     <Button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       variant="contained"
       disableElevation
       className="primary-button"

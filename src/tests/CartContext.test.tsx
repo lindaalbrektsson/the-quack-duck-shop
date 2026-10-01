@@ -44,8 +44,14 @@ const saleProduct: Product = {
 
 // Connect the product card and cart list for the tests.
 function TestCart({ showSaleProduct = false }) {
-  const { cartItems, changeQuantity, removeItem, totalPrice } =
-    useContext(CartContext)!;
+  const {
+    cartItems,
+    changeQuantity,
+    removeItem,
+    totalPrice,
+    totalQuantity,
+    clearCart,
+  } = useContext(CartContext)!;
 
   return (
     <>
@@ -58,7 +64,11 @@ function TestCart({ showSaleProduct = false }) {
           onQuantityChange={changeQuantity}
           onRemove={removeItem}
         />
+        <p>Cart quantity: {totalQuantity}</p>
         <p>Cart total: ${totalPrice.toFixed(2)}</p>
+        <button type="button" onClick={clearCart}>
+          Clear cart
+        </button>
       </section>
     </>
   );
@@ -127,7 +137,6 @@ describe("Cart", () => {
   });
 
   it("uses the sale price when calculating the cart total", async () => {
-    
     // Arrange
     const user = userEvent.setup();
 
@@ -153,5 +162,71 @@ describe("Cart", () => {
 
     expect(cart.getAllByRole("listitem")).toHaveLength(2);
     expect(cart.getByText("Cart total: $40.00")).toBeInTheDocument();
+  });
+
+  it("removes one product and keeps the other products", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <CartProvider>
+          <TestCart showSaleProduct />
+        </CartProvider>
+      </MemoryRouter>,
+    );
+
+    const addButtons = screen.getAllByRole("button", {
+      name: /add to cart/i,
+    });
+
+    await user.click(addButtons[0]);
+    await user.click(addButtons[0]);
+    await user.click(addButtons[1]);
+
+    const cart = within(screen.getByRole("region", { name: "Shopping cart" }));
+
+    // Act
+    await user.click(
+      cart.getByRole("button", { name: "Remove Test Duck from cart" }),
+    );
+
+    // Assert
+    expect(cart.queryByText("Test Duck")).not.toBeInTheDocument();
+    expect(cart.getByText("Sale Duck")).toBeInTheDocument();
+    expect(cart.getAllByRole("listitem")).toHaveLength(1);
+    expect(cart.getByText("Cart quantity: 1")).toBeInTheDocument();
+    expect(cart.getByText("Cart total: $15.00")).toBeInTheDocument();
+  });
+
+  it("clears all products from the cart", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <CartProvider>
+          <TestCart showSaleProduct />
+        </CartProvider>
+      </MemoryRouter>,
+    );
+
+    const addButtons = screen.getAllByRole("button", {
+      name: /add to cart/i,
+    });
+
+    await user.click(addButtons[0]);
+    await user.click(addButtons[1]);
+
+    const cart = within(screen.getByRole("region", { name: "Shopping cart" }));
+
+    // Act
+    await user.click(cart.getByRole("button", { name: "Clear cart" }));
+
+    // Assert
+    expect(cart.queryAllByRole("listitem")).toHaveLength(0);
+    expect(cart.getByText("Your cart is empty.")).toBeInTheDocument();
+    expect(cart.getByText("Cart quantity: 0")).toBeInTheDocument();
+    expect(cart.getByText("Cart total: $0.00")).toBeInTheDocument();
   });
 });

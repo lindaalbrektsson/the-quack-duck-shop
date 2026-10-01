@@ -27,7 +27,7 @@ function CheckoutPage() {
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const { changeQuantity, cartItems, removeItem, totalPrice } =
+  const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
     useContext(CartContext)!;
 
   const [stockError, setStockError] = useState<string | null>(null);
@@ -128,8 +128,10 @@ function CheckoutPage() {
       return;
     }
 
+    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`;
+
     const order: CreateOrder = {
-      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      orderNumber,
       customerName: customerInfo.customerName,
       customerAddress: customerInfo.customerAddress,
       shippingMethod: shippingInfo.shippingMethod,
@@ -145,7 +147,10 @@ function CheckoutPage() {
       })),
     };
 
-    createOrderMutation.mutate(order);
+    await createOrderMutation.mutateAsync(order);
+
+    clearCart();
+    navigate(`/order-confirmation/${orderNumber}`);
   };
 
   const orderTotal = totalPrice + shippingCost;

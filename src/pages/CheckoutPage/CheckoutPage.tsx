@@ -247,11 +247,11 @@ function CheckoutPage() {
         </div>
 
         <aside className="checkout-page__summary">
-          <h2>Your Order Resume</h2>
+          <h2>Your Order Summary</h2>
 
           {checkoutStep === "customer" && (
             <>
-              <p>{totalQuantity} articles</p>
+              <p>{totalQuantity} items</p>
 
               <div className="checkout-page__summary-items">
                 {cartItems.map((item) => {

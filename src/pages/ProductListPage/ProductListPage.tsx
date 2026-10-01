@@ -4,6 +4,7 @@ import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import type { Product, SelectedCategory } from "../../types/product";
 import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/CategoryFilter/CategoryFilter";
+import { fetchProducts, productsQueryKey } from "../../api/products";
 
 function ProductListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,16 +28,8 @@ function ProductListPage() {
     isLoading,
     isError,
   } = useQuery<Product[]>({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const response = await fetch("http://localhost:3000/products");
-
-      if (!response.ok) {
-        throw new Error("Failed to load products");
-      }
-
-      return response.json();
-    },
+    queryKey: productsQueryKey,
+    queryFn: fetchProducts,
   });
 
   if (isLoading) {

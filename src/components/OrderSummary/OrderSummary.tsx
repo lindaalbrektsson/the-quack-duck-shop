@@ -35,37 +35,20 @@ const productQueries = useQueries({
     }
 
 
-    const getShippingFee = (shippingMethod: string) => {
-        switch (shippingMethod){
-            case "DHL":
-                return 4.99
-
-            case "PostNord":
-                return 3.99
-
-            case "BudBee":
-                return 5.99
-        }
-
-        return 0
-    }
-
     const productTotal = order.items.reduce((total, item) => {
         return total + item.unitPrice * item.quantity
     }, 0)
 
-    const shippingCost = getShippingFee(order.shippingMethod)
 
     const totalQunatity = order.items.reduce((sum, item) => {
         return sum + item.quantity
     }, 0) 
 
-    const total = productTotal + shippingCost
+
+    const total = productTotal + order.shippingCost
 
     return (
         <>
-        
-        
         <div className="order-sum-container">
             <div>
                 <h1>YOUR ORDER RESUME</h1>
@@ -106,7 +89,7 @@ const productQueries = useQueries({
                 </div>
                 <div className="receipt-containers">
                     <p>SHIPPING FEE:</p>
-                    <p>${shippingCost.toFixed(2)}</p>
+                    <p>${order.shippingCost.toFixed(2)}</p>
                 </div>
                 <div className="receipt-containers">
                     <p className="total-cost">TOTAL:</p>

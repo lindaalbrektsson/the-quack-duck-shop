@@ -17,6 +17,8 @@ function ProductCard({ product }: ProductCardProps) {
       ? product.salePrice
       : product.price;
 
+  const isOutOfStock = product.stock === 0;
+
   const { addToCart } = useContext(CartContext)!;
 
   return (
@@ -38,8 +40,11 @@ function ProductCard({ product }: ProductCardProps) {
       </Link>
       <CategoryBadges categories={product.categories} />
       <div className="product-card__bottom">
-        <PrimaryButton onClick={() => addToCart(product)}>
-          ADD TO CART
+        <PrimaryButton
+          onClick={() => addToCart(product)}
+          disabled={isOutOfStock}
+        >
+          {isOutOfStock ? "SOLD OUT" : "ADD TO CART"}
         </PrimaryButton>
 
         <span

@@ -13,6 +13,7 @@ import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
 import { CartContext } from "../../context/CartContext";
 import { useMutation } from "@tanstack/react-query";
 import type { CreateOrder, Order } from "../../types/order";
+import type { Product } from "../../types/product";
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
@@ -21,6 +22,8 @@ function CheckoutPage() {
 
   const { changeQuantity, cartItems, removeItem, totalPrice } =
     useContext(CartContext)!;
+
+  const [stockError, setStockError] = useState<string | null>(null);
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
@@ -43,29 +46,60 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handlePaymentContinue = (data: PaymentMethodFormData) => {
+  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
     }
 
-    const order: CreateOrder = {
-      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
-      customerName: customerInfo.customerName,
-      customerAddress: customerInfo.customerAddress,
-      shippingMethod: shippingInfo.shippingMethod,
-      paymentMethod: data.paymentMethod,
-      createdAt: new Date().toISOString(),
-      items: cartItems.map((item) => ({
-        productId: item.id,
-        quantity: item.quantity,
-        unitPrice:
-          item.isOnSale && item.salePrice !== null
-            ? item.salePrice
-            : item.price,
-      })),
-    };
+    setStockError(null);
 
-    createOrderMutation.mutate(order);
+    try {
+      const response = await fetch("http://localhost:3000/products");
+
+      if (!response.ok) {
+        throw new Error("Failed to check stock");
+      }
+
+      const products: Product[] = await response.json();
+
+      const unavailableItem = cartItems.find((item) => {
+        const currentProduct = products.find(
+          (product) => product.id === item.id,
+        );
+
+        return !currentProduct || item.quantity > currentProduct.stock;
+      });
+
+      if (unavailableItem) {
+        setStockError(
+          `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
+        );
+        return;
+      }
+
+      const order: CreateOrder = {
+        orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+        customerName: customerInfo.customerName,
+        customerAddress: customerInfo.customerAddress,
+        shippingMethod: shippingInfo.shippingMethod,
+        paymentMethod: data.paymentMethod,
+        createdAt: new Date().toISOString(),
+        items: cartItems.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+          unitPrice:
+            item.isOnSale && item.salePrice !== null
+              ? item.salePrice
+              : item.price,
+        })),
+      };
+
+      createOrderMutation.mutate(order);
+    } catch {
+      setStockError(
+        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+      );
+    }
   };
 
   const orderTotal = totalPrice + shippingCost;
@@ -117,6 +151,8 @@ function CheckoutPage() {
           {checkoutStep === "payment" && (
             <>
               <PaymentMethodForm onContinue={handlePaymentContinue} />
+
+              {stockError && <p>{stockError}</p>}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

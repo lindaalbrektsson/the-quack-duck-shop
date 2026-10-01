@@ -16,6 +16,9 @@ const ProductInfo = ({ product }: Props) => {
     product.isOnSale && product.salePrice !== null
       ? product.salePrice
       : product.price;
+
+  const isOutOfStock = product.stock <= 0;
+
   return (
     <>
       <div id="title-container">
@@ -28,11 +31,14 @@ const ProductInfo = ({ product }: Props) => {
       </div>
       <div id="description-container">
         <p id="description-text">{product.description}</p>
-        <p>STOCK STATUS</p> {/*Hard coded stock status for know*/}
+        <p>{isOutOfStock ? "SOLD OUT" : "IN STOCK"}</p>
       </div>
       <div id="price-container">
-        <PrimaryButton onClick={() => addToCart(product)}>
-          ADD TO CART
+        <PrimaryButton
+          onClick={() => addToCart(product)}
+          disabled={isOutOfStock}
+        >
+          {isOutOfStock ? "SOLD OUT" : "ADD TO CART"}
         </PrimaryButton>
         <div className="product-info__price">
           {product.isOnSale && product.salePrice !== null ? (

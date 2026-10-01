@@ -17,7 +17,7 @@ function ProductCard({ product }: ProductCardProps) {
       ? product.salePrice
       : product.price;
 
-  const isOutOfStock = product.stock === 0;
+  const isOutOfStock = product.stock <= 0;
 
   const { addToCart } = useContext(CartContext)!;
 

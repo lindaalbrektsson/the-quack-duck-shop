@@ -15,7 +15,6 @@ import { useMutation } from "@tanstack/react-query";
 import type { CreateOrder, Order } from "../../types/order";
 import type { Product } from "../../types/product";
 import Alert from "@mui/material/Alert";
-import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<

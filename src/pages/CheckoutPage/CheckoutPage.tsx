@@ -46,11 +46,7 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
-    if (!customerInfo || !shippingInfo) {
-      return;
-    }
-
+  const checkStock = async () => {
     setStockError(null);
 
     try {
@@ -74,32 +70,47 @@ function CheckoutPage() {
         setStockError(
           `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
         );
-        return;
+        return false;
       }
 
-      const order: CreateOrder = {
-        orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
-        customerName: customerInfo.customerName,
-        customerAddress: customerInfo.customerAddress,
-        shippingMethod: shippingInfo.shippingMethod,
-        paymentMethod: data.paymentMethod,
-        createdAt: new Date().toISOString(),
-        items: cartItems.map((item) => ({
-          productId: item.id,
-          quantity: item.quantity,
-          unitPrice:
-            item.isOnSale && item.salePrice !== null
-              ? item.salePrice
-              : item.price,
-        })),
-      };
-
-      createOrderMutation.mutate(order);
+      return true;
     } catch {
       setStockError(
         "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
       );
+      return false;
     }
+  };
+
+  const handlePaymentContinue = async (data: PaymentMethodFormData) => {
+    if (!customerInfo || !shippingInfo) {
+      return;
+    }
+
+    const stockIsAvailable = await checkStock();
+
+    if (!stockIsAvailable) {
+      return;
+    }
+
+    const order: CreateOrder = {
+      orderNumber: `QD-${Math.floor(100000 + Math.random() * 900000)}`,
+      customerName: customerInfo.customerName,
+      customerAddress: customerInfo.customerAddress,
+      shippingMethod: shippingInfo.shippingMethod,
+      paymentMethod: data.paymentMethod,
+      createdAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        unitPrice:
+          item.isOnSale && item.salePrice !== null
+            ? item.salePrice
+            : item.price,
+      })),
+    };
+
+    createOrderMutation.mutate(order);
   };
 
   const orderTotal = totalPrice + shippingCost;
@@ -148,6 +159,7 @@ function CheckoutPage() {
               onShippingChange={setShippingCost}
             />
           )}
+
           {checkoutStep === "payment" && (
             <>
               <PaymentMethodForm onContinue={handlePaymentContinue} />
@@ -166,6 +178,7 @@ function CheckoutPage() {
             </>
           )}
         </div>
+
         <aside className="checkout-page__summary">
           <h2>Your Order Resume</h2>
 

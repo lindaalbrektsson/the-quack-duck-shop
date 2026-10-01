@@ -10,6 +10,7 @@ export interface Order {
   customerName: string;
   customerAddress: string;
   shippingMethod: string;
+  shippingCost: number;
   paymentMethod: string;
   createdAt: string;
   items: OrderItem[];

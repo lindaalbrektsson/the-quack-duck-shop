@@ -135,6 +135,7 @@ function CheckoutPage() {
       customerName: customerInfo.customerName,
       customerAddress: customerInfo.customerAddress,
       shippingMethod: shippingInfo.shippingMethod,
+      shippingCost: shippingCost,
       paymentMethod: data.paymentMethod,
       createdAt: new Date().toISOString(),
       items: cartItems.map((item) => ({

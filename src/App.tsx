@@ -7,7 +7,7 @@ import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import { CartProvider } from "./context/CartContext";
-import OrderConfirmationPage from "./pages/OrderConfirmationPage/OrderConfiramtionPage";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage/OrderConfirmationPage";
 
 const App = () => {
   return (

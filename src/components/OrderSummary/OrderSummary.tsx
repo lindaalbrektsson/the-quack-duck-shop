@@ -56,6 +56,10 @@ const productQueries = useQueries({
 
     const shippingCost = getShippingFee(order.shippingMethod)
 
+    const totalQunatity = order.items.reduce((sum, item) => {
+        return sum + item.quantity
+    }, 0) 
+
     const total = productTotal + shippingCost
 
     return (
@@ -66,7 +70,7 @@ const productQueries = useQueries({
             <div>
                 <h1>YOUR ORDER RESUME</h1>
                 <h2>ORDER ID:{order.orderNumber}</h2>
-                <p>{order.items.length} articles</p>
+                <p>{totalQunatity} articles</p>
                 <ul className="order-list">
             {order.items.map((item, index) => {
                 const product = productQueries[index].data
@@ -75,7 +79,7 @@ const productQueries = useQueries({
                     <li key={item.productId} className="order-list__item">
                         <img src={product?.images.main} alt={product?.title} />
                         <p>{product?.title}</p>
-                        <p>{item.unitPrice}$</p>
+                        <p>${item.unitPrice.toFixed(2)}</p>
                         <p>x{item.quantity}</p>
                     </li>
                 )
@@ -89,11 +93,11 @@ const productQueries = useQueries({
                     <p>{order.customerName}</p>
                 </div>
                 <div className="receipt-containers">
-                    <p>ADRESS:</p>
+                    <p>ADDRESS:</p>
                     <p>{order.customerAddress}</p>
                 </div>
                 <div className="receipt-containers">
-                    <p>PAYED WITH:</p>
+                    <p>PAID WITH:</p>
                     <p>{order.paymentMethod}</p>
                 </div>
                 <div className="receipt-containers">
@@ -102,11 +106,11 @@ const productQueries = useQueries({
                 </div>
                 <div className="receipt-containers">
                     <p>SHIPPING FEE:</p>
-                    <p>{shippingCost}</p>
+                    <p>${shippingCost.toFixed(2)}</p>
                 </div>
                 <div className="receipt-containers">
                     <p className="total-cost">TOTAL:</p>
-                    <p className="total-cost">{total.toFixed(2)}$</p>
+                    <p className="total-cost">${total.toFixed(2)}</p>
                 </div>
             </div>
         </div>

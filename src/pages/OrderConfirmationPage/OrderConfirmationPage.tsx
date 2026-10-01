@@ -13,16 +13,20 @@ const OrderConfirmationPage = () => {
         data: order,
         isLoading,
         isError,
-    } = useQuery<Order>({
+    } = useQuery<Order | null>({
         queryKey: ["order", orderNumber],
         queryFn: async () => {
             const response = await fetch (`http://localhost:3000/orders?orderNumber=${orderNumber}`)
 
             if (!response.ok) {
-                throw new Error("Faild to load order!")
+                throw new Error("Failed to load order!")
             }
 
             const orderData: Order[] = await response.json()
+
+            if (orderData.length === 0) {
+                return null;
+}
 
             return orderData[0]
         }
@@ -45,7 +49,7 @@ const OrderConfirmationPage = () => {
     <div className="Order-confirmation-container">
         <div className="title-container">
             <h1>Thank you {order.customerName} for your order!</h1>
-            <h1>It has been sucessfully placed</h1>
+            <h1>It has been successfully placed</h1>
         </div>
         <OrderSummary order={order}/>
         <div className="return-btn">

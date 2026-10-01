@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import Alert from "@mui/material/Alert";
+
 import CartList from "../../components/CartList/CartList";
 import CustomerInfoForm, {
   type CustomerFormData,
@@ -7,16 +10,19 @@ import CustomerInfoForm, {
 import ShippingForm, {
   type ShippingFormData,
 } from "../../components/forms/ShippingForm";
-import type { PaymentMethodFormData } from "../../components/forms/PaymentMethodForm";
-import "./CheckoutPage.css";
-import PaymentMethodForm from "../../components/forms/PaymentMethodForm";
+import PaymentMethodForm, {
+  type PaymentMethodFormData,
+} from "../../components/forms/PaymentMethodForm";
+
 import { CartContext } from "../../context/CartContext";
-import { useMutation } from "@tanstack/react-query";
 import type { CreateOrder, Order } from "../../types/order";
 import type { Product } from "../../types/product";
-import Alert from "@mui/material/Alert";
+
+import "./CheckoutPage.css";
 
 function CheckoutPage() {
+  const navigate = useNavigate();
+
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
@@ -25,16 +31,6 @@ function CheckoutPage() {
     useContext(CartContext)!;
 
   const [stockError, setStockError] = useState<string | null>(null);
-
-  const handleQuantityChange = (id: string, change: number) => {
-    setStockError(null);
-    changeQuantity(id, change);
-  };
-
-  const handleRemoveItem = (id: string) => {
-    setStockError(null);
-    removeItem(id);
-  };
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
@@ -45,6 +41,16 @@ function CheckoutPage() {
   );
 
   const [shippingCost, setShippingCost] = useState(0);
+
+  const handleQuantityChange = (id: string, change: number) => {
+    setStockError(null);
+    changeQuantity(id, change);
+  };
+
+  const handleRemoveItem = (id: string) => {
+    setStockError(null);
+    removeItem(id);
+  };
 
   const handleCustomerContinue = (data: CustomerFormData) => {
     setCustomerInfo(data);
@@ -93,6 +99,24 @@ function CheckoutPage() {
     }
   };
 
+  const createOrderMutation = useMutation<Order, Error, CreateOrder>({
+    mutationFn: async (order) => {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save order");
+      }
+
+      return response.json();
+    },
+  });
+
   const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
@@ -128,24 +152,6 @@ function CheckoutPage() {
 
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const createOrderMutation = useMutation<Order, Error, CreateOrder>({
-    mutationFn: async (order) => {
-      const response = await fetch("http://localhost:3000/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(order),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save order");
-      }
-
-      return response.json();
-    },
-  });
-
   return (
     <section className="checkout-page">
       <h1>Checkout</h1>
@@ -154,6 +160,14 @@ function CheckoutPage() {
         <div className="checkout-page__main">
           {checkoutStep === "customer" && (
             <>
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => navigate("/")}
+              >
+                ← Back to Shop
+              </button>
+
               <CartList
                 items={cartItems}
                 onQuantityChange={handleQuantityChange}
@@ -165,33 +179,53 @@ function CheckoutPage() {
           )}
 
           {checkoutStep === "shipping" && (
-            <ShippingForm
-              onContinue={handleShippingContinue}
-              onShippingChange={setShippingCost}
-            />
-          )}
-
-          {checkoutStep === "payment" && (
             <>
-              <PaymentMethodForm onContinue={handlePaymentContinue} />
-
-              {stockError && (
-                <Alert
-                  severity="warning"
-                  variant="filled"
-                  className="checkout-page__stock-alert"
-                >
-                  {stockError}
-                </Alert>
-              )}
-
               <button
                 type="button"
                 className="checkout-page__back-button"
                 onClick={() => setCheckoutStep("customer")}
               >
-                ← Back to Cart
+                ← Back to Customer Information
               </button>
+
+              <ShippingForm
+                onContinue={handleShippingContinue}
+                onShippingChange={setShippingCost}
+              />
+            </>
+          )}
+
+          {checkoutStep === "payment" && (
+            <>
+              <button
+                type="button"
+                className="checkout-page__back-button"
+                onClick={() => setCheckoutStep("shipping")}
+              >
+                ← Back to Shipping Details
+              </button>
+
+              <PaymentMethodForm onContinue={handlePaymentContinue} />
+
+              {stockError && (
+                <>
+                  <Alert
+                    severity="warning"
+                    variant="filled"
+                    className="checkout-page__stock-alert"
+                  >
+                    {stockError}
+                  </Alert>
+
+                  <button
+                    type="button"
+                    className="checkout-page__back-button"
+                    onClick={() => setCheckoutStep("customer")}
+                  >
+                    ← Return to Cart
+                  </button>
+                </>
+              )}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

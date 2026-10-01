@@ -32,21 +32,17 @@ const ProductInfo = ({ product }: Props) => {
       <div id="description-container">
         <p id="description-text">{product.description}</p>
 
-        <p
-          className={
-            isOutOfStock
-              ? "product-info__stock product-info__stock--out"
-              : isLowStock
+        {!isOutOfStock && (
+          <p
+            className={
+              isLowStock
                 ? "product-info__stock product-info__stock--low"
                 : "product-info__stock product-info__stock--available"
-          }
-        >
-          {isOutOfStock
-            ? "SOLD OUT"
-            : isLowStock
-              ? `ONLY ${product.stock} LEFT IN STOCK!`
-              : "IN STOCK"}
-        </p>
+            }
+          >
+            {isLowStock ? `ONLY ${product.stock} LEFT IN STOCK!` : "IN STOCK"}
+          </p>
+        )}
       </div>
 
       <div id="price-container">

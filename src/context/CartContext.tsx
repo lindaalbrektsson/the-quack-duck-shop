@@ -25,11 +25,11 @@ export function CartProvider({ children }: CartProviderProps) {
 
   const addToCart = (product: Product) => {
     setCartItems((currentItems) => {
+      const existingItem = currentItems.find((item) => item.id === product.id);
+
       if (product.stock <= 0) {
         return currentItems;
       }
-
-      const existingItem = currentItems.find((item) => item.id === product.id);
 
       if (existingItem) {
         if (existingItem.quantity >= product.stock) {
@@ -52,7 +52,6 @@ export function CartProvider({ children }: CartProviderProps) {
     0,
   );
 
-  //Function to change the quantity of the product in cart.
   const changeQuantity = (id: string, change: number) => {
     setCartItems((currentItems) =>
       currentItems.map((item) =>
@@ -69,19 +68,16 @@ export function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  //Function for removing a product in cart
   const removeItem = (id: string) => {
     setCartItems((currentItems) =>
       currentItems.filter((item) => item.id !== id),
     );
   };
 
-  //Function to clear the cart
   const clearCart = () => {
     setCartItems([]);
   };
 
-  //function that counts and returns the total price.
   const totalPrice = cartItems.reduce((total, item) => {
     const price =
       item.isOnSale && item.salePrice !== null ? item.salePrice : item.price;

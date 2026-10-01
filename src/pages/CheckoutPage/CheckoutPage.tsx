@@ -14,6 +14,8 @@ import { CartContext } from "../../context/CartContext";
 import { useMutation } from "@tanstack/react-query";
 import type { CreateOrder, Order } from "../../types/order";
 import type { Product } from "../../types/product";
+import Alert from "@mui/material/Alert";
+import PrimaryButton from "../../components/PrimaryButton/PrimaryButton";
 
 function CheckoutPage() {
   const [checkoutStep, setCheckoutStep] = useState<
@@ -164,7 +166,32 @@ function CheckoutPage() {
             <>
               <PaymentMethodForm onContinue={handlePaymentContinue} />
 
-              {stockError && <p>{stockError}</p>}
+              {stockError && (
+                <div className="checkout-page__stock-error">
+                  <Alert
+                    severity="warning"
+                    variant="filled"
+                    sx={{
+                      backgroundColor: "var(--color-light-orange)",
+                      color: "var(--color-black)",
+                      fontWeight: 600,
+                      "& .MuiAlert-icon": {
+                        color: "var(--color-black)",
+                      },
+                    }}
+                  >
+                    {stockError}
+                  </Alert>
+
+                  <button
+                    type="button"
+                    className="checkout-page__back-button"
+                    onClick={() => setCheckoutStep("customer")}
+                  >
+                    ← Back to Cart
+                  </button>
+                </div>
+              )}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

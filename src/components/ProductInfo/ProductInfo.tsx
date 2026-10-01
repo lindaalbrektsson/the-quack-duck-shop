@@ -1,23 +1,21 @@
 import type { Product } from "../../types/product";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
 import Rating from "@mui/material/Rating";
-import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import AddToCartButton from "../AddToCartButton";
 import "./ProductInfo.css";
 
 type Props = {
   product: Product;
 };
-const ProductInfo = ({ product }: Props) => {
-  const { addToCart } = useContext(CartContext)!;
 
+const ProductInfo = ({ product }: Props) => {
   const displayPrice =
     product.isOnSale && product.salePrice !== null
       ? product.salePrice
       : product.price;
 
   const isOutOfStock = product.stock <= 0;
+  const isLowStock = product.stock > 0 && product.stock <= 3;
 
   return (
     <>
@@ -25,21 +23,35 @@ const ProductInfo = ({ product }: Props) => {
         <h1>{product.title}</h1>
         <CategoryBadges categories={product.categories} />
       </div>
+
       <div id="rating-container">
         <Rating value={product.rating} readOnly />
         <p>THROWABILITY RATING</p>
       </div>
+
       <div id="description-container">
         <p id="description-text">{product.description}</p>
-        <p>{isOutOfStock ? "SOLD OUT" : "IN STOCK"}</p>
-      </div>
-      <div id="price-container">
-        <PrimaryButton
-          onClick={() => addToCart(product)}
-          disabled={isOutOfStock}
+
+        <p
+          className={
+            isOutOfStock
+              ? "product-info__stock product-info__stock--out"
+              : isLowStock
+                ? "product-info__stock product-info__stock--low"
+                : "product-info__stock product-info__stock--available"
+          }
         >
-          {isOutOfStock ? "SOLD OUT" : "ADD TO CART"}
-        </PrimaryButton>
+          {isOutOfStock
+            ? "SOLD OUT"
+            : isLowStock
+              ? `ONLY ${product.stock} LEFT IN STOCK!`
+              : "IN STOCK"}
+        </p>
+      </div>
+
+      <div id="price-container">
+        <AddToCartButton product={product} />
+
         <div className="product-info__price">
           {product.isOnSale && product.salePrice !== null ? (
             <>

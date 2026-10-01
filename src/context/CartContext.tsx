@@ -25,9 +25,17 @@ export function CartProvider({ children }: CartProviderProps) {
 
   const addToCart = (product: Product) => {
     setCartItems((currentItems) => {
+      if (product.stock <= 0) {
+        return currentItems;
+      }
+
       const existingItem = currentItems.find((item) => item.id === product.id);
 
       if (existingItem) {
+        if (existingItem.quantity >= product.stock) {
+          return currentItems;
+        }
+
         return currentItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -44,20 +52,28 @@ export function CartProvider({ children }: CartProviderProps) {
     0,
   );
 
-  //Function to change the quantity of the product in cart. 
-   const changeQuantity = (id: string, change: number) => {
+  //Function to change the quantity of the product in cart.
+  const changeQuantity = (id: string, change: number) => {
     setCartItems((currentItems) =>
       currentItems.map((item) =>
         item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
+          ? {
+              ...item,
+              quantity: Math.min(
+                item.stock,
+                Math.max(1, item.quantity + change),
+              ),
+            }
           : item,
       ),
     );
   };
 
   //Function for removing a product in cart
-    const removeItem = (id: string) => {
-    setCartItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  const removeItem = (id: string) => {
+    setCartItems((currentItems) =>
+      currentItems.filter((item) => item.id !== id),
+    );
   };
 
   //Function to clear the cart

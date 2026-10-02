@@ -68,6 +68,5 @@ npm test -- --run
 Or use `npm test` to keep the tests running and rerun them when you edit a file.
 
 Our cart tests cover adding products, changing quantities, sale prices, removing products and clearing the cart.
-The cart resets when the page is refreshed. Placed orders are saved in db.json.
 
 *Built with React, teamwork and a slightly unreasonable amount of ducks. 🦆*

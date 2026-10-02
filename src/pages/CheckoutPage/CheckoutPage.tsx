@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Alert from "@mui/material/Alert";
 
 import CartList from "../../components/CartList/CartList";
@@ -14,9 +14,10 @@ import PaymentMethodForm, {
   type PaymentMethodFormData,
 } from "../../components/forms/PaymentMethodForm";
 
+import { fetchProducts, productsQueryKey } from "../../api/products";
+
 import { CartContext } from "../../context/CartContext";
 import type { CreateOrder, Order } from "../../types/order";
-import type { Product } from "../../types/product";
 
 import "./CheckoutPage.css";
 
@@ -63,17 +64,21 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
+  const { refetch: refetchProducts } = useQuery({
+    queryKey: productsQueryKey,
+    queryFn: fetchProducts,
+    enabled: false,
+  });
+
   const checkStock = async () => {
     setStockError(null);
 
     try {
-      const response = await fetch("http://localhost:3000/products");
+      const { data: products, error } = await refetchProducts();
 
-      if (!response.ok) {
+      if (error || !products) {
         throw new Error("Failed to check stock");
       }
-
-      const products: Product[] = await response.json();
 
       const unavailableItem = cartItems.find((item) => {
         const currentProduct = products.find(

@@ -150,7 +150,7 @@ function CheckoutPage() {
       items: cartItems.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
-        unitPrice:
+        Price:
           item.isOnSale && item.salePrice !== null
             ? item.salePrice
             : item.price,

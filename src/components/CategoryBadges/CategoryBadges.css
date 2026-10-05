@@ -19,33 +19,13 @@
   line-height: 1;
 }
 
-.category-badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 0.25rem;
-  min-height: 68px;
-}
-
-.category-chip.MuiChip-root {
-  height: 20px;
-  font-size: 0.6rem;
-  font-weight: 600;
-}
-
-.category-chip .MuiChip-label {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  line-height: 1;
-}
-
 @media (max-width: 600px) {
   .category-badges {
     gap: 0.2rem;
     min-height: 48px;
     margin-bottom: 0.25rem;
   }
+
   .category-chip.MuiChip-root {
     height: 18px;
     font-size: 0.5rem;

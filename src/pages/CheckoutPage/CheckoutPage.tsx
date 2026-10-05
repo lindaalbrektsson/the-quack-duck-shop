@@ -133,7 +133,7 @@ function CheckoutPage() {
       return;
     }
 
-    const orderNumber = `QD-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderNumber = `QD-${crypto.randomUUID()}`;
 
     const order: CreateOrder = {
       orderNumber,

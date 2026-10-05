@@ -21,12 +21,19 @@
   min-width: 2rem;
   text-align: center;
   background-color: white;
+  border-radius: 4px;
 }
 
 .cart-list__info {
   flex: 1;
+  min-width: 0;
 }
 
 .cart-list__info p {
   margin: 0.25rem 0;
+}
+
+.cart-list__info p:first-child {
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 1.05rem;
 }

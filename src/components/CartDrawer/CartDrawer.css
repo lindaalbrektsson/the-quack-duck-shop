@@ -26,6 +26,24 @@
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-right: 0.25rem;
+}
+
+.cart-drawer .cart-list__item {
+  background-color: rgba(255, 255, 255, 0.45);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.cart-drawer .cart-list__item img {
+  background-color: var(--color-light-yellow);
+  border-radius: 10px;
+  padding: 0.25rem;
+}
+
+.cart-drawer .cart-list__item > p:last-of-type {
+  font-weight: 600;
 }
 
 .cart-drawer__total {

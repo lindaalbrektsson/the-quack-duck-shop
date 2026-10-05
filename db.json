@@ -394,6 +394,151 @@
         }
       ],
       "id": "nOKmmElZPlc"
+    },
+    {
+      "orderNumber": "QD-0550b788-dbe0-4e27-bdbf-a1dde48764e7",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "swish",
+      "createdAt": "2026-10-05T10:02:57.299Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 1,
+          "unitPrice": 9.99
+        },
+        {
+          "productId": "duck-004",
+          "quantity": 1,
+          "unitPrice": 13.99
+        },
+        {
+          "productId": "duck-005",
+          "quantity": 1,
+          "unitPrice": 16.99
+        },
+        {
+          "productId": "duck-006",
+          "quantity": 1,
+          "unitPrice": 14.99
+        },
+        {
+          "productId": "duck-009",
+          "quantity": 1,
+          "unitPrice": 18.99
+        },
+        {
+          "productId": "duck-010",
+          "quantity": 1,
+          "unitPrice": 17.99
+        }
+      ],
+      "id": "dB_5bILfYDo"
+    },
+    {
+      "orderNumber": "QD-07f63f08-aabe-4195-b7eb-e22664eeca63",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "PostNord",
+      "shippingCost": 3.99,
+      "paymentMethod": "swish",
+      "createdAt": "2026-10-05T10:03:46.253Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 1,
+          "unitPrice": 9.99
+        }
+      ],
+      "id": "k5g3TCfNncU"
+    },
+    {
+      "orderNumber": "QD-0610A1F15087",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "PostNord",
+      "shippingCost": 3.99,
+      "paymentMethod": "swish",
+      "createdAt": "2026-10-05T10:06:47.211Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 1,
+          "unitPrice": 9.99
+        },
+        {
+          "productId": "duck-003",
+          "quantity": 1,
+          "unitPrice": 12.99
+        },
+        {
+          "productId": "duck-004",
+          "quantity": 1,
+          "unitPrice": 13.99
+        },
+        {
+          "productId": "duck-014",
+          "quantity": 1,
+          "unitPrice": 13.99
+        },
+        {
+          "productId": "duck-013",
+          "quantity": 1,
+          "unitPrice": 19.99
+        },
+        {
+          "productId": "duck-015",
+          "quantity": 1,
+          "unitPrice": 22.99
+        },
+        {
+          "productId": "duck-016",
+          "quantity": 1,
+          "unitPrice": 15.99
+        }
+      ],
+      "id": "asCcRRMc6h8"
+    },
+    {
+      "orderNumber": "QD-6A10AC64EA94",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "Swish",
+      "createdAt": "2026-10-05T10:13:43.016Z",
+      "items": [
+        {
+          "productId": "duck-002",
+          "quantity": 1,
+          "unitPrice": 16.99
+        },
+        {
+          "productId": "duck-001",
+          "quantity": 1,
+          "unitPrice": 9.99
+        }
+      ],
+      "id": "F2Dp92RRIX0"
+    },
+    {
+      "orderNumber": "QD-E115A06800BA",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "Klarna",
+      "createdAt": "2026-10-05T10:15:31.629Z",
+      "items": [
+        {
+          "productId": "duck-002",
+          "quantity": 1,
+          "unitPrice": 16.99
+        }
+      ],
+      "id": "XpMhKEeCac0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

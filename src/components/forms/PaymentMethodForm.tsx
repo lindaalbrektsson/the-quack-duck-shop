@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const paymentMethodSchema = z.object({
-  paymentMethod: z.enum(["card", "swish", "klarna"], {
+  paymentMethod: z.enum(["Card Payment", "Swish", "Klarna"], {
     message: "Please select a payment method",
   }),
 });
@@ -36,7 +36,11 @@ const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
       <h2>Select Payment Method</h2>
 
       <label className="shipping-option">
-        <input type="radio" value="card" {...register("paymentMethod")} />
+        <input
+          type="radio"
+          value="Card Payment"
+          {...register("paymentMethod")}
+        />
         <img
           className="shipping-logo"
           src="/payment/Mastercard-logo.png"
@@ -48,11 +52,11 @@ const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="swish" {...register("paymentMethod")} />
+        <input type="radio" value="Swish" {...register("paymentMethod")} />
         <img
           className="shipping-logo"
           src="/payment/Swish-logo.png"
-          alt="swish"
+          alt="Swish"
         />
         <div className="shipping-details">
           <span>Swish</span>
@@ -60,19 +64,21 @@ const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="klarna" {...register("paymentMethod")} />
+        <input type="radio" value="Klarna" {...register("paymentMethod")} />
         <img
           className="shipping-logo"
           src="/payment/Klarna-logo.png"
-          alt="klarna"
+          alt="Klarna"
         />
         <div className="shipping-details">
           <span>Klarna</span>
         </div>
       </label>
+
       {errors.paymentMethod && (
         <p role="alert">{errors.paymentMethod.message}</p>
       )}
+
       <PrimaryButton type="submit">Continue</PrimaryButton>
     </form>
   );

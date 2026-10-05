@@ -133,7 +133,11 @@ function CheckoutPage() {
       return;
     }
 
-    const orderNumber = `QD-${crypto.randomUUID()}`;
+    const orderNumber = `QD-${crypto
+      .randomUUID()
+      .replaceAll("-", "")
+      .slice(0, 12)
+      .toUpperCase()}`;
 
     const order: CreateOrder = {
       orderNumber,
@@ -254,33 +258,25 @@ function CheckoutPage() {
         <aside className="checkout-page__summary">
           <h2>Your Order Summary</h2>
 
-          {checkoutStep === "customer" && (
-            <>
-              <p>{totalQuantity} items</p>
+          <p>{totalQuantity} items</p>
 
-              <div className="checkout-page__summary-items">
-                {cartItems.map((item) => {
-                  const itemPrice =
-                    item.isOnSale && item.salePrice !== null
-                      ? item.salePrice
-                      : item.price;
+          <div className="checkout-page__summary-items">
+            {cartItems.map((item) => {
+              const itemPrice =
+                item.isOnSale && item.salePrice !== null
+                  ? item.salePrice
+                  : item.price;
 
-                  return (
-                    <div className="checkout-page__summary-item" key={item.id}>
-                      <span>{item.title}</span>
-                      <span>
-                        {item.quantity} × ${itemPrice.toFixed(2)}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
-
-          {checkoutStep !== "customer" && (
-            <CartList items={cartItems} readOnly />
-          )}
+              return (
+                <div className="checkout-page__summary-item" key={item.id}>
+                  <span>{item.title}</span>
+                  <span>
+                    {item.quantity} × ${itemPrice.toFixed(2)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
 
           <div className="checkout-page__summary-total">
             <strong>Total:</strong>

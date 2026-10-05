@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import type { Product } from "../types/product";
-import { CartContext } from "../context/CartContext";
-import PrimaryButton from "./PrimaryButton/PrimaryButton";
+import type { Product } from "../../types/product";
+import { CartContext } from "../../context/CartContext";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import "./AddToCartButton.css";
 
 type AddToCartButtonProps = {
   product: Product;
@@ -78,18 +79,7 @@ function AddToCartButton({ product }: AddToCartButtonProps) {
           onClose={() => setOpen(false)}
           severity={severity}
           variant="filled"
-          sx={{
-            backgroundColor:
-              severity === "success"
-                ? "var(--color-green)"
-                : "var(--color-light-orange)",
-            color: "var(--color-black)",
-            fontWeight: 600,
-            boxShadow: 3,
-            "& .MuiAlert-icon": {
-              color: "var(--color-black)",
-            },
-          }}
+          className={`add-to-cart-alert add-to-cart-alert--${severity}`}
         >
           {message}
         </Alert>

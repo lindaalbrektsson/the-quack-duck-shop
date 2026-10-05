@@ -3,7 +3,7 @@ import type { Product } from "../../types/product";
 import "./ProductCard.css";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
 import { Link } from "react-router-dom";
-import AddToCartButton from "../AddToCartButton";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
 
 interface ProductCardProps {
   product: Product;

@@ -1,0 +1,39 @@
+.add-to-cart-alert {
+  color: var(--color-black) !important;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
+  align-items: center;
+}
+
+.add-to-cart-alert--success {
+  background-color: var(--color-green-solid) !important;
+}
+
+.add-to-cart-alert--warning {
+  background-color: var(--color-orange-solid) !important;
+}
+
+.add-to-cart-alert .MuiAlert-icon {
+  color: var(--color-black);
+}
+
+@media (max-width: 600px) {
+  .add-to-cart-alert {
+    width: calc(100vw - 32px);
+    box-sizing: border-box;
+    font-size: 0.85rem;
+  }
+
+  .add-to-cart-alert .MuiAlert-icon {
+    margin-right: 6px;
+  }
+
+  .add-to-cart-alert .MuiAlert-message {
+    padding: 4px 0;
+  }
+
+  .add-to-cart-alert .MuiAlert-action {
+    padding-left: 6px;
+    margin-right: 0;
+  }
+}

@@ -44,9 +44,10 @@ const ProductDetailsPage = () => {
       </Link>
 
       <div className="product-details">
-        <div>
+        <div className="product-details__info">
           <ProductInfo product={product} />
         </div>
+
         <div className="product-details__gallery">
           <ProductGallery product={product} />
         </div>

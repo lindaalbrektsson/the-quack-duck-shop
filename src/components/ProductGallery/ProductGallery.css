@@ -1,18 +1,23 @@
 #main-img {
-    max-width: 500px;
-    max-height: 500px;
-    background-color: rgba(189, 111, 249, 0.46);
-    border: 2px solid black;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  background-color: rgba(189, 111, 249, 0.46);
+  border: 2px solid black;
+  box-sizing: border-box;
 }
 
 #second-img {
-    max-width: 200px;
-    max-height: 200px;
-    background-color: rgba(189, 111, 249, 0.46);
-    border: 2px solid black;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  background-color: rgba(189, 111, 249, 0.46);
+  border: 2px solid black;
+  box-sizing: border-box;
 }
 
 .product-gallery__thumbnail {
+  max-width: 200px;
   padding: 0;
   border: none;
   background: transparent;
@@ -21,4 +26,6 @@
 
 .product-gallery__thumbnail img {
   display: block;
+  width: 100%;
+  height: auto;
 }

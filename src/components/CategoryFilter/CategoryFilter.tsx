@@ -17,7 +17,7 @@ const CategoryFilter = ({
   const id = React.useId();
 
   return (
-    <Box sx={{ minWidth: 130 }}>
+    <Box sx={{ width: "100%" }}>
       <FormControl fullWidth>
         <p className="category-filter-title">Filter by category</p>
 

@@ -1,7 +1,7 @@
 export interface OrderItem {
   productId: string;
   quantity: number;
-  unitPrice: number;
+  Price: number;
 }
 
 export interface Order {

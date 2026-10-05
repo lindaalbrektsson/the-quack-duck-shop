@@ -15,8 +15,25 @@
 
 .product-details {
   display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  width: 100%;
 }
 
+.product-details__info,
 .product-details__gallery {
-  margin-left: 10%;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .product-details {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .product-details__info,
+  .product-details__gallery {
+    width: 100%;
+  }
 }

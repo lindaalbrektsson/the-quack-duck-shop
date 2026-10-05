@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import "./index.css";
 import App from "./App.tsx";
 
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./context/CartProvider";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(

@@ -1,7 +1,7 @@
 import type { Product } from "../../types/product";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
 import Rating from "@mui/material/Rating";
-import AddToCartButton from "../AddToCartButton";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import "./ProductInfo.css";
 
 type Props = {

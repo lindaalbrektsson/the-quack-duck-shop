@@ -32,3 +32,21 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .product-list-page__header {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .product-list-page__intro,
+  .product-list-page__filter {
+    grid-column: 1;
+  }
+
+  .product-list-page__filter {
+    justify-self: center;
+    width: 180px;
+    text-align: center;
+  }
+}

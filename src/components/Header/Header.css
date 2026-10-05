@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background-color: var(--color-blue);
+  background-color: var(--color-blue-solid);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -34,4 +34,14 @@
   background-color: var(--color-pink);
   color: var(--color-black);
   font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    padding: 0.75rem 1rem;
+  }
+
+  .logo {
+    width: 200px;
+  }
 }

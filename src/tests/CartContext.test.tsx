@@ -5,7 +5,8 @@ import "@testing-library/jest-dom/vitest";
 import { useContext } from "react";
 import { MemoryRouter } from "react-router-dom";
 
-import { CartContext, CartProvider } from "../context/CartContext";
+import { CartContext } from "../context/CartContext";
+import { CartProvider } from "../context/CartProvider";
 import ProductCard from "../components/ProductCard/ProductCard";
 import CartList from "../components/CartList/CartList";
 import type { Product } from "../types/product";

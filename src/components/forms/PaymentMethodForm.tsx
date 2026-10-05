@@ -79,7 +79,7 @@ const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
         <p role="alert">{errors.paymentMethod.message}</p>
       )}
 
-      <PrimaryButton type="submit">Continue</PrimaryButton>
+      <PrimaryButton type="submit">Place Order</PrimaryButton>
     </form>
   );
 };

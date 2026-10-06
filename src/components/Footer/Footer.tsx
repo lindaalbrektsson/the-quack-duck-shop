@@ -15,7 +15,11 @@ function Footer() {
           </Link>
         </p>
 
-        <p>CONTACT US</p>
+        <p>
+          <Link to="/contact" className="footer-link">
+            CONTACT US
+          </Link>
+        </p>
       </div>
     </footer>
   );

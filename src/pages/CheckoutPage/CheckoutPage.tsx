@@ -14,7 +14,7 @@ import PaymentMethodForm, {
   type PaymentMethodFormData,
 } from "../../components/forms/PaymentMethodForm";
 
-import { fetchProducts, productsQueryKey } from "../../api/products";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
 
 import { CartContext } from "../../context/CartContext";
 import type { CreateOrder, Order } from "../../types/order";

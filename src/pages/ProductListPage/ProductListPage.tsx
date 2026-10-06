@@ -4,7 +4,7 @@ import ProductGrid from "../../components/ProductGrid/ProductGrid";
 import type { Product, SelectedCategory } from "../../types/product";
 import { useSearchParams } from "react-router-dom";
 import CategoryFilter from "../../components/CategoryFilter/CategoryFilter";
-import { fetchProducts, productsQueryKey } from "../../api/products";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
 
 function ProductListPage() {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -42,7 +42,7 @@ const OrderSummary = ({ order }: OrderProps) => {
   }
 
   const productTotal = order.items.reduce((total, item) => {
-    return total + item.Price * item.quantity;
+    return total + item.price * item.quantity;
   }, 0);
 
   const totalQuantity = order.items.reduce((sum, item) => {
@@ -72,7 +72,7 @@ const OrderSummary = ({ order }: OrderProps) => {
               <div className="order-list__info">
                 <strong>{product?.title}</strong>
                 <span className={item.isOnSale ? "sale-price" : ""}>
-                  {item.quantity} × ${item.Price.toFixed(2)}
+                  {item.quantity} × ${item.price.toFixed(2)}
                 </span>
               </div>
             </li>

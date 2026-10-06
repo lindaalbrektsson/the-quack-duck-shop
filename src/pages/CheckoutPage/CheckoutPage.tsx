@@ -151,7 +151,7 @@ function CheckoutPage() {
         productId: item.id,
         quantity: item.quantity,
         isOnSale: item.isOnSale && item.salePrice !== null,
-        Price:
+        price:
           item.isOnSale && item.salePrice !== null
             ? item.salePrice
             : item.price,

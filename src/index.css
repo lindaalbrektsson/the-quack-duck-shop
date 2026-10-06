@@ -30,3 +30,7 @@ body {
 #root {
   min-height: 100vh;
 }
+
+.sale-price {
+  color: var(--color-sale);
+}

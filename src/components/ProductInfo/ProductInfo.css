@@ -51,10 +51,6 @@
   font-weight: bold;
 }
 
-.product-info__sale-price {
-  color: var(--color-sale);
-}
-
 .product-info__original-price {
   color: var(--color-black);
   font-size: 1rem;

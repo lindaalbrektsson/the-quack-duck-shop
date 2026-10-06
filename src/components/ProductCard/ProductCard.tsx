@@ -41,7 +41,7 @@ function ProductCard({ product }: ProductCardProps) {
         <span
           className={
             product.isOnSale && product.salePrice !== null
-              ? "product-card__price product-card__sale-price"
+              ? "product-card__price sale-price"
               : "product-card__price"
           }
         >

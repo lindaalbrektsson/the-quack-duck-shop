@@ -6,6 +6,7 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage/ProductDetailsPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import ContactPage from "./pages/ContactPage/ContactPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage/OrderConfirmationPage";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
           element={<OrderConfirmationPage />}
         />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
     </Routes>
   );

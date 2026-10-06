@@ -150,6 +150,7 @@ function CheckoutPage() {
       items: cartItems.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
+        isOnSale: item.isOnSale && item.salePrice !== null,
         Price:
           item.isOnSale && item.salePrice !== null
             ? item.salePrice
@@ -270,7 +271,11 @@ function CheckoutPage() {
               return (
                 <div className="checkout-page__summary-item" key={item.id}>
                   <span>{item.title}</span>
-                  <span>
+                  <span
+                    className={
+                      item.isOnSale && item.salePrice !== null ? "sale-price" : ""
+                    }
+                  >
                     {item.quantity} × ${itemPrice.toFixed(2)}
                   </span>
                 </div>

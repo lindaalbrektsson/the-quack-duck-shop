@@ -2,6 +2,7 @@ export interface OrderItem {
   productId: string;
   quantity: number;
   Price: number;
+  isOnSale?: boolean;
 }
 
 export interface Order {

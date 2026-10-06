@@ -30,7 +30,11 @@ function CartList({
           <div className="cart-list__info">
             <p>{item.title}</p>
             {/* Use the sale price when the product is on sale. */}
-            <p>
+            <p
+              className={
+                item.isOnSale && item.salePrice !== null ? "sale-price" : ""
+              }
+            >
               Price: $
               {(item.isOnSale && item.salePrice !== null
                 ? item.salePrice
@@ -64,7 +68,11 @@ function CartList({
               </IconButton>
             </div>
           )}
-          <p>
+          <p
+            className={
+              item.isOnSale && item.salePrice !== null ? "sale-price" : ""
+            }
+          >
             Total: $
             {(
               (item.isOnSale && item.salePrice !== null

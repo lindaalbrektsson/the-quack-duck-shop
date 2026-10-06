@@ -71,7 +71,7 @@ const OrderSummary = ({ order }: OrderProps) => {
 
               <div className="order-list__info">
                 <strong>{product?.title}</strong>
-                <span>
+                <span className={item.isOnSale ? "sale-price" : ""}>
                   {item.quantity} × ${item.Price.toFixed(2)}
                 </span>
               </div>

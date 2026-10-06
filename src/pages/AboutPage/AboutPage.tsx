@@ -1,16 +1,17 @@
 import "./AboutPage.css";
+import "../../styles/InfoPage.css";
 
 function AboutPage() {
   return (
-    <section className="about-page">
+    <section className="info-page">
       <h1>ABOUT THE DUCK TEAM</h1>
       <p>
         We are Linda, Isabell and Oskar, three frontend students building The
         Quack Duck Shop together.
       </p>
 
-      <div className="about-page__team">
-        <article className="about-page__member">
+      <div className="info-page__cards">
+        <article className="info-page__card">
           <img
             className="about-page__image"
             src="/team/linda-duck.png"
@@ -24,7 +25,7 @@ function AboutPage() {
           </p>
         </article>
 
-        <article className="about-page__member">
+        <article className="info-page__card">
           <img
             className="about-page__image"
             src="/team/oskar-duck.png"
@@ -39,7 +40,7 @@ function AboutPage() {
           </p>
         </article>
 
-        <article className="about-page__member">
+        <article className="info-page__card">
           <img
             className="about-page__image"
             src="/team/isabell-duck.png"

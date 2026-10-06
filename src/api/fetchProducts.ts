@@ -1,5 +1,7 @@
 import type { Product } from "../types/product";
 
+
+//For all products
 export const productsQueryKey = ["products"] as const;
 
 export async function fetchProducts(): Promise<Product[]> {
@@ -12,20 +14,19 @@ export async function fetchProducts(): Promise<Product[]> {
   return response.json();
 }
 
-export async function updateProductStock(
-  id: string,
-  stock: number,
+//For specific products
+export const productIdQueryKey = (productId: string) => 
+  ["product", productId] as const;
+
+export async function fetchProductById(
+  productId: string,
 ): Promise<Product> {
-  const response = await fetch(`http://localhost:3000/products/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ stock }),
-  });
+  const response = await fetch (
+    `http://localhost:3000/products/${productId}`
+  );
 
   if (!response.ok) {
-    throw new Error("Failed to update product stock");
+    throw new Error ("Failed to load product")
   }
 
   return response.json();

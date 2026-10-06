@@ -1,29 +1,21 @@
 import { useQueries } from "@tanstack/react-query";
 import type { Order } from "../../types/order";
-import type { Product } from "../../types/product";
+import { productIdQueryKey, fetchProductById } from "../../api/fetchProducts";
 import "./OrderSummary.css";
+
 
 type OrderProps = {
   order: Order;
 };
 
 const OrderSummary = ({ order }: OrderProps) => {
-  const productQueries = useQueries({
-    queries: order.items.map((item) => ({
-      queryKey: ["product", item.productId],
-      queryFn: async () => {
-        const response = await fetch(
-          `http://localhost:3000/products/${item.productId}`,
-        );
 
-        if (!response.ok) {
-          throw new Error("Failed to load product");
-        }
-
-        return response.json() as Promise<Product>;
-      },
-    })),
-  });
+    const productQueries = useQueries({
+        queries: order.items.map((item) => ({
+            queryKey: productIdQueryKey(item.productId),
+            queryFn: () => fetchProductById(item.productId),
+        })),
+    });
 
   const isLoading = productQueries.some((query) => query.isLoading);
   const isError = productQueries.some((query) => query.isError);

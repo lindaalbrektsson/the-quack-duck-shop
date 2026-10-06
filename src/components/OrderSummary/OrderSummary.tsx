@@ -3,7 +3,6 @@ import type { Order } from "../../types/order";
 import { productIdQueryKey, fetchProductById } from "../../api/fetchProducts";
 import "./OrderSummary.css";
 
-
 type OrderProps = {
   order: Order;
 };
@@ -32,6 +31,7 @@ const OrderSummary = ({ order }: OrderProps) => {
       </p>
     );
   }
+
 
   const productTotal = order.items.reduce((total, item) => {
     return total + item.price * item.quantity;

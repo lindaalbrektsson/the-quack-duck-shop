@@ -14,7 +14,8 @@ import PaymentMethodForm, {
   type PaymentMethodFormData,
 } from "../../components/forms/PaymentMethodForm";
 
-import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import { fetchProductById, fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import { updateProductStock } from "../../api/patchProduct";
 
 import { CartContext } from "../../context/CartContext";
 import type { CreateOrder, Order } from "../../types/order";
@@ -122,6 +123,16 @@ function CheckoutPage() {
     },
   });
 
+  const updateStockMutation = useMutation({
+    mutationFn: ({
+      productId,
+      stock,
+    }: {
+      productId: string;
+      stock: number;
+    }) => updateProductStock(productId, stock),
+  });
+
   const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
@@ -159,6 +170,17 @@ function CheckoutPage() {
     };
 
     await createOrderMutation.mutateAsync(order);
+
+    for (const item of order.items) {
+      const product = await fetchProductById(item.productId);
+
+      const newStock = product.stock - item.quantity
+
+      await updateStockMutation.mutateAsync({
+        productId: item.productId,
+        stock: newStock,
+      });
+    };
 
     clearCart();
     navigate(`/order-confirmation/${orderNumber}`);

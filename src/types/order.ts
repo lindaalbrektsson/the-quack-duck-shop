@@ -1,7 +1,8 @@
 export interface OrderItem {
   productId: string;
   quantity: number;
-  Price: number;
+  price: number;
+  isOnSale?: boolean;
 }
 
 export interface Order {

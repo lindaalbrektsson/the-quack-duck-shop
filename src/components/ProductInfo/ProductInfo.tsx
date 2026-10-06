@@ -51,7 +51,7 @@ const ProductInfo = ({ product }: Props) => {
         <div className="product-info__price">
           {product.isOnSale && product.salePrice !== null ? (
             <>
-              <span className="product-info__sale-price">
+              <span className="sale-price">
                 ${displayPrice.toFixed(2)}
               </span>
               <s className="product-info__original-price">

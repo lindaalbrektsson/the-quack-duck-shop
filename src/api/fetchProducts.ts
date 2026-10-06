@@ -18,7 +18,7 @@ export async function fetchProducts(): Promise<Product[]> {
 export const productIdQueryKey = (productId: string) => 
   ["product", productId] as const;
 
-export async function fetchIdProduct(
+export async function fetchProductById(
   productId: string,
 ): Promise<Product> {
   const response = await fetch (

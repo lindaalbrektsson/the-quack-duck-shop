@@ -1,6 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 import type { Order } from "../../types/order";
-import { productIdQueryKey, fetchIdProduct } from "../../api/fetchProducts";
+import { productIdQueryKey, fetchProductById } from "../../api/fetchProducts";
 import "./OrderSummary.css";
 
 
@@ -13,7 +13,7 @@ const OrderSummary = ({ order }: OrderProps) => {
     const productQueries = useQueries({
         queries: order.items.map((item) => ({
             queryKey: productIdQueryKey(item.productId),
-            queryFn: () => fetchIdProduct(item.productId),
+            queryFn: () => fetchProductById(item.productId),
         })),
     });
 

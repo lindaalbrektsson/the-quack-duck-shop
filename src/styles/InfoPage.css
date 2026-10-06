@@ -1,0 +1,43 @@
+.info-page h1,
+.info-page > h2 {
+  font-family: "Bubblegum Sans", sans-serif;
+  text-align: center;
+}
+
+.info-page > h2 {
+  margin-top: 2rem;
+}
+
+.info-page > p {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.info-page__cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.info-page__card {
+  flex: 1 1 250px;
+  min-width: 0;
+  padding: 1.5rem;
+  background-color: var(--color-light-green);
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.info-page__card h2 {
+  font-family: "Bubblegum Sans", sans-serif;
+  font-size: 1.2rem;
+}
+
+.info-page__card p {
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.info-page__card a {
+  color: var(--color-black);
+}

@@ -79,11 +79,17 @@ function CheckoutPage() {
     const checkStock = async () => {
       setStockError(null);
       
-      try {
         const { data: products, error } = await refetchProducts();
         
-        if (error || !products) {
-          throw new Error("Failed to check stock");
+        if ( isError || error || !products) {
+          setStockError (
+            "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+          )
+
+        return {
+          isAvailable:false,
+          products: null,
+        };
         }
         
         
@@ -109,16 +115,6 @@ function CheckoutPage() {
         isAvailable:true,
         products,
       };
-      
-    } catch {
-      setStockError(
-        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
-      );
-      return {
-        isAvailable:false,
-        products: null,
-      };
-    }
   };
   
   const createOrderMutation = useMutation<Order, Error, CreateOrder>({
@@ -290,10 +286,6 @@ function CheckoutPage() {
               {isFetching && (
                 <p>Checking duck stock... 🐥</p>
               )}
-
-              {isError && (
-                <p>Oh Quack! We couldn't check the duck stock. 🐥</p>
-              )} 
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

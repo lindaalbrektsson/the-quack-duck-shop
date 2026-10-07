@@ -14,7 +14,8 @@ import PaymentMethodForm, {
   type PaymentMethodFormData,
 } from "../../components/forms/PaymentMethodForm";
 
-import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import {  fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import { updateProductStock } from "../../api/patchProduct";
 
 import { CartContext } from "../../context/CartContext";
 import type { CreateOrder, Order } from "../../types/order";
@@ -43,6 +44,7 @@ function CheckoutPage() {
 
   const [shippingCost, setShippingCost] = useState(0);
 
+
   const handleQuantityChange = (id: string, change: number) => {
     setStockError(null);
     changeQuantity(id, change);
@@ -64,11 +66,23 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const { refetch: refetchProducts } = useQuery({
+  const { 
+    refetch: refetchProducts,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: productsQueryKey,
     queryFn: fetchProducts,
     enabled: false,
   });
+  
+  if (isLoading) {
+    <p>Checking duck stock... 🐥</p>
+  }
+
+  if (isError) {
+    <p>Oh Quack! We couldn't check the duck stock. 🐥</p>
+  }
 
   const checkStock = async () => {
     setStockError(null);
@@ -79,6 +93,7 @@ function CheckoutPage() {
       if (error || !products) {
         throw new Error("Failed to check stock");
       }
+
 
       const unavailableItem = cartItems.find((item) => {
         const currentProduct = products.find(
@@ -92,15 +107,25 @@ function CheckoutPage() {
         setStockError(
           `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
         );
-        return false;
+        return {
+          isAvailable:false,
+          products: null,
+        };
       }
 
-      return true;
+      return {
+        isAvailable:true,
+        products,
+      };
+
     } catch {
       setStockError(
         "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
       );
-      return false;
+        return {
+          isAvailable:false,
+          products: null,
+        };
     }
   };
 
@@ -122,14 +147,24 @@ function CheckoutPage() {
     },
   });
 
+  const updateStockMutation = useMutation({
+    mutationFn: ({
+      productId,
+      stock,
+    }: {
+      productId: string;
+      stock: number;
+    }) => updateProductStock(productId, stock),
+  });
+
   const handlePaymentContinue = async (data: PaymentMethodFormData) => {
     if (!customerInfo || !shippingInfo) {
       return;
     }
 
-    const stockIsAvailable = await checkStock();
+    const { isAvailable, products } = await checkStock();
 
-    if (!stockIsAvailable) {
+    if (!isAvailable || !products) {
       return;
     }
 
@@ -159,6 +194,23 @@ function CheckoutPage() {
     };
 
     await createOrderMutation.mutateAsync(order);
+
+    
+    for (const item of order.items) {
+      const product = products.find(
+        (product) => product.id === item.productId);
+
+        if (!product) {
+          return;
+        }
+
+        const newStock = product.stock - item.quantity;
+
+        await updateStockMutation.mutateAsync({
+          productId: item.productId,
+          stock: newStock,
+        })
+    }
 
     clearCart();
     navigate(`/order-confirmation/${orderNumber}`);
@@ -251,6 +303,14 @@ function CheckoutPage() {
                 <p>
                   Oh quack! We couldn't place your order. Please try again. 🐥
                 </p>
+              )}
+
+              {updateStockMutation.isPending && (
+                <p> Updating duck stock... Please quack tight! 🐥</p>
+              )}
+
+              {updateStockMutation.isError && (
+                <p>Oh quack! We couldn't update the duck stock. Pleace try again. 🐥</p>
               )}
             </>
           )}

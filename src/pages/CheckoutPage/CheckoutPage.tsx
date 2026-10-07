@@ -66,11 +66,23 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const { refetch: refetchProducts } = useQuery({
+  const { 
+    refetch: refetchProducts,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: productsQueryKey,
     queryFn: fetchProducts,
     enabled: false,
   });
+  
+  if (isLoading) {
+    <p>Checking duck stock... 🐥</p>
+  }
+
+  if (isError) {
+    <p>Oh Quack! We couldn't check the duck stock. 🐥</p>
+  }
 
   const checkStock = async () => {
     setStockError(null);

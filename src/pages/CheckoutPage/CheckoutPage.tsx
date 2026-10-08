@@ -112,10 +112,6 @@ function CheckoutPage() {
     const { data: products, error } = await refetchProducts();
 
     if (error || !products) {
-      setStockError(
-        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
-      );
-
       return {
         isAvailable: false,
         products: null,
@@ -309,7 +305,24 @@ function CheckoutPage() {
 
               {isFetching && <p>Checking duck stock... 🐥</p>}
 
-              {isError && <p>Can't check stock.</p>}
+              {isError && (
+                <>
+                <Alert
+                  severity="warning"
+                  variant="filled"
+                  className="checkout-page__stock-alert">
+                  Oh quack! We couldn't check the duck stock right now. Please try again. 🐥
+                </Alert>
+
+                <button
+                  type="button"
+                    className="checkout-page__back-button"
+                    onClick={() => setCheckoutStep("customer")}
+                  >
+                    ← Return to Cart
+                </button>
+                </>
+              )}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

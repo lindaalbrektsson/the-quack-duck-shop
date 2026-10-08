@@ -6,15 +6,13 @@ import Alert from "@mui/material/Alert";
 import CartList from "../../components/CartList/CartList";
 import CustomerInfoForm, {
   type CustomerFormData,
-} from "../../components/forms/CustomerInfoForm";
-import ShippingForm, {
-  type ShippingFormData,
-} from "../../components/forms/ShippingForm";
+} from "../../forms/CustomerInfoForm";
+import ShippingForm, { type ShippingFormData } from "../../forms/ShippingForm";
 import PaymentMethodForm, {
   type PaymentMethodFormData,
-} from "../../components/forms/PaymentMethodForm";
+} from "../../forms/PaymentMethodForm";
 
-import {  fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
 import { updateProductStock } from "../../api/patchProduct";
 
 import { CartContext } from "../../context/CartContext";
@@ -44,7 +42,6 @@ function CheckoutPage() {
 
   const [shippingCost, setShippingCost] = useState(0);
 
-
   const handleQuantityChange = (id: string, change: number) => {
     setStockError(null);
     changeQuantity(id, change);
@@ -65,8 +62,8 @@ function CheckoutPage() {
     setShippingCost(data.shippingCost);
     setCheckoutStep("payment");
   };
-  
-  const { 
+
+  const {
     refetch: refetchProducts,
     isFetching,
     isError,
@@ -76,47 +73,44 @@ function CheckoutPage() {
     enabled: false,
   });
 
-    const checkStock = async () => {
-      setStockError(null);
-      
-        const { data: products, error } = await refetchProducts();
-        
-        if ( error || !products) {
-          setStockError (
-            "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
-          )
+  const checkStock = async () => {
+    setStockError(null);
 
-        return {
-          isAvailable:false,
-          products: null,
-        };
-        }
-        
-        
-        const unavailableItem = cartItems.find((item) => {
-        const currentProduct = products.find(
-          (product) => product.id === item.id,
-        );
+    const { data: products, error } = await refetchProducts();
 
-        return !currentProduct || item.quantity > currentProduct.stock;
-      });
+    if (error || !products) {
+      setStockError(
+        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+      );
 
-      if (unavailableItem) {
-        setStockError(
-          `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
-        );
-        return {
-          isAvailable:false,
-          products: null,
-        };
-      }
-      
       return {
-        isAvailable:true,
-        products,
+        isAvailable: false,
+        products: null,
       };
+    }
+
+    const unavailableItem = cartItems.find((item) => {
+      const currentProduct = products.find((product) => product.id === item.id);
+
+      return !currentProduct || item.quantity > currentProduct.stock;
+    });
+
+    if (unavailableItem) {
+      setStockError(
+        `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
+      );
+      return {
+        isAvailable: false,
+        products: null,
+      };
+    }
+
+    return {
+      isAvailable: true,
+      products,
+    };
   };
-  
+
   const createOrderMutation = useMutation<Order, Error, CreateOrder>({
     mutationFn: async (order) => {
       const response = await fetch("http://localhost:3000/orders", {
@@ -136,13 +130,8 @@ function CheckoutPage() {
   });
 
   const updateStockMutation = useMutation({
-    mutationFn: ({
-      productId,
-      stock,
-    }: {
-      productId: string;
-      stock: number;
-    }) => updateProductStock(productId, stock),
+    mutationFn: ({ productId, stock }: { productId: string; stock: number }) =>
+      updateProductStock(productId, stock),
   });
 
   const handlePaymentContinue = async (data: PaymentMethodFormData) => {
@@ -183,21 +172,19 @@ function CheckoutPage() {
 
     await createOrderMutation.mutateAsync(order);
 
-    
     for (const item of order.items) {
-      const product = products.find(
-        (product) => product.id === item.productId);
+      const product = products.find((product) => product.id === item.productId);
 
-        if (!product) {
-          return;
-        }
+      if (!product) {
+        return;
+      }
 
-        const newStock = product.stock - item.quantity;
+      const newStock = product.stock - item.quantity;
 
-        await updateStockMutation.mutateAsync({
-          productId: item.productId,
-          stock: newStock,
-        })
+      await updateStockMutation.mutateAsync({
+        productId: item.productId,
+        stock: newStock,
+      });
     }
 
     clearCart();
@@ -261,7 +248,11 @@ function CheckoutPage() {
                 ← Back to Shipping Details
               </button>
 
-              <PaymentMethodForm onContinue={handlePaymentContinue} isPending={createOrderMutation.isPending} isFetching={isFetching} />
+              <PaymentMethodForm
+                onContinue={handlePaymentContinue}
+                isPending={createOrderMutation.isPending}
+                isFetching={isFetching}
+              />
 
               {stockError && (
                 <>
@@ -283,13 +274,9 @@ function CheckoutPage() {
                 </>
               )}
 
-              {isFetching && (
-                <p>Checking duck stock... 🐥</p>
-              )}
+              {isFetching && <p>Checking duck stock... 🐥</p>}
 
-              {isError && (
-                <p>Can't check stock.</p>
-              )} 
+              {isError && <p>Can't check stock.</p>}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>
@@ -306,7 +293,10 @@ function CheckoutPage() {
               )}
 
               {updateStockMutation.isError && (
-                <p>Oh quack! We couldn't update the duck stock. Pleace try again. 🐥</p>
+                <p>
+                  Oh quack! We couldn't update the duck stock. Pleace try again.
+                  🐥
+                </p>
               )}
             </>
           )}
@@ -329,7 +319,9 @@ function CheckoutPage() {
                   <span>{item.title}</span>
                   <span
                     className={
-                      item.isOnSale && item.salePrice !== null ? "sale-price" : ""
+                      item.isOnSale && item.salePrice !== null
+                        ? "sale-price"
+                        : ""
                     }
                   >
                     {item.quantity} × ${itemPrice.toFixed(2)}

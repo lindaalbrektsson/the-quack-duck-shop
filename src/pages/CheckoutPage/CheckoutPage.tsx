@@ -27,8 +27,14 @@ function CheckoutPage() {
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
-    useContext(CartContext)!;
+  const {
+    changeQuantity,
+    updateCartItemStock,
+    cartItems,
+    removeItem,
+    totalPrice,
+    clearCart,
+  } = useContext(CartContext)!;
 
   const [stockError, setStockError] = useState<string | null>(null);
 
@@ -42,9 +48,36 @@ function CheckoutPage() {
 
   const [shippingCost, setShippingCost] = useState(0);
 
-  const handleQuantityChange = (id: string, change: number) => {
+  const handleQuantityChange = async (id: string, change: number) => {
     setStockError(null);
-    changeQuantity(id, change);
+
+    if (change < 0) {
+      changeQuantity(id, change);
+      return;
+    }
+
+    try {
+      const products = await fetchProducts();
+      const product = products.find((product) => product.id === id);
+      const cartItem = cartItems.find((item) => item.id === id);
+
+      if (!product || !cartItem) {
+        setStockError("Oh quack! We couldn't find this duck. 🐥");
+        return;
+      }
+
+      updateCartItemStock(id, product.stock);
+
+      if (cartItem.quantity >= product.stock) {
+        return;
+      }
+
+      changeQuantity(id, change);
+    } catch {
+      setStockError(
+        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+      );
+    }
   };
 
   const handleRemoveItem = (id: string) => {

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import {
-  fetchProducts,
-  productsQueryKey,
-  updateProductStock,
-} from "../../api/products";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+
+import { updateProductStock } from "../../api/patchProduct";
 
 import "./AdminPage.css";
 

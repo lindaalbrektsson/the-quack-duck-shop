@@ -1,6 +1,6 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Alert from "@mui/material/Alert";
 
 import CartList from "../../components/CartList/CartList";
@@ -12,7 +12,7 @@ import PaymentMethodForm, {
   type PaymentMethodFormData,
 } from "../../forms/PaymentMethodForm";
 
-import { fetchProducts } from "../../api/fetchProducts";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
 import { updateProductStock } from "../../api/patchProduct";
 
 import { CartContext } from "../../context/CartContext";
@@ -22,25 +22,15 @@ import "./CheckoutPage.css";
 
 function CheckoutPage() {
   const navigate = useNavigate();
-  const submittingRef = useRef(false);
-  const checkingStockRef = useRef(false);
 
   const [checkoutStep, setCheckoutStep] = useState<
     "customer" | "shipping" | "payment"
   >("customer");
 
-  const {
-    changeQuantity,
-    cartItems,
-    removeItem,
-    totalPrice,
-    clearCart,
-    updateCartItemStock,
-  } = useContext(CartContext)!;
+  const { changeQuantity, cartItems, removeItem, totalPrice, clearCart } =
+    useContext(CartContext)!;
 
   const [stockError, setStockError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isCheckingStock, setIsCheckingStock] = useState(false);
 
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
@@ -52,78 +42,9 @@ function CheckoutPage() {
 
   const [shippingCost, setShippingCost] = useState(0);
 
-  // Check current stock when increasing quantity.
-  const handleQuantityChange = async (id: string, change: number) => {
-    if (checkingStockRef.current || submittingRef.current) {
-      return;
-    }
-
+  const handleQuantityChange = (id: string, change: number) => {
     setStockError(null);
-
-    if (change < 0) {
-      changeQuantity(id, change);
-      return;
-    }
-
-    const cartItem = cartItems.find((item) => item.id === id);
-
-    if (!cartItem) {
-      return;
-    }
-
-    checkingStockRef.current = true;
-    setIsCheckingStock(true);
-
-    try {
-      const products = await fetchProducts();
-
-      const currentProduct = products.find((product) => product.id === id);
-
-      if (!currentProduct) {
-        removeItem(id);
-        setStockError(
-          `Oh quack! ${cartItem.title} is no longer available and has been removed from your cart. 🐥`,
-        );
-        return;
-      }
-
-      const currentStock = currentProduct.stock;
-
-      // Always update the cart with the latest stock.
-      updateCartItemStock(id, currentStock);
-
-      if (currentStock <= 0) {
-        setStockError(
-          `Oh quack! ${cartItem.title} is sold out and has been removed from your cart. 🐥`,
-        );
-        return;
-      }
-
-      if (cartItem.quantity > currentStock) {
-        setStockError(
-          `Oh quack! Only ${currentStock} ${cartItem.title} available. Your cart has been updated automatically. 🐥`,
-        );
-        return;
-      }
-
-      if (cartItem.quantity >= currentStock) {
-        setStockError(
-          `Oh quack! You already have all ${currentStock} available ${cartItem.title} in your cart. 🐥`,
-        );
-        return;
-      }
-
-      // Increase quantity after checking the latest stock.
-      changeQuantity(id, change);
-    } catch (error) {
-      console.error("Stock check failed:", error);
-      setStockError(
-        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
-      );
-    } finally {
-      checkingStockRef.current = false;
-      setIsCheckingStock(false);
-    }
+    changeQuantity(id, change);
   };
 
   const handleRemoveItem = (id: string) => {
@@ -132,14 +53,6 @@ function CheckoutPage() {
   };
 
   const handleCustomerContinue = (data: CustomerFormData) => {
-    if (cartItems.length === 0) {
-      setStockError(
-        "Oh quack! Your cart is empty. Please add some ducks first. 🐥",
-      );
-      return;
-    }
-
-    setStockError(null);
     setCustomerInfo(data);
     setCheckoutStep("shipping");
   };
@@ -150,81 +63,22 @@ function CheckoutPage() {
     setCheckoutStep("payment");
   };
 
-  const handleReturnToCart = () => {
-    setCheckoutStep("customer");
-  };
+  const {
+    refetch: refetchProducts,
+    isFetching,
+    isError,
+  } = useQuery({
+    queryKey: productsQueryKey,
+    queryFn: fetchProducts,
+    enabled: false,
+  });
 
-  // Check current stock before placing an order.
   const checkStock = async () => {
     setStockError(null);
 
-    if (cartItems.length === 0) {
-      setStockError(
-        "Oh quack! Your cart is empty. Please add some ducks before placing an order. 🐥",
-      );
+    const { data: products, error } = await refetchProducts();
 
-      return {
-        isAvailable: false,
-        products: null,
-      };
-    }
-
-    try {
-      const products = await fetchProducts();
-      const messages: string[] = [];
-
-      cartItems.forEach((item) => {
-        const currentProduct = products.find(
-          (product) => product.id === item.id,
-        );
-
-        if (!currentProduct) {
-          removeItem(item.id);
-
-          messages.push(
-            `${item.title} is no longer available and has been removed from your cart.`,
-          );
-          return;
-        }
-
-        const currentStock = currentProduct.stock;
-
-        // Sync stock even when it has increased.
-        if (item.stock !== currentStock) {
-          updateCartItemStock(item.id, currentStock);
-        }
-
-        if (item.quantity > currentStock) {
-          if (currentStock <= 0) {
-            messages.push(
-              `${item.title} is sold out and has been removed from your cart.`,
-            );
-          } else {
-            messages.push(
-              `Only ${currentStock} ${currentProduct.title} available.`,
-            );
-          }
-        }
-      });
-
-      if (messages.length > 0) {
-        setStockError(
-          `Oh quack! ${messages.join(" ")} Your cart has been updated automatically. Please review it before continuing. 🐥`,
-        );
-
-        return {
-          isAvailable: false,
-          products: null,
-        };
-      }
-
-      return {
-        isAvailable: true,
-        products,
-      };
-    } catch (error) {
-      console.error("Stock check failed:", error);
-
+    if (error || !products) {
       setStockError(
         "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
       );
@@ -234,6 +88,27 @@ function CheckoutPage() {
         products: null,
       };
     }
+
+    const unavailableItem = cartItems.find((item) => {
+      const currentProduct = products.find((product) => product.id === item.id);
+
+      return !currentProduct || item.quantity > currentProduct.stock;
+    });
+
+    if (unavailableItem) {
+      setStockError(
+        `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
+      );
+      return {
+        isAvailable: false,
+        products: null,
+      };
+    }
+
+    return {
+      isAvailable: true,
+      products,
+    };
   };
 
   const createOrderMutation = useMutation<Order, Error, CreateOrder>({
@@ -260,75 +135,60 @@ function CheckoutPage() {
   });
 
   const handlePaymentContinue = async (data: PaymentMethodFormData) => {
-    if (
-      !customerInfo ||
-      !shippingInfo ||
-      submittingRef.current ||
-      checkingStockRef.current
-    ) {
+    if (!customerInfo || !shippingInfo) {
       return;
     }
 
-    submittingRef.current = true;
-    setIsSubmitting(true);
+    const { isAvailable, products } = await checkStock();
 
-    try {
-      const { isAvailable, products } = await checkStock();
+    if (!isAvailable || !products) {
+      return;
+    }
 
-      if (!isAvailable || !products) {
+    const orderNumber = `QD-${crypto
+      .randomUUID()
+      .replaceAll("-", "")
+      .slice(0, 12)
+      .toUpperCase()}`;
+
+    const order: CreateOrder = {
+      orderNumber,
+      customerName: customerInfo.customerName,
+      customerAddress: customerInfo.customerAddress,
+      shippingMethod: shippingInfo.shippingMethod,
+      shippingCost: shippingCost,
+      paymentMethod: data.paymentMethod,
+      createdAt: new Date().toISOString(),
+      items: cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        isOnSale: item.isOnSale && item.salePrice !== null,
+        price:
+          item.isOnSale && item.salePrice !== null
+            ? item.salePrice
+            : item.price,
+      })),
+    };
+
+    await createOrderMutation.mutateAsync(order);
+
+    for (const item of order.items) {
+      const product = products.find((product) => product.id === item.productId);
+
+      if (!product) {
         return;
       }
 
-      const orderNumber = `QD-${crypto
-        .randomUUID()
-        .replaceAll("-", "")
-        .slice(0, 12)
-        .toUpperCase()}`;
+      const newStock = product.stock - item.quantity;
 
-      const order: CreateOrder = {
-        orderNumber,
-        customerName: customerInfo.customerName,
-        customerAddress: customerInfo.customerAddress,
-        shippingMethod: shippingInfo.shippingMethod,
-        shippingCost,
-        paymentMethod: data.paymentMethod,
-        createdAt: new Date().toISOString(),
-        items: cartItems.map((item) => ({
-          productId: item.id,
-          quantity: item.quantity,
-          isOnSale: item.isOnSale && item.salePrice !== null,
-          price:
-            item.isOnSale && item.salePrice !== null
-              ? item.salePrice
-              : item.price,
-        })),
-      };
-
-      await createOrderMutation.mutateAsync(order);
-
-      for (const item of order.items) {
-        const product = products.find(
-          (product) => product.id === item.productId,
-        );
-
-        if (!product) {
-          throw new Error("Product not found");
-        }
-
-        await updateStockMutation.mutateAsync({
-          productId: item.productId,
-          stock: product.stock - item.quantity,
-        });
-      }
-
-      clearCart();
-      navigate(`/order-confirmation/${orderNumber}`);
-    } catch (error) {
-      console.error("Checkout failed:", error);
-    } finally {
-      submittingRef.current = false;
-      setIsSubmitting(false);
+      await updateStockMutation.mutateAsync({
+        productId: item.productId,
+        stock: newStock,
+      });
     }
+
+    clearCart();
+    navigate(`/order-confirmation/${orderNumber}`);
   };
 
   const orderTotal = totalPrice + shippingCost;
@@ -351,16 +211,6 @@ function CheckoutPage() {
                 ← Back to Shop
               </button>
 
-              {stockError && (
-                <Alert
-                  severity="warning"
-                  className="checkout-page__stock-alert"
-                  sx={{ mb: 2 }}
-                >
-                  {stockError}
-                </Alert>
-              )}
-
               <CartList
                 items={cartItems}
                 onQuantityChange={handleQuantityChange}
@@ -368,8 +218,6 @@ function CheckoutPage() {
               />
 
               <CustomerInfoForm onContinue={handleCustomerContinue} />
-
-              {isCheckingStock && <p>Checking duck stock... 🐥</p>}
             </>
           )}
 
@@ -378,7 +226,7 @@ function CheckoutPage() {
               <button
                 type="button"
                 className="checkout-page__back-button"
-                onClick={handleReturnToCart}
+                onClick={() => setCheckoutStep("customer")}
               >
                 ← Back to Customer Information
               </button>
@@ -402,12 +250,8 @@ function CheckoutPage() {
 
               <PaymentMethodForm
                 onContinue={handlePaymentContinue}
-                isPending={
-                  isSubmitting ||
-                  createOrderMutation.isPending ||
-                  updateStockMutation.isPending
-                }
-                isFetching={isCheckingStock}
+                isPending={createOrderMutation.isPending}
+                isFetching={isFetching}
               />
 
               {stockError && (
@@ -423,18 +267,16 @@ function CheckoutPage() {
                   <button
                     type="button"
                     className="checkout-page__back-button"
-                    onClick={handleReturnToCart}
+                    onClick={() => setCheckoutStep("customer")}
                   >
                     ← Return to Cart
                   </button>
                 </>
               )}
 
-              {isSubmitting &&
-                !createOrderMutation.isPending &&
-                !updateStockMutation.isPending && (
-                  <p>Checking duck stock... 🐥</p>
-                )}
+              {isFetching && <p>Checking duck stock... 🐥</p>}
+
+              {isError && <p>Can't check stock.</p>}
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>
@@ -447,12 +289,12 @@ function CheckoutPage() {
               )}
 
               {updateStockMutation.isPending && (
-                <p>Updating duck stock... Please quack tight! 🐥</p>
+                <p> Updating duck stock... Please quack tight! 🐥</p>
               )}
 
               {updateStockMutation.isError && (
                 <p>
-                  Oh quack! We couldn't update the duck stock. Please try again.
+                  Oh quack! We couldn't update the duck stock. Pleace try again.
                   🐥
                 </p>
               )}

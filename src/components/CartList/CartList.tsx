@@ -61,7 +61,6 @@ function CartList({
 
               <IconButton
                 aria-label={`Increase quantity of ${item.title}`}
-                disabled={item.quantity >= item.stock}
                 onClick={() => onQuantityChange?.(item.id, 1)}
               >
                 <AddIcon />

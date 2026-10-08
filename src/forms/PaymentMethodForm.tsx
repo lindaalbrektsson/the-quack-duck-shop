@@ -2,7 +2,7 @@ import "./CheckoutForms.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import PrimaryButton from "../components/PrimaryButton/PrimaryButton";
 
 const paymentMethodSchema = z.object({
   paymentMethod: z.enum(["Card Payment", "Swish", "Klarna"], {
@@ -18,7 +18,11 @@ type PaymentMethodFormProps = {
   isFetching: boolean;
 };
 
-const PaymentMethodForm = ({ onContinue, isPending, isFetching }: PaymentMethodFormProps) => {
+const PaymentMethodForm = ({
+  onContinue,
+  isPending,
+  isFetching,
+}: PaymentMethodFormProps) => {
   const {
     register,
     handleSubmit,
@@ -81,15 +85,9 @@ const PaymentMethodForm = ({ onContinue, isPending, isFetching }: PaymentMethodF
         <p role="alert">{errors.paymentMethod.message}</p>
       )}
 
-      <PrimaryButton 
-      type="submit" 
-      disabled={isPending || isFetching}>
-        {isPending || isFetching
-        ? "LOADING..."
-        : "PLACE ORDER"
-          
-        }
-        </PrimaryButton>
+      <PrimaryButton type="submit" disabled={isPending || isFetching}>
+        {isPending || isFetching ? "LOADING..." : "PLACE ORDER"}
+      </PrimaryButton>
     </form>
   );
 };

@@ -74,7 +74,7 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
           alt="PostNord"
         />
         <div className="shipping-details">
-          <span>3.99</span>
+          <span>$3.99</span>
           <span>3-5 days delivery.</span>
         </div>
       </label>
@@ -88,7 +88,7 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
         />
         <img className="shipping-logo" src="/shipping/dhl-logo.png" alt="DHL" />
         <div className="shipping-details">
-          <span>4.99</span>
+          <span>$4.99</span>
           <span>1-2 days delivery.</span>
         </div>
       </label>
@@ -106,7 +106,7 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
           alt="BudBee"
         />
         <div className="shipping-details">
-          <span>5.99</span>
+          <span>$5.99</span>
           <span>1 day delivery.</span>
         </div>
       </label>

@@ -14,6 +14,7 @@ import type { Product } from "../types/product";
 // Start each test with a fresh cart.
 afterEach(() => {
   cleanup();
+  localStorage.removeItem("cartItems");
 });
 
 const testProduct: Product = {

@@ -81,7 +81,7 @@ function CheckoutPage() {
       
         const { data: products, error } = await refetchProducts();
         
-        if ( isError || error || !products) {
+        if ( error || !products) {
           setStockError (
             "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
           )
@@ -286,6 +286,10 @@ function CheckoutPage() {
               {isFetching && (
                 <p>Checking duck stock... 🐥</p>
               )}
+
+              {isError && (
+                <p>Can't check stock.</p>
+              )} 
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

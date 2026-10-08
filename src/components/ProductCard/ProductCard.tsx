@@ -36,8 +36,6 @@ function ProductCard({ product }: ProductCardProps) {
       <CategoryBadges categories={product.categories} />
 
       <div className="product-card__bottom">
-        <AddToCartButton product={product} />
-
         <span
           className={
             product.isOnSale && product.salePrice !== null
@@ -47,6 +45,7 @@ function ProductCard({ product }: ProductCardProps) {
         >
           ${displayPrice.toFixed(2)}
         </span>
+        <AddToCartButton product={product} />
       </div>
     </article>
   );

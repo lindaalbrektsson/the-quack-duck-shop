@@ -14,12 +14,16 @@ export type PaymentMethodFormData = z.infer<typeof paymentMethodSchema>;
 
 type PaymentMethodFormProps = {
   onContinue: (data: PaymentMethodFormData) => void;
+  onPaymentChange: (data: PaymentMethodFormData) => void;
+  defaultValues?: PaymentMethodFormData;
   isPending: boolean;
   isFetching: boolean;
 };
 
 const PaymentMethodForm = ({
   onContinue,
+  onPaymentChange,
+  defaultValues,
   isPending,
   isFetching,
 }: PaymentMethodFormProps) => {
@@ -29,12 +33,18 @@ const PaymentMethodForm = ({
     formState: { errors },
   } = useForm<PaymentMethodFormData>({
     resolver: zodResolver(paymentMethodSchema),
+    defaultValues,
   });
 
-  const onSubmit = (data: PaymentMethodFormData) => {
-    onContinue({
-      paymentMethod: data.paymentMethod,
+  const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onPaymentChange({
+      paymentMethod: event.target
+        .value as PaymentMethodFormData["paymentMethod"],
     });
+  };
+
+  const onSubmit = (data: PaymentMethodFormData) => {
+    onContinue(data);
   };
 
   return (
@@ -45,7 +55,9 @@ const PaymentMethodForm = ({
         <input
           type="radio"
           value="Card Payment"
-          {...register("paymentMethod")}
+          {...register("paymentMethod", {
+            onChange: handlePaymentChange,
+          })}
         />
         <img
           className="shipping-logo"
@@ -58,7 +70,13 @@ const PaymentMethodForm = ({
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="Swish" {...register("paymentMethod")} />
+        <input
+          type="radio"
+          value="Swish"
+          {...register("paymentMethod", {
+            onChange: handlePaymentChange,
+          })}
+        />
         <img
           className="shipping-logo"
           src="/payment/Swish-logo.png"
@@ -70,7 +88,13 @@ const PaymentMethodForm = ({
       </label>
 
       <label className="shipping-option">
-        <input type="radio" value="Klarna" {...register("paymentMethod")} />
+        <input
+          type="radio"
+          value="Klarna"
+          {...register("paymentMethod", {
+            onChange: handlePaymentChange,
+          })}
+        />
         <img
           className="shipping-logo"
           src="/payment/Klarna-logo.png"

@@ -65,7 +65,7 @@
         "main": "/ducks/chefduck.png",
         "secondary": "/ducks/chefduck2.png"
       },
-      "stock": 14,
+      "stock": 13,
       "rating": 3
     },
     {
@@ -85,7 +85,11 @@
         "main": "/ducks/daladuck.png",
         "secondary": "/ducks/daladuck2.png"
       },
+<<<<<<< HEAD
+      "stock": 4,
+=======
       "stock": 2,
+>>>>>>> 93-admin-dashboard
       "rating": 5
     },
     {
@@ -407,6 +411,30 @@
       "id": "aaNyv1jVfKo"
     },
     {
+<<<<<<< HEAD
+      "orderNumber": "QD-0E67A243CACC",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "PostNord",
+      "shippingCost": 3.99,
+      "paymentMethod": "Swish",
+      "createdAt": "2026-10-08T11:42:19.326Z",
+      "items": [
+        {
+          "productId": "duck-005",
+          "quantity": 1,
+          "isOnSale": true,
+          "price": 16.99
+        },
+        {
+          "productId": "duck-004",
+          "quantity": 1,
+          "isOnSale": false,
+          "price": 13.99
+        }
+      ],
+      "id": "lRlXh_uRXGg"
+=======
       "orderNumber": "QD-59F71E15A67A",
       "customerName": "Linda",
       "customerAddress": "Vägen 123",
@@ -459,6 +487,7 @@
         }
       ],
       "id": "vhjOx8wHJow"
+>>>>>>> 93-admin-dashboard
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

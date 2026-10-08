@@ -22,6 +22,7 @@ export type ShippingFormData = {
 type ShippingFormProps = {
   onContinue: (data: ShippingFormData) => void;
   onShippingChange: (shippingCost: number) => void;
+  defaultValues?: ShippingFormData;
 };
 
 const shippingCosts = {
@@ -30,13 +31,20 @@ const shippingCosts = {
   BudBee: 5.99,
 };
 
-const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
+const ShippingForm = ({
+  onContinue,
+  onShippingChange,
+  defaultValues,
+}: ShippingFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingSchema),
+    defaultValues: {
+      shippingMethod: defaultValues?.shippingMethod ?? "",
+    },
   });
 
   const handleShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,8 +73,9 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
         <input
           type="radio"
           value="PostNord"
-          {...register("shippingMethod")}
-          onChange={handleShippingChange}
+          {...register("shippingMethod", {
+            onChange: handleShippingChange,
+          })}
         />
         <img
           className="shipping-logo"
@@ -83,8 +92,9 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
         <input
           type="radio"
           value="DHL"
-          {...register("shippingMethod")}
-          onChange={handleShippingChange}
+          {...register("shippingMethod", {
+            onChange: handleShippingChange,
+          })}
         />
         <img className="shipping-logo" src="/shipping/dhl-logo.png" alt="DHL" />
         <div className="shipping-details">
@@ -97,8 +107,9 @@ const ShippingForm = ({ onContinue, onShippingChange }: ShippingFormProps) => {
         <input
           type="radio"
           value="BudBee"
-          {...register("shippingMethod")}
-          onChange={handleShippingChange}
+          {...register("shippingMethod", {
+            onChange: handleShippingChange,
+          })}
         />
         <img
           className="shipping-logo"

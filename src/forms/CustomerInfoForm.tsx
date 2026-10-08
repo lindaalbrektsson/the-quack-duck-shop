@@ -12,11 +12,16 @@ const customerSchema = z.object({
 
 // Get the form type from the schema.
 export type CustomerFormData = z.infer<typeof customerSchema>;
+
 type CustomerInfoFormProps = {
   onContinue: (data: CustomerFormData) => void;
+  defaultValues?: CustomerFormData;
 };
 
-const CustomerInfoForm = ({ onContinue }: CustomerInfoFormProps) => {
+const CustomerInfoForm = ({
+  onContinue,
+  defaultValues,
+}: CustomerInfoFormProps) => {
   // Set up the form with Zod validation.
   const {
     register,
@@ -24,6 +29,7 @@ const CustomerInfoForm = ({ onContinue }: CustomerInfoFormProps) => {
     formState: { errors },
   } = useForm<CustomerFormData>({
     resolver: zodResolver(customerSchema),
+    defaultValues,
   });
 
   // Pass valid customer data to the next step.

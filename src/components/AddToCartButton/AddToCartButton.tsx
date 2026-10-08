@@ -23,6 +23,14 @@ function AddToCartButton({ product }: AddToCartButtonProps) {
   const cartItem = cartItems.find((item) => item.id === product.id);
   const quantityInCart = cartItem?.quantity ?? 0;
 
+  console.log("STOCK CHECK", {
+    id: product.id,
+    title: product.title,
+    productStock: product.stock,
+    cartStock: cartItem?.stock,
+    quantityInCart,
+  });
+
   const isOutOfStock = product.stock <= 0;
   const maxInCart = quantityInCart >= product.stock;
 

@@ -15,7 +15,7 @@
         "main": "/ducks/alcaponeduck.png",
         "secondary": "/ducks/alcaponeduck2.png"
       },
-      "stock": 3,
+      "stock": 1,
       "rating": 3
     },
     {
@@ -405,6 +405,60 @@
         }
       ],
       "id": "aaNyv1jVfKo"
+    },
+    {
+      "orderNumber": "QD-59F71E15A67A",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "Swish",
+      "createdAt": "2026-10-08T11:25:08.054Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 6,
+          "isOnSale": true,
+          "price": 9.99
+        }
+      ],
+      "id": "5GSNYIx47s0"
+    },
+    {
+      "orderNumber": "QD-7A1B37E15968",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "Klarna",
+      "createdAt": "2026-10-08T11:25:42.087Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 3,
+          "isOnSale": true,
+          "price": 9.99
+        }
+      ],
+      "id": "gCT1DCIgA0I"
+    },
+    {
+      "orderNumber": "QD-DB23DAD7AE42",
+      "customerName": "Linda",
+      "customerAddress": "Vägen 123",
+      "shippingMethod": "DHL",
+      "shippingCost": 4.99,
+      "paymentMethod": "Klarna",
+      "createdAt": "2026-10-08T11:26:04.036Z",
+      "items": [
+        {
+          "productId": "duck-001",
+          "quantity": 5,
+          "isOnSale": true,
+          "price": 9.99
+        }
+      ],
+      "id": "vhjOx8wHJow"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

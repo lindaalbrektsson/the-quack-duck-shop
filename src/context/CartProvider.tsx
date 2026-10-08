@@ -22,13 +22,13 @@ export function CartProvider({ children }: CartProviderProps) {
       }
 
       if (existingItem) {
-        if (existingItem.quantity >= product.stock) {
-          return currentItems;
-        }
-
         return currentItems.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                stock: product.stock,
+                quantity: Math.min(item.quantity + 1, product.stock),
+              }
             : item,
         );
       }
@@ -55,6 +55,22 @@ export function CartProvider({ children }: CartProviderProps) {
             }
           : item,
       ),
+    );
+  };
+
+  const updateCartItemStock = (id: string, stock: number) => {
+    setCartItems((currentItems) =>
+      currentItems
+        .map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                stock,
+                quantity: Math.min(item.quantity, stock),
+              }
+            : item,
+        )
+        .filter((item) => item.quantity > 0),
     );
   };
 
@@ -85,6 +101,7 @@ export function CartProvider({ children }: CartProviderProps) {
         removeItem,
         clearCart,
         totalPrice,
+        updateCartItemStock,
       }}
     >
       {children}

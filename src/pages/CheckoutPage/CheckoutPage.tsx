@@ -40,6 +40,10 @@ function CheckoutPage() {
     null,
   );
 
+  const [paymentInfo, setPaymentInfo] = useState<PaymentMethodFormData | null>(
+    null,
+  );
+
   const [shippingCost, setShippingCost] = useState(0);
 
   const handleQuantityChange = (id: string, change: number) => {
@@ -217,7 +221,10 @@ function CheckoutPage() {
                 onRemove={handleRemoveItem}
               />
 
-              <CustomerInfoForm onContinue={handleCustomerContinue} />
+              <CustomerInfoForm
+                onContinue={handleCustomerContinue}
+                defaultValues={customerInfo ?? undefined}
+              />
             </>
           )}
 
@@ -234,6 +241,7 @@ function CheckoutPage() {
               <ShippingForm
                 onContinue={handleShippingContinue}
                 onShippingChange={setShippingCost}
+                defaultValues={shippingInfo ?? undefined}
               />
             </>
           )}
@@ -250,6 +258,8 @@ function CheckoutPage() {
 
               <PaymentMethodForm
                 onContinue={handlePaymentContinue}
+                onPaymentChange={setPaymentInfo}
+                defaultValues={paymentInfo ?? undefined}
                 isPending={createOrderMutation.isPending}
                 isFetching={isFetching}
               />

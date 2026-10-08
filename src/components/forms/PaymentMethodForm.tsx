@@ -14,9 +14,11 @@ export type PaymentMethodFormData = z.infer<typeof paymentMethodSchema>;
 
 type PaymentMethodFormProps = {
   onContinue: (data: PaymentMethodFormData) => void;
+  isPending: boolean;
+  isFetching: boolean;
 };
 
-const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
+const PaymentMethodForm = ({ onContinue, isPending, isFetching }: PaymentMethodFormProps) => {
   const {
     register,
     handleSubmit,
@@ -79,7 +81,15 @@ const PaymentMethodForm = ({ onContinue }: PaymentMethodFormProps) => {
         <p role="alert">{errors.paymentMethod.message}</p>
       )}
 
-      <PrimaryButton type="submit">Place Order</PrimaryButton>
+      <PrimaryButton 
+      type="submit" 
+      disabled={isPending || isFetching}>
+        {isPending || isFetching
+        ? "LOADING..."
+        : "PLACE ORDER"
+          
+        }
+        </PrimaryButton>
     </form>
   );
 };

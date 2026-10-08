@@ -65,37 +65,35 @@ function CheckoutPage() {
     setShippingCost(data.shippingCost);
     setCheckoutStep("payment");
   };
-
+  
   const { 
     refetch: refetchProducts,
-    isLoading,
+    isFetching,
     isError,
   } = useQuery({
     queryKey: productsQueryKey,
     queryFn: fetchProducts,
     enabled: false,
   });
-  
-  if (isLoading) {
-    <p>Checking duck stock... 🐥</p>
-  }
 
-  if (isError) {
-    <p>Oh Quack! We couldn't check the duck stock. 🐥</p>
-  }
+    const checkStock = async () => {
+      setStockError(null);
+      
+        const { data: products, error } = await refetchProducts();
+        
+        if ( error || !products) {
+          setStockError (
+            "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
+          )
 
-  const checkStock = async () => {
-    setStockError(null);
-
-    try {
-      const { data: products, error } = await refetchProducts();
-
-      if (error || !products) {
-        throw new Error("Failed to check stock");
-      }
-
-
-      const unavailableItem = cartItems.find((item) => {
+        return {
+          isAvailable:false,
+          products: null,
+        };
+        }
+        
+        
+        const unavailableItem = cartItems.find((item) => {
         const currentProduct = products.find(
           (product) => product.id === item.id,
         );
@@ -112,23 +110,13 @@ function CheckoutPage() {
           products: null,
         };
       }
-
+      
       return {
         isAvailable:true,
         products,
       };
-
-    } catch {
-      setStockError(
-        "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
-      );
-        return {
-          isAvailable:false,
-          products: null,
-        };
-    }
   };
-
+  
   const createOrderMutation = useMutation<Order, Error, CreateOrder>({
     mutationFn: async (order) => {
       const response = await fetch("http://localhost:3000/orders", {
@@ -273,7 +261,7 @@ function CheckoutPage() {
                 ← Back to Shipping Details
               </button>
 
-              <PaymentMethodForm onContinue={handlePaymentContinue} />
+              <PaymentMethodForm onContinue={handlePaymentContinue} isPending={createOrderMutation.isPending} isFetching={isFetching} />
 
               {stockError && (
                 <>
@@ -294,6 +282,14 @@ function CheckoutPage() {
                   </button>
                 </>
               )}
+
+              {isFetching && (
+                <p>Checking duck stock... 🐥</p>
+              )}
+
+              {isError && (
+                <p>Can't check stock.</p>
+              )} 
 
               {createOrderMutation.isPending && (
                 <p>Just a quack... placing your order! 🐥</p>

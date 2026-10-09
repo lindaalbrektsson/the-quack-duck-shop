@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 import CartList from "../../components/CartList/CartList";
 import CustomerInfoForm, {
@@ -38,6 +39,9 @@ function CheckoutPage() {
 
   const [stockError, setStockError] = useState<string | null>(null);
 
+  const [cartAlert, setCartAlert] = useState("");
+  const [cartAlertOpen, setCartAlertOpen] = useState(false);
+
   const [customerInfo, setCustomerInfo] = useState<CustomerFormData | null>(
     null,
   );
@@ -66,21 +70,27 @@ function CheckoutPage() {
       const cartItem = cartItems.find((item) => item.id === id);
 
       if (!product || !cartItem) {
-        setStockError("Oh quack! We couldn't find this duck. 🐥");
+        setCartAlert("Oh quack! We couldn't find this duck. 🐥");
+        setCartAlertOpen(true);
         return;
       }
 
       updateCartItemStock(id, product.stock);
 
       if (cartItem.quantity >= product.stock) {
+        setCartAlert(
+          `Oh quack! You've already got all available ${product.title}s in your cart! 🐥`,
+        );
+        setCartAlertOpen(true);
         return;
       }
 
       changeQuantity(id, change);
     } catch {
-      setStockError(
+      setCartAlert(
         "Oh quack! We couldn't check the duck stock right now. Please try again. 🐥",
       );
+      setCartAlertOpen(true);
     }
   };
 
@@ -230,6 +240,25 @@ function CheckoutPage() {
 
   return (
     <section className="checkout-page">
+      <Snackbar
+        open={cartAlertOpen}
+        autoHideDuration={3000}
+        onClose={() => setCartAlertOpen(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Alert
+          onClose={() => setCartAlertOpen(false)}
+          severity="warning"
+          variant="filled"
+          className="checkout-page__stock-alert"
+        >
+          {cartAlert}
+        </Alert>
+      </Snackbar>
+
       <h1>Checkout</h1>
 
       <div className="checkout-page__layout">
@@ -317,20 +346,22 @@ function CheckoutPage() {
 
               {isError && (
                 <>
-                <Alert
-                  severity="warning"
-                  variant="filled"
-                  className="checkout-page__stock-alert">
-                  Oh quack! We couldn't check the duck stock right now. Please try again. 🐥
-                </Alert>
+                  <Alert
+                    severity="warning"
+                    variant="filled"
+                    className="checkout-page__stock-alert"
+                  >
+                    Oh quack! We couldn't check the duck stock right now. Please
+                    try again. 🐥
+                  </Alert>
 
-                <button
-                  type="button"
+                  <button
+                    type="button"
                     className="checkout-page__back-button"
                     onClick={() => setCheckoutStep("customer")}
                   >
                     ← Return to Cart
-                </button>
+                  </button>
                 </>
               )}
 

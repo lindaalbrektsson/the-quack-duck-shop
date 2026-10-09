@@ -15,7 +15,7 @@
         "main": "/ducks/alcaponeduck.png",
         "secondary": "/ducks/alcaponeduck2.png"
       },
-      "stock": 1,
+      "stock": 5,
       "rating": 3
     },
     {
@@ -85,11 +85,7 @@
         "main": "/ducks/daladuck.png",
         "secondary": "/ducks/daladuck2.png"
       },
-<<<<<<< HEAD
-      "stock": 4,
-=======
       "stock": 2,
->>>>>>> 93-admin-dashboard
       "rating": 5
     },
     {
@@ -304,7 +300,7 @@
         "secondary": "/ducks/trumpduck2.png"
       },
       "stock": 8,
-      "rating": 1
+      "rating": 5
     },
     {
       "id": "duck-018",
@@ -380,61 +376,37 @@
         {
           "productId": "duck-005",
           "quantity": 1,
-          "Price": 16.99
+          "price": 16.99
         },
         {
           "productId": "duck-003",
           "quantity": 1,
-          "Price": 12.99
+          "price": 12.99
         },
         {
           "productId": "duck-002",
           "quantity": 1,
-          "Price": 16.99
+          "price": 16.99
         },
         {
           "productId": "duck-009",
           "quantity": 1,
-          "Price": 18.99
+          "price": 18.99
         },
         {
           "productId": "duck-010",
           "quantity": 1,
-          "Price": 17.99
+          "price": 17.99
         },
         {
           "productId": "duck-011",
           "quantity": 1,
-          "Price": 21.99
+          "price": 21.99
         }
       ],
       "id": "aaNyv1jVfKo"
     },
     {
-<<<<<<< HEAD
-      "orderNumber": "QD-0E67A243CACC",
-      "customerName": "Linda",
-      "customerAddress": "Vägen 123",
-      "shippingMethod": "PostNord",
-      "shippingCost": 3.99,
-      "paymentMethod": "Swish",
-      "createdAt": "2026-10-08T11:42:19.326Z",
-      "items": [
-        {
-          "productId": "duck-005",
-          "quantity": 1,
-          "isOnSale": true,
-          "price": 16.99
-        },
-        {
-          "productId": "duck-004",
-          "quantity": 1,
-          "isOnSale": false,
-          "price": 13.99
-        }
-      ],
-      "id": "lRlXh_uRXGg"
-=======
       "orderNumber": "QD-59F71E15A67A",
       "customerName": "Linda",
       "customerAddress": "Vägen 123",
@@ -487,7 +459,6 @@
         }
       ],
       "id": "vhjOx8wHJow"
->>>>>>> 93-admin-dashboard
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

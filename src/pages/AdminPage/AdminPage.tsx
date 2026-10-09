@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import {
+  fetchProducts,
+  productsQueryKey,
+  productIdQueryKey,
+} from "../../api/fetchProducts";
 import { fetchOrders, ordersQueryKey } from "../../api/fetchOrder";
 import { updateProductStock } from "../../api/patchProduct";
 
@@ -37,6 +41,10 @@ function AdminPage() {
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
         queryKey: productsQueryKey,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: productIdQueryKey(variables.id),
       });
 
       setStockToAdd((current) => {
@@ -102,7 +110,6 @@ function AdminPage() {
       </section>
 
       {/* Three most recent orders */}
-
       <section className="admin-orders">
         <h2>Recent Orders</h2>
 

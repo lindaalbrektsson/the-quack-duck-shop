@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import type { Product } from "../../types/product";
+import { CartContext } from "../../context/CartContext";
 import CategoryBadges from "../CategoryBadges/CategoryBadges";
 import Rating from "@mui/material/Rating";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
@@ -14,8 +16,21 @@ const ProductInfo = ({ product }: Props) => {
       ? product.salePrice
       : product.price;
 
-  const isOutOfStock = product.stock <= 0;
-  const isLowStock = product.stock > 0 && product.stock <= 3;
+  const cartContext = useContext(CartContext);
+
+  if (!cartContext) {
+    throw new Error("ProductInfo must be used within a CartProvider");
+  }
+
+  const { cartItems } = cartContext;
+
+  const quantityInCart =
+    cartItems.find((item) => item.id === product.id)?.quantity ?? 0;
+
+  const availableStock = Math.max(0, product.stock - quantityInCart);
+
+  const isOutOfStock = availableStock === 0;
+  const isLowStock = availableStock > 0 && availableStock <= 3;
 
   return (
     <>
@@ -40,7 +55,7 @@ const ProductInfo = ({ product }: Props) => {
                 : "product-info__stock product-info__stock--available"
             }
           >
-            {isLowStock ? `ONLY ${product.stock} LEFT IN STOCK!` : "IN STOCK"}
+            {isLowStock ? `ONLY ${availableStock} LEFT IN STOCK!` : "IN STOCK"}
           </p>
         )}
       </div>
@@ -51,9 +66,7 @@ const ProductInfo = ({ product }: Props) => {
         <div className="product-info__price">
           {product.isOnSale && product.salePrice !== null ? (
             <>
-              <span className="sale-price">
-                ${displayPrice.toFixed(2)}
-              </span>
+              <span className="sale-price">${displayPrice.toFixed(2)}</span>
               <s className="product-info__original-price">
                 ${product.price.toFixed(2)}
               </s>

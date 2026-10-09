@@ -99,3 +99,13 @@
     padding: 1rem;
   }
 }
+
+*.cart-drawer__stock-alert {
+  background-color: var(--color-orange-solid) !important;
+  color: var(--color-black) !important;
+  font-weight: 600;
+}
+
+.cart-drawer__stock-alert .MuiAlert-icon {
+  color: var(--color-black);
+}

@@ -13,22 +13,27 @@ This is a demo shop. The checkout saves test orders locally, but no real payment
 ## What you can do
 
 - Browse ducks and filter them by category.
-- Open a product page to see its details, price and stock status.
+- Open product pages to see details, prices, ratings and stock status.
+- See badges for special categories, sales and low stock.
 - Add ducks to the cart, change quantities and remove products.
-- Get feedback when adding a duck or reaching the stock limit.
+- Keep your cart when refreshing the page.
+- Get feedback when adding products or reaching stock limits.
 - Go through checkout with customer details, shipping and a payment method.
+- Keep your entered checkout details when navigating between steps.
 - See an order confirmation after placing an order, with the cart cleared.
+- Use the admin page to restock products and update their availability.
 
-The checkout also checks the latest stock before saving an order.
+The shop keeps product stock synchronized across the product pages, cart, checkout and admin page. Before an order is placed, checkout checks the latest stock, adjusts quantities if necessary and prevents orders that exceed availability.
 
 ## Built with
 
 - React, TypeScript and Vite.
-- React Router for navigation and Context for the shopping cart.
-- TanStack Query for fetching data and saving orders.
+- React Router for navigation.
+- React Context and localStorage for the shopping cart.
+- TanStack Query for fetching, updating and synchronizing data.
 - React Hook Form and Zod for forms and validation.
 - Material UI and CSS for the interface and styling.
-- JSON Server as a local API, with products and orders in `db.json`.
+- JSON Server as a local API, with products and orders in db.json.
 - Vitest and React Testing Library for tests.
 
 ## Run the project locally
@@ -67,6 +72,6 @@ npm test -- --run
 
 Or use `npm test` to keep the tests running and rerun them when you edit a file.
 
-Our cart tests cover adding products, changing quantities, sale prices, removing products and clearing the cart.
+Our tests cover cart functionality, including adding and removing products, changing quantities, sale prices and clearing the cart. We also test order-related functionality and error handling.
 
-*Built with React, teamwork and a slightly unreasonable amount of ducks. 🦆*
+_Built with React, teamwork and a slightly unreasonable amount of ducks. 🦆_

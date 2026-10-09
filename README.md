@@ -72,6 +72,6 @@ npm test -- --run
 
 Or use `npm test` to keep the tests running and rerun them when you edit a file.
 
-Our tests cover cart functionality, including adding and removing products, changing quantities, sale prices and clearing the cart. We also test order-related functionality and error handling.
+Our cart tests cover adding products, changing quantities, sale prices, removing products and clearing the cart.
 
 _Built with React, teamwork and a slightly unreasonable amount of ducks. 🦆_

@@ -1,15 +1,16 @@
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import "./CartDrawer.css";
-import CartList from "../CartList/CartList";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PrimaryButton from "../PrimaryButton/PrimaryButton";
-import { CartContext } from "../../context/CartContext";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { fetchProducts } from "../../api/fetchProducts";
+import CartList from "../CartList/CartList";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import { CartContext } from "../../context/CartContext";
+import { fetchProducts, productsQueryKey } from "../../api/fetchProducts";
+import "./CartDrawer.css";
 
 interface CartDrawerProps {
   open: boolean;
@@ -18,9 +19,15 @@ interface CartDrawerProps {
 
 function CartDrawer({ open, onClose }: CartDrawerProps) {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const { changeQuantity, cartItems, removeItem, totalPrice } =
-    useContext(CartContext)!;
+  const {
+    changeQuantity,
+    updateCartItemStock,
+    cartItems,
+    removeItem,
+    totalPrice,
+  } = useContext(CartContext)!;
 
   const [cartAlert, setCartAlert] = useState("");
   const [cartAlertOpen, setCartAlertOpen] = useState(false);
@@ -39,7 +46,12 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
     }
 
     try {
-      const products = await fetchProducts();
+      const products = await queryClient.fetchQuery({
+        queryKey: productsQueryKey,
+        queryFn: fetchProducts,
+        staleTime: 0,
+      });
+
       const product = products.find((product) => product.id === id);
       const cartItem = cartItems.find((item) => item.id === id);
 
@@ -47,6 +59,9 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
         showCartAlert("Oh quack! We couldn't find this duck. 🐥");
         return;
       }
+
+      // Update the cart item's stored stock with the latest API value.
+      updateCartItemStock(id, product.stock);
 
       if (cartItem.quantity >= product.stock) {
         showCartAlert(
@@ -73,14 +88,17 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
             <CloseIcon />
           </IconButton>
         </div>
+
         <CartList
           items={cartItems}
           onQuantityChange={handleQuantityChange}
           onRemove={removeItem}
         />
+
         {cartItems.length > 0 && (
           <div className="cart-drawer__total">
             <p>Total: ${totalPrice.toFixed(2)}</p>
+
             <PrimaryButton
               onClick={() => {
                 navigate("/checkout");
@@ -92,6 +110,7 @@ function CartDrawer({ open, onClose }: CartDrawerProps) {
           </div>
         )}
       </div>
+
       <Snackbar
         key={snackbarKey}
         open={cartAlertOpen}

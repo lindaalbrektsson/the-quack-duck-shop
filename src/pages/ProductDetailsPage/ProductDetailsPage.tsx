@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import type { Product } from "../../types/product";
+import { fetchProductById, productIdQueryKey } from "../../api/fetchProducts";
 import ProductInfo from "../../components/ProductInfo/ProductInfo";
 import ProductGallery from "../../components/ProductGallery/ProductGallery";
 import "./ProductDetailsPage.css";
@@ -12,17 +12,10 @@ const ProductDetailsPage = () => {
     data: product,
     isLoading,
     isError,
-  } = useQuery<Product>({
-    queryKey: ["product", id],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3000/products/${id}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to load product");
-      }
-
-      return response.json();
-    },
+  } = useQuery({
+    queryKey: productIdQueryKey(id ?? ""),
+    queryFn: () => fetchProductById(id!),
+    enabled: !!id,
   });
 
   if (isLoading) {

@@ -113,14 +113,25 @@ function CheckoutPage() {
         products: null,
       };
     }
-    const unavailableItem = cartItems.find((item) => {
+    const unavailableItems = cartItems.filter((item) => {
       const currentProduct = products.find((product) => product.id === item.id);
+
       return !currentProduct || item.quantity > currentProduct.stock;
     });
-    if (unavailableItem) {
+
+    if (unavailableItems.length > 0) {
+      unavailableItems.forEach((item) => {
+        const currentProduct = products.find(
+          (product) => product.id === item.id,
+        );
+
+        updateCartItemStock(item.id, currentProduct?.stock ?? 0);
+      });
+
       setStockError(
-        `Oh quack! There aren't enough "${unavailableItem.title}" left in stock. Please update your cart and try again. 🐥`,
+        "Oh quack! Some ducks are no longer available in the requested quantity. We've updated your cart. Please review it and try again. 🐥",
       );
+
       return {
         isAvailable: false,
         products: null,

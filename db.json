@@ -376,32 +376,32 @@
         {
           "productId": "duck-005",
           "quantity": 1,
-          "Price": 16.99
+          "price": 16.99
         },
         {
           "productId": "duck-003",
           "quantity": 1,
-          "Price": 12.99
+          "price": 12.99
         },
         {
           "productId": "duck-002",
           "quantity": 1,
-          "Price": 16.99
+          "price": 16.99
         },
         {
           "productId": "duck-009",
           "quantity": 1,
-          "Price": 18.99
+          "price": 18.99
         },
         {
           "productId": "duck-010",
           "quantity": 1,
-          "Price": 17.99
+          "price": 17.99
         },
         {
           "productId": "duck-011",
           "quantity": 1,
-          "Price": 21.99
+          "price": 21.99
         }
       ],
       "id": "aaNyv1jVfKo"
